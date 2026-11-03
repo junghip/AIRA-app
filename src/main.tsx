@@ -7,7 +7,7 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* GitHub Pages에선 /aira-prototype/ 아래에서 동작 */}
+    {/* GitHub Pages에선 /AIRA-app/ 아래에서 동작 */}
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
       <App />
     </BrowserRouter>

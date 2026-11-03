@@ -17,7 +17,7 @@ npm run dev
 npm run deploy
 ```
 
-빌드 결과를 `gh-pages` 브랜치로 올립니다. 주소: https://junghip.github.io/aira-prototype/
+빌드 결과를 `gh-pages` 브랜치로 올립니다. 주소: https://junghip.github.io/AIRA-app/
 
 ## 구성
 
