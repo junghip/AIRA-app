@@ -1,0 +1,236 @@
+/* 피그마 프레임 기준 top 값에 상태바 높이 차이(--dy)만 보정 */
+.reserve {
+  --dy: calc(var(--safe-top) - 59px);
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #e3dad8 100%);
+}
+
+.reserve__top {
+  position: absolute;
+  z-index: 5;
+  top: var(--safe-top);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.reserve__step {
+  position: absolute;
+  inset: 0;
+}
+
+.reserve__headline {
+  position: absolute;
+  top: calc(119px + var(--dy));
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 349px;
+  max-width: calc(100% - 40px);
+}
+
+.reserve__title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #fff;
+}
+
+.reserve__sub {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.32px;
+  color: var(--color-greeting);
+}
+
+.reserve__sub--loose {
+  line-height: 1.4;
+}
+
+/* 도착 시간 */
+.time-picker {
+  position: absolute;
+  top: calc(343px + var(--dy));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.time-picker__hint {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.32px;
+  color: var(--color-greeting);
+}
+
+.time-picker__hint:disabled {
+  cursor: default;
+}
+
+.time-picker__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 100px;
+  line-height: normal;
+  letter-spacing: -2px;
+  color: #fff;
+  cursor: ns-resize;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+
+.time-picker__caption {
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.36px;
+  color: var(--color-sub);
+}
+
+/* 탑승 인원 */
+.rider-counter {
+  position: absolute;
+  top: calc(350px + var(--dy));
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.rider-counter__value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: normal;
+}
+
+.rider-counter__number {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 120px;
+  color: #fff;
+}
+
+.rider-counter__label {
+  width: 93px;
+  font-size: 18px;
+  letter-spacing: -0.36px;
+  color: var(--color-sub);
+}
+
+.stepper {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1.3px solid var(--glass-border);
+  border-radius: 23px;
+  background: var(--glass-chip);
+  transition: background-color 0.25s, border-color 0.25s;
+}
+
+.stepper.is-disabled {
+  border-color: rgba(227, 227, 227, 0.3);
+  background: #b7c1d1;
+  cursor: default;
+}
+
+/* 예약 완료 요약 */
+.booked {
+  position: absolute;
+  top: calc(278px + var(--dy));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 피그마 이미지 CROP 값 그대로: 299×140 박스 안에 220×147로 배치, 박스 전체 좌우 반전 */
+.booked__frame {
+  position: relative;
+  width: 299px;
+  height: 140px;
+  overflow: hidden;
+  scale: -1 1;
+}
+
+.booked__frame img {
+  position: absolute;
+  top: -3.41px;
+  left: 68.47px;
+  width: 220.22px;
+  height: 146.82px;
+  max-width: none;
+  user-select: none;
+}
+
+.booked__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.booked__name {
+  font-size: 44px;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #fff;
+}
+
+.booked__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.booked__key {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+  color: rgba(116, 132, 163, 0.5);
+}
+
+.booked__value {
+  font-size: 20px;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: var(--color-sub);
+}
+
+/* 하단 버튼 줄 */
+.reserve__center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.reserve__center--cta {
+  top: calc(678px + var(--dy));
+}
+
+.reserve__center--link {
+  top: calc(754px + var(--dy));
+}

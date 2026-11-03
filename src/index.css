@@ -1,0 +1,65 @@
+/* 디자인 토큰 — 피그마 값 기준 */
+:root {
+  --color-ink: #050c2c; /* UI main */
+  --color-sub: #7484a3;
+  --color-greeting: #dbe7ff;
+  --color-icon-muted: #c1b4b4;
+  --color-bg: #ffffff;
+
+  --glass: rgba(255, 255, 255, 0.3);
+  --glass-chip: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  --bg-sky: linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3dad8 100%);
+
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: '42dot Sans', var(--font-sans);
+  --font-system: -apple-system, 'SF Pro Text', BlinkMacSystemFont, system-ui, sans-serif;
+
+  --frame-w: 393px;
+  --frame-h: 852px;
+  --safe-top: 59px; /* 상태바 높이 */
+}
+
+@media (max-width: 500px) {
+  :root {
+    --safe-top: max(env(safe-area-inset-top), 20px);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--color-ink);
+  background: #e9e9ec;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img,
+svg {
+  display: block;
+}

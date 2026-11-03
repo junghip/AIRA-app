@@ -1,0 +1,37 @@
+.status-bar {
+  display: flex;
+  align-items: center;
+  height: 59px;
+}
+
+.status-bar__side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.status-bar__side--left {
+  padding: 0 0 3px 10px;
+}
+
+.status-bar__side--right {
+  padding-right: 11px;
+}
+
+.status-bar__time {
+  width: 54px;
+  font-family: var(--font-system);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  letter-spacing: -0.32px;
+  text-align: center;
+  color: #fff;
+}
+
+.status-bar__island {
+  width: 125px;
+  height: 37px;
+  border-radius: 100px;
+  background: #000;
+}

@@ -1,0 +1,44 @@
+/* 여러 화면에서 같이 쓰는 버튼 */
+.glass-pill {
+  padding: 10px 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: 23px;
+  background: var(--glass-chip);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5);
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: #fff;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 240px;
+  height: 52px;
+  padding: 12px 32px;
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px #cac4c3;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: var(--color-ink);
+}
+
+.text-link {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  color: var(--color-sub);
+}
+
+/* 내용 길이에 맞춰 줄어드는 버튼 (예: Done!) */
+.cta--hug {
+  width: auto;
+}

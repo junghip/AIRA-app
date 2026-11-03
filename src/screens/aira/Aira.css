@@ -1,0 +1,409 @@
+/* 피그마 프레임 기준 top 값에 상태바 높이 차이(--dy)만 보정 */
+.aira {
+  --dy: calc(var(--safe-top) - 59px);
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #121212;
+}
+
+.aira > * {
+  position: absolute;
+  inset: 0;
+}
+
+/* ───────── 잠금화면 ───────── */
+.lock {
+  background: #121212;
+}
+
+.lock__clock {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-system);
+  text-align: center;
+  color: #fff;
+  pointer-events: none;
+}
+
+.lock__date {
+  position: absolute;
+  top: calc(88px + var(--dy));
+  left: 0;
+  right: 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.7); /* 등장 애니메이션이 opacity를 쓰므로 투명도는 색에 */
+}
+
+.lock__time {
+  position: absolute;
+  top: calc(105px + var(--dy));
+  left: 0;
+  right: 0;
+  font-family: ui-rounded, 'SF Pro Rounded', var(--font-system);
+  font-size: 100px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -2.12px;
+  color: #6f6f6f;
+}
+
+.lock__widgets {
+  position: absolute;
+  top: calc(231px + var(--dy));
+  left: calc(50% - 114.5px);
+  display: flex;
+  gap: 32px;
+}
+
+.widget {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  color: #8a8a8a;
+}
+
+.widget > * {
+  position: absolute;
+}
+
+.widget__ring {
+  top: 0;
+  left: 0;
+  opacity: 0.6;
+}
+
+.widget__marker {
+  top: 2px;
+  left: 13px;
+}
+
+.widget__temp,
+.widget__low,
+.widget__high {
+  translate: -50% -50%;
+  white-space: nowrap;
+}
+
+.widget__temp {
+  top: 27px;
+  left: 28px;
+  font-size: 24px;
+  line-height: 34px;
+  letter-spacing: 0.364px;
+}
+
+.widget__low,
+.widget__high {
+  top: 46.5px;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: 0.066px;
+}
+
+.widget__low {
+  left: 18.5px;
+}
+
+.widget__high {
+  left: 37.5px;
+}
+
+.widget--clock {
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.widget--clock > * {
+  left: 50%;
+  translate: -50% 0;
+  white-space: nowrap;
+}
+
+.widget__city {
+  top: 9px;
+  font-size: 8px;
+  line-height: 10px;
+  letter-spacing: -0.434px;
+}
+
+.widget__clock-time {
+  top: 18px;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.24px;
+}
+
+.widget__ampm {
+  top: 35px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* 알림 카드 */
+.notif {
+  position: absolute;
+  top: calc(647px + var(--dy));
+  left: 12px;
+  right: 11px;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.25);
+  text-align: left;
+}
+
+.notif--open {
+  inset: 0;
+  background: #a9bbd4;
+}
+
+.notif__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 20px;
+}
+
+.notif__row {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.notif__streak {
+  position: absolute;
+  top: 24px;
+  left: 187px;
+  width: 169px;
+  height: 14px;
+  background: linear-gradient(225deg, rgba(219, 240, 255, 0.5) 6.74%, rgba(219, 240, 255, 0) 90.82%);
+}
+
+.notif__car {
+  position: absolute;
+  top: 5px;
+  left: 234px;
+}
+
+.notif__text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.notif__title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #fff;
+}
+
+.notif__accent {
+  color: var(--color-greeting);
+}
+
+.notif__desc {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 18px;
+  color: #c6c6c6;
+}
+
+.notif__place {
+  position: relative;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #c6c6c6;
+}
+
+/* ───────── 공통 (지도·엔딩) ───────── */
+.aira__top {
+  position: absolute;
+  z-index: 5;
+  top: var(--safe-top);
+  right: 0;
+  padding: 10px 20px;
+}
+
+.aira__headline {
+  position: absolute;
+  top: calc(119px + var(--dy));
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 349px;
+  max-width: calc(100% - 40px);
+}
+
+.aira__headline--center {
+  align-items: center;
+  text-align: center;
+}
+
+.aira__title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #fff;
+}
+
+.aira__sub {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+  color: var(--color-sub);
+}
+
+.aira__center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* ───────── 지도 ───────── */
+.map {
+  background: var(--bg-sky);
+}
+
+.map__scene,
+.ending__scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.map__pulse {
+  position: absolute;
+  top: calc(385px + var(--dy));
+  left: calc(50% + 4px);
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  border: 2px solid rgba(116, 206, 255, 0.9);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(116, 206, 255, 0.25), transparent 70%);
+}
+
+.map__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.map__fade--top {
+  top: 0;
+  height: 317px;
+  background: linear-gradient(180deg, rgba(145, 169, 201, 0.7) 50.16%, rgba(185, 198, 216, 0) 99.83%);
+}
+
+.map__fade--bottom {
+  bottom: 0;
+  height: 194px;
+  background: linear-gradient(0deg, rgba(226, 218, 216, 0.64) 44.37%, rgba(255, 255, 255, 0) 99.83%);
+}
+
+.map__minutes {
+  display: inline-flex;
+  color: var(--color-ink);
+}
+
+.map__info {
+  position: absolute;
+  top: calc(546px + var(--dy));
+  left: calc(50% - 174.5px);
+  width: 349px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.56px;
+  color: #fff;
+}
+
+.aira__center--cancel {
+  top: calc(747px + var(--dy));
+}
+
+/* ───────── 엔딩 ───────── */
+.ending {
+  background: var(--bg-sky);
+}
+
+.ending__scene {
+  top: 1px;
+  height: calc(100% - 1px);
+}
+
+/* 빛줄기 위치(피그마 이미지 기준)에 겹치는 흐르는 빛 */
+.ending__beam {
+  position: absolute;
+  top: calc(470px + var(--dy));
+  left: calc(50% - 50px);
+  width: 100px;
+  height: 382px;
+  background: linear-gradient(0deg, transparent 0%, rgba(160, 225, 255, 0.55) 45%, transparent 60%) 0 100% / 100% 300% no-repeat;
+  mix-blend-mode: screen;
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.ending__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.ending__fade--top1 {
+  top: 0;
+  height: 356px;
+  background: linear-gradient(180deg, rgba(145, 169, 201, 0.7) 0.17%, rgba(185, 198, 216, 0) 99.83%);
+}
+
+.ending__fade--top2 {
+  top: 0;
+  height: 255px;
+  background: linear-gradient(180deg, rgba(145, 169, 201, 0.7) 50.16%, rgba(185, 198, 216, 0) 99.83%);
+}
+
+.ending__fade--bottom1 {
+  bottom: 0;
+  height: 194px;
+  background: linear-gradient(0deg, rgba(226, 218, 216, 0.64) 44.37%, rgba(255, 255, 255, 0) 99.83%);
+}
+
+.ending__fade--bottom2 {
+  bottom: 0;
+  height: 279px;
+  background: linear-gradient(0deg, rgba(220, 218, 219, 0.8) 2.84%, rgba(255, 255, 255, 0) 99.83%);
+}
+
+.ending__title {
+  width: 100%;
+  font-size: 52px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #fff;
+}

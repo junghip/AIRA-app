@@ -1,0 +1,269 @@
+/* 피그마 프레임 기준 top 값에 상태바 높이 차이(--dy)만 보정 */
+.pass {
+  --dy: calc(var(--safe-top) - 59px);
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #a7b9d3;
+}
+
+.pass__bg-done {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #ecdbd7 100%);
+  pointer-events: none;
+}
+
+.pass__top {
+  position: absolute;
+  z-index: 5;
+  top: var(--safe-top);
+  right: 0;
+  padding: 10px 20px;
+}
+
+/* 제목 */
+.pass__headline {
+  position: absolute;
+  top: calc(119px + var(--dy));
+  left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 349px;
+  max-width: calc(100% - 44px);
+}
+
+.pass__title,
+.pass__sub {
+  display: flex;
+  flex-direction: column;
+}
+
+.pass__title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #fff;
+}
+
+.pass__sub {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.32px;
+  color: var(--color-greeting);
+}
+
+/* 탑승권 앵커 — 화면 가로 중앙 기준으로 x를 움직임 */
+.pass__ticket-anchor {
+  position: absolute;
+  top: var(--dy);
+  left: calc(50% - 108.171px);
+  width: 216.342px;
+  height: 348.551px;
+}
+
+/* 탑승권 모양 영역만큼 잘라내는 레이어 (빛줄기·반짝임용) */
+.pass__ticket-clip {
+  position: absolute;
+  inset: 4.48% 11.11% 12.76% 11.11%;
+  overflow: hidden;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.pass__beam-glow {
+  position: absolute;
+  top: 30.55px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(116, 206, 255, 0) 0%, #74ceff 100%);
+}
+
+.pass__beam {
+  position: absolute;
+  top: 104.57px;
+  left: calc(50% - 107.821px);
+  width: 215.642px;
+  height: 3.42px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 10px #67c8f5;
+  pointer-events: none;
+}
+
+.pass__shine {
+  position: absolute;
+  inset: -20% -30%;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+}
+
+.pass__corners {
+  position: absolute;
+  top: calc(264.5px + var(--dy));
+  left: calc(50% - 104px);
+  pointer-events: none;
+}
+
+/* 작은 가로 카드 */
+.pass__mini-anchor {
+  position: absolute;
+  top: var(--dy);
+  left: calc(50% - 85.318px);
+}
+
+.mini-pass {
+  position: relative;
+  width: 170.635px;
+  height: 103.5px;
+  overflow: hidden;
+  border-radius: 13.986px;
+  background: linear-gradient(180deg, #d7eefd 0%, #98ceeb 100%);
+  box-shadow:
+    0 4px 20px #8299b9,
+    inset 0 0 0 1.399px rgba(255, 255, 255, 0.1),
+    inset 0 0.699px 0.699px rgba(255, 255, 255, 0.7);
+  color: #fff;
+  cursor: grab;
+  user-select: none;
+}
+
+.mini-pass > * {
+  position: absolute;
+  white-space: nowrap;
+  line-height: normal;
+}
+
+.mini-pass__label {
+  top: 10.49px;
+  left: 11.19px;
+  font-size: 5.595px;
+  letter-spacing: 1px;
+}
+
+.mini-pass__route {
+  top: 21.68px;
+  left: 11.19px;
+  font-size: 13.287px;
+  letter-spacing: -0.2098px;
+}
+
+.mini-pass__bar {
+  left: 11.19px;
+  height: 3.497px;
+  border-radius: 2.098px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.mini-pass__flight {
+  top: 81.12px;
+  left: 11.19px;
+  font-size: 6.993px;
+  font-weight: 400;
+  letter-spacing: 0.1399px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mini-pass__plane {
+  top: 34.97px;
+  left: 136.37px;
+}
+
+.mini-pass__seat {
+  top: 57.35px;
+  left: 135.67px;
+  font-size: 8.392px;
+  letter-spacing: 0.1399px;
+}
+
+/* 업로드 방법 3개 */
+.pass__sources {
+  position: absolute;
+  top: calc(648px + var(--dy));
+  left: calc(50% - 135.5px);
+  display: flex;
+  gap: 41px;
+}
+
+.source {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 63px;
+}
+
+.source__tile {
+  display: grid;
+  place-items: center;
+  width: 63px;
+  height: 60px;
+  border: 1px solid var(--glass-border);
+  border-radius: 23px;
+  background: var(--glass);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.3);
+}
+
+.source__label {
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+  color: #fff;
+}
+
+/* 하단 가운데 정렬 줄 */
+.pass__center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.pass__caption {
+  position: absolute;
+  top: calc(629px + var(--dy));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.pass__caption-title {
+  position: relative;
+  font-size: 22px;
+  letter-spacing: -0.44px;
+  color: #fff;
+}
+
+.loading-dots {
+  position: absolute;
+  left: 100%;
+}
+
+.pass__caption-sub {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  color: var(--color-sub);
+}
+
+.pass__center--cancel {
+  top: calc(731px + var(--dy));
+}
+
+.pass__center--cta {
+  top: calc(678px + var(--dy));
+}
+
+.pass__center--link {
+  top: calc(754px + var(--dy));
+}
+

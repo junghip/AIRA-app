@@ -1,0 +1,178 @@
+/* 좌표는 피그마 값(%) 그대로 — inset: top right bottom left */
+.bp {
+  position: relative;
+  width: 216.342px;
+  height: 348.551px;
+  font-family: var(--font-sans);
+  color: #fff;
+  user-select: none;
+}
+
+.bp__fill {
+  position: absolute;
+  inset: 4.48% 11.11% 12.76% 11.11%;
+  width: 77.78%;
+  height: 82.76%;
+}
+
+.bp__t {
+  position: absolute;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/* 선/아이콘: 바깥 박스 + 선 두께만큼 넘치는 안쪽 이미지 */
+.bp__v {
+  position: absolute;
+}
+
+.bp__v img {
+  position: absolute;
+  max-width: none;
+}
+
+.bp__label {
+  inset: 10% 54.49% 87.99% 17.78%;
+  font-size: 6.009px;
+  font-weight: 400;
+  letter-spacing: 1.142px;
+}
+
+.bp__plane {
+  inset: 9.88% 18.03% 88.34% 77.22%;
+}
+
+.bp__plane img {
+  top: -7.56%;
+  left: -4.56%;
+  width: 109.12%;
+  height: 115.15%;
+}
+
+.bp__city {
+  inset: 16.21% 64.19% 75.47% 17.78%;
+  font-size: 24.038px;
+  font-weight: 400;
+  letter-spacing: -0.4808px;
+}
+
+.bp__city--to {
+  inset: 16.21% 17.47% 75.47% 62.2%;
+  text-align: right;
+}
+
+.bp__route-line {
+  inset: 20.69% 41.66% 79.31% 41.67%;
+}
+
+.bp__route-line img {
+  top: -0.45px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 0.9px);
+}
+
+.bp__route-arrow {
+  inset: 19.83% 41.66% 78.45% 56.67%;
+}
+
+.bp__route-arrow img {
+  top: -5.76%;
+  left: -8%;
+  width: 120.5%;
+  height: 111.52%;
+}
+
+.bp__city-name {
+  inset: 25.17% 61.42% 72.25% 17.78%;
+  font-size: 7.211px;
+  letter-spacing: -0.1442px;
+  color: #e2eef7;
+}
+
+.bp__city-name--to {
+  inset: 25.17% 17.55% 72.25% 64.42%;
+  text-align: right;
+}
+
+.bp__divider {
+  position: absolute;
+  inset: 31.38% 17.77% 68.45% 17.78%;
+  width: 64.45%;
+  height: 0.17%;
+}
+
+.bp__key {
+  font-size: 5.409px;
+  color: #e2eef7;
+}
+
+.bp__val {
+  font-size: 9.615px;
+  font-weight: 400;
+}
+
+.bp__big {
+  font-size: 15.625px;
+  font-weight: 400;
+}
+
+.bp__key--flight { inset: 35% 73.44% 63.28% 17.78%; }
+.bp__val--flight { inset: 37.59% 68.35% 59.26% 17.78%; }
+.bp__key--date { inset: 35% 43.53% 63.28% 50%; }
+.bp__val--date { inset: 37.59% 34.28% 59.26% 50%; }
+
+.bp__key--gate { inset: 45.69% 75.75% 52.59% 17.78%; }
+.bp__big--gate { inset: 47.93% 73.44% 46.62% 17.78%; }
+.bp__key--boarding { inset: 45.69% 48.63% 52.59% 38.89%; }
+.bp__big--boarding { inset: 47.93% 42.62% 46.62% 38.89%; }
+.bp__key--seat { inset: 46.03% 24.99% 52.25% 69%; text-align: right; }
+.bp__big--seat { inset: 47.93% 17.66% 46.62% 68.93%; text-align: right; }
+
+.bp__perforation {
+  inset: 61.38% 16.67% 38.62% 16.67%;
+}
+
+.bp__perforation img {
+  top: -0.45px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 0.9px);
+}
+
+.bp__passenger-key {
+  inset: 66.03% 67.89% 32.24% 17.78%;
+  font-size: 5.409px;
+  font-weight: 400;
+}
+
+.bp__passenger {
+  inset: 68.62% 71.59% 28.51% 17.78%;
+  font-size: 8.413px;
+  font-weight: 400;
+}
+
+.bp__class {
+  inset: 68.97% 17.8% 28.45% 68.34%;
+  font-size: 7.211px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.bp__barcode {
+  inset: 77.93% 17.78% 22.07% 17.78%;
+}
+
+.bp__barcode img {
+  top: -10.82px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 21.64px);
+}
+
+.bp__code {
+  inset: 82.59% 37.26% 15.69% 37.78%;
+  font-size: 5.409px;
+  color: #e2eef7;
+  text-align: center;
+}
