@@ -7,11 +7,12 @@ import arrowIcon from '../../assets/icons/arrow-right-s-line.svg'
 import chevronSub from '../../assets/icons/chevron-right-sub.svg'
 import closeIcon from '../../assets/icons/close-line.svg'
 import subtractIcon from '../../assets/icons/subtract-line.svg'
+import AmbientGradient from '../../components/AmbientGradient'
 import GlassIconButton from '../../components/GlassIconButton'
 import Icon from '../../components/Icon'
 import RollingText from '../../components/RollingText'
-import { riseIn, softSpring, spring, stagger } from '../../motion/transitions'
-import BoardingScene from './BoardingScene'
+import { riseIn, riseInSmooth, smoothEase, softSpring, spring, stagger } from '../../motion/transitions'
+import BoardingScene, { CAR_ARRIVE } from './BoardingScene'
 import { SUGGESTED, TIME_MAX, TIME_MIN, TIME_STEP, formatTime, timeWithAira } from './time'
 import TimeSheet from './TimeSheet'
 import './Reserve.css'
@@ -78,6 +79,9 @@ export default function Reserve() {
 
   return (
     <div className="reserve">
+      <motion.div className="reserve__ambient" initial={false} animate={{ opacity: step === 'booked' ? 1 : 0 }} transition={{ duration: 1 }}>
+        <AmbientGradient />
+      </motion.div>
       <div className="reserve__top">
         <GlassIconButton icon={arrowIcon} label="Back" flip onClick={back} />
         <GlassIconButton icon={closeIcon} label="Close" onClick={() => navigate('/')} />
@@ -287,6 +291,7 @@ function RiderCounter({
 }) {
   const shake = useAnimation()
   const plusHint = useAnimation()
+  const minusHint = useAnimation()
 
   // 아직 4명이 아닌데 버튼을 누르면 + 를 콩콩 눌러보라고 알려줌
   useEffect(() => {
@@ -300,7 +305,9 @@ function RiderCounter({
   return (
     <motion.div className="rider-counter" variants={stagger(0.08, 0.15)} initial="hidden" animate="show">
       <motion.div variants={riseIn}>
-        <StepperButton icon={subtractIcon} label="Remove a passenger" disabled={riders <= 1} onClick={() => press(-1)} />
+        <motion.div animate={minusHint}>
+          <StepperButton icon={subtractIcon} label="Remove a passenger" disabled={riders <= 1} onClick={() => press(-1)} />
+        </motion.div>
       </motion.div>
       <motion.div className="rider-counter__value" variants={riseIn}>
         <motion.div animate={shake}>
@@ -327,7 +334,7 @@ function StepperButton({ icon, label, disabled, onClick }: { icon: string; label
       transition={spring}
       onClick={onClick}
     >
-      <Icon src={icon} width={36} color={disabled ? 'var(--color-sub)' : '#fff'} />
+      <Icon src={icon} width={36} color="#fff" />
     </motion.button>
   )
 }
@@ -341,27 +348,21 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
 
   return (
     <div className="booked">
-      {/* 차가 오른쪽에서 달려와 살짝 앞으로 쏠리며 멈춘 뒤, 문이 열리고 탑승 */}
+      {/* 차가 오른쪽에서 천천히 들어와 부드럽게 멈춘 뒤, 문이 열리고 탑승 */}
       <motion.div
         className="booked__car"
         initial={{ x: 320, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 90, damping: 14, delay: 0.15 }}
+        transition={{ x: { duration: CAR_ARRIVE, ease: smoothEase, delay: 0.15 }, opacity: { duration: 0.6, delay: 0.15 } }}
       >
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={{ rotate: [0, 0, -2.5, 1, 0] }}
-          transition={{ duration: 1.1, times: [0, 0.45, 0.6, 0.8, 1], delay: 0.15 }}
-        >
-          <BoardingScene riders={riders} />
-        </motion.div>
+        <BoardingScene riders={riders} />
       </motion.div>
-      <motion.div className="booked__info" variants={stagger(0.09, 0.55)} initial="hidden" animate="show">
-        <motion.p className="booked__name" variants={riseIn}>
+      <motion.div className="booked__info" variants={stagger(0.12, 0.8)} initial="hidden" animate="show">
+        <motion.p className="booked__name" variants={riseInSmooth}>
           AIRA 07
         </motion.p>
         {rows.map(([key, value]) => (
-          <motion.div key={key} className="booked__row" variants={riseIn}>
+          <motion.div key={key} className="booked__row" variants={riseInSmooth}>
             <span className="booked__key">{key}</span>
             <span className="booked__value">{value}</span>
           </motion.div>

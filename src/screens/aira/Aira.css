@@ -179,6 +179,7 @@
 }
 
 .notif__streak {
+  overflow: hidden;
   position: absolute;
   top: 24px;
   left: 187px;
@@ -187,10 +188,23 @@
   background: linear-gradient(225deg, rgba(219, 240, 255, 0.5) 6.74%, rgba(219, 240, 255, 0) 90.82%);
 }
 
+.notif__streak-flow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent 0%, rgba(235, 247, 255, 0.75) 50%, transparent 100%);
+}
+
 .notif__car {
   position: absolute;
   top: 5px;
   left: 234px;
+}
+
+.notif__car img {
+  display: block;
 }
 
 .notif__text {

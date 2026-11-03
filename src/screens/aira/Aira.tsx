@@ -101,7 +101,15 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
             >
               <img src={airaLogoSmall} width={76.495} height={14} alt="AIRA" />
               <div className="notif__row">
-                <span className="notif__streak" />
+                <span className="notif__streak">
+                  {/* 길이 뒤로 흘러가듯 빛이 오른쪽에서 왼쪽으로 계속 지나감 */}
+                  <motion.span
+                    className="notif__streak-flow"
+                    initial={{ x: '260%' }}
+                    animate={{ x: '-110%' }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: 'linear', delay: 1.2 }}
+                  />
+                </span>
                 <div className="notif__text">
                   <p className="notif__title">
                     <span className="notif__accent">2min</span> until pickup
@@ -112,17 +120,22 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
                   </p>
                 </div>
                 <p className="notif__place">3F Departures · Terminal 1</p>
-                {/* 알림 속 작은 차가 빛줄기를 따라 들어옴 */}
-                <motion.img
+                {/* 알림 속 작은 차가 왼쪽에서 빛줄기를 따라 미끄러져 들어와, 달리는 듯 살짝 흔들림 */}
+                <motion.div
                   className="notif__car"
-                  src={notificationCar}
-                  width={59}
-                  height={30.307}
-                  alt=""
-                  initial={{ x: 90, opacity: 0 }}
+                  initial={{ x: -110, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 120, damping: 16, delay: 0.45 }}
-                />
+                  transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+                >
+                  <motion.img
+                    src={notificationCar}
+                    width={59}
+                    height={30.307}
+                    alt=""
+                    animate={{ y: [0, -0.6, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }}
+                  />
+                </motion.div>
               </div>
             </motion.div>
           </motion.button>

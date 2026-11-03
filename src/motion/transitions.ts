@@ -17,6 +17,14 @@ export const stagger = (gap = 0.08, delay = 0.1): Variants => ({
   show: { transition: { staggerChildren: gap, delayChildren: delay } },
 })
 
+// 튀지 않고 부드럽게 멈추는 곡선
+export const smoothEase = [0.22, 1, 0.36, 1] as const
+
+export const riseInSmooth: Variants = {
+  hidden: { opacity: 0, y: 16, filter: 'blur(6px)' },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.9, ease: smoothEase } },
+}
+
 export const riseIn: Variants = {
   hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
   show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: softSpring },

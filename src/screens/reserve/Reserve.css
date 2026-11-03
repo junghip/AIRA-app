@@ -7,6 +7,13 @@
   background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #e3dad8 100%);
 }
 
+.reserve__ambient {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  pointer-events: none;
+}
+
 .reserve__top {
   position: absolute;
   z-index: 5;
@@ -142,12 +149,12 @@
   border: 1.3px solid var(--glass-border);
   border-radius: 23px;
   background: var(--glass-chip);
-  transition: background-color 0.25s, border-color 0.25s;
+  transition: opacity 0.25s;
 }
 
+/* 더 줄이거나 늘릴 수 없을 때는 같은 모양에서 흐리게만 */
 .stepper.is-disabled {
-  border-color: rgba(227, 227, 227, 0.3);
-  background: #b7c1d1;
+  opacity: 0.35;
   cursor: default;
 }
 

@@ -4,12 +4,13 @@ import carClosed from '../../assets/reserve/car-closed.png'
 import carOpen from '../../assets/reserve/car-open.png'
 import './BoardingScene.css'
 
-// 차가 멈추면 문이 열리고 → 한 명씩 걸어와 타고 → 문이 닫힘 (초 단위)
-const DOOR_OPEN_AT = 1.25
-const DOOR_FADE = 0.35
-const FIRST_RIDER_AT = 1.65
-const RIDER_GAP = 0.45
-const WALK = 1.6
+// 차가 천천히 들어와 멈추면 → 문이 열리고 → 한 명씩 걸어와 타고 → 문이 닫힘 (초 단위)
+export const CAR_ARRIVE = 2.2 // 차가 들어오는 시간
+const DOOR_OPEN_AT = 0.15 + CAR_ARRIVE * 0.85 // 거의 멈췄을 때
+const DOOR_FADE = 0.6
+const FIRST_RIDER_AT = DOOR_OPEN_AT + 0.5
+const RIDER_GAP = 0.55
+const WALK = 2
 
 // 키가 조금씩 다른 4명
 const figures = [
@@ -34,7 +35,7 @@ export default function BoardingScene({ riders }: { riders: number }) {
   const keyTimes = [0, DOOR_OPEN_AT, DOOR_OPEN_AT + DOOR_FADE, closeAt, closeAt + DOOR_FADE]
   const total = keyTimes[4]
   const doorTiming = { duration: total, times: keyTimes.map((t) => t / total), ease: 'easeInOut' as const }
-  const flashTiming = (at: number) => ({ duration: 0.6, delay: at - 0.1, ease: 'easeOut' as const })
+  const flashTiming = (at: number) => ({ duration: 1.1, delay: at - 0.2, ease: 'easeInOut' as const })
 
   return (
     <div className="boarding">
@@ -66,7 +67,7 @@ export default function BoardingScene({ riders }: { riders: number }) {
           key={at}
           className="boarding__flash"
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: [0, 0.7, 0], scale: [0.8, 1.1, 1.2] }}
+          animate={{ opacity: [0, 0.5, 0], scale: [0.85, 1.05, 1.15] }}
           transition={flashTiming(at)}
         />
       ))}
@@ -86,17 +87,14 @@ export default function BoardingScene({ riders }: { riders: number }) {
               opacity: [0, 1, 1, 0],
               scale: [0.95, 1, 1, 0.72],
             }}
-            transition={{ duration: WALK, times: [0, 0.14, 0.68, 1], ease: 'easeInOut', delay: FIRST_RIDER_AT + i * RIDER_GAP }}
+            transition={{ duration: WALK, times: [0, 0.18, 0.7, 1], ease: 'easeInOut', delay: FIRST_RIDER_AT + i * RIDER_GAP }}
           >
+            {/* 통통 튀지 않고 미끄러지듯 이동 */}
             <span className="rider__shadow" />
-            <motion.span
-              className="rider__figure"
-              animate={{ y: [0, -2.5, 0], rotate: [-2.5, 2.5, -2.5] }}
-              transition={{ duration: 0.36, repeat: Infinity, ease: 'easeInOut' }}
-            >
+            <span className="rider__figure">
               <span className="rider__head" />
               <span className="rider__body" />
-            </motion.span>
+            </span>
           </motion.div>
         )
       })}

@@ -143,7 +143,7 @@ export default function Pass() {
                 className="pass__shine"
                 initial={{ x: '-130%' }}
                 animate={{ x: '130%' }}
-                transition={{ delay: 0.45, duration: 1.1, ease: 'easeInOut' }}
+                transition={{ delay: 0.45, duration: 1.2, ease: 'easeInOut', repeat: Infinity, repeatDelay: 1.8 }}
               />
             </div>
           )}
