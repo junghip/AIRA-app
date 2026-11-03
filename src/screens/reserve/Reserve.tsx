@@ -7,12 +7,11 @@ import arrowIcon from '../../assets/icons/arrow-right-s-line.svg'
 import chevronSub from '../../assets/icons/chevron-right-sub.svg'
 import closeIcon from '../../assets/icons/close-line.svg'
 import subtractIcon from '../../assets/icons/subtract-line.svg'
-import carBooked from '../../assets/reserve/car-side-booked.png'
 import GlassIconButton from '../../components/GlassIconButton'
 import Icon from '../../components/Icon'
 import RollingText from '../../components/RollingText'
 import { riseIn, softSpring, spring, stagger } from '../../motion/transitions'
-import BoardingRiders from './BoardingRiders'
+import BoardingScene from './BoardingScene'
 import { SUGGESTED, TIME_MAX, TIME_MIN, TIME_STEP, formatTime, timeWithAira } from './time'
 import TimeSheet from './TimeSheet'
 import './Reserve.css'
@@ -342,7 +341,7 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
 
   return (
     <div className="booked">
-      {/* 차가 오른쪽에서 달려와 살짝 앞으로 쏠리며 멈춤 */}
+      {/* 차가 오른쪽에서 달려와 살짝 앞으로 쏠리며 멈춘 뒤, 문이 열리고 탑승 */}
       <motion.div
         className="booked__car"
         initial={{ x: 320, opacity: 0 }}
@@ -350,14 +349,12 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
         transition={{ type: 'spring', stiffness: 90, damping: 14, delay: 0.15 }}
       >
         <motion.div
-          className="booked__frame"
           initial={{ rotate: 0 }}
-          animate={{ rotate: [0, 0, 2.5, -1, 0] }}
+          animate={{ rotate: [0, 0, -2.5, 1, 0] }}
           transition={{ duration: 1.1, times: [0, 0.45, 0.6, 0.8, 1], delay: 0.15 }}
         >
-          <img src={carBooked} width={1536} height={1024} alt="AIRA 07" draggable={false} />
+          <BoardingScene riders={riders} />
         </motion.div>
-        <BoardingRiders riders={riders} />
       </motion.div>
       <motion.div className="booked__info" variants={stagger(0.09, 0.55)} initial="hidden" animate="show">
         <motion.p className="booked__name" variants={riseIn}>

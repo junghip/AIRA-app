@@ -163,24 +163,6 @@
   gap: 10px;
 }
 
-/* 피그마 이미지 CROP 값 그대로: 299×140 박스 안에 220×147로 배치, 박스 전체 좌우 반전 */
-.booked__frame {
-  position: relative;
-  width: 299px;
-  height: 140px;
-  overflow: hidden;
-  scale: -1 1;
-}
-
-.booked__frame img {
-  position: absolute;
-  top: -3.41px;
-  left: 68.47px;
-  width: 220.22px;
-  height: 146.82px;
-  max-width: none;
-  user-select: none;
-}
 
 .booked__info {
   display: flex;
