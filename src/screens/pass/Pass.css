@@ -10,6 +10,7 @@
 .pass__bg-done {
   position: absolute;
   inset: 0;
+  isolation: isolate;
   background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #ecdbd7 100%);
   pointer-events: none;
 }

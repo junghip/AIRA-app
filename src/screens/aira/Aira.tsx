@@ -32,7 +32,7 @@ export default function Aira() {
 
   return (
     <div className="aira">
-      <AnimatePresence initial={false}>
+      <AnimatePresence>
         {step === 'lock' && <LockScreen key="lock" onOpen={() => setStep('map')} />}
         {step === 'map' && <MapScreen key="map" riders={riders} onArrive={arrive} onClose={goHome} />}
         {step === 'ending' && <EndingScreen key="ending" onClose={goHome} />}

@@ -7,6 +7,7 @@ import chevron from '../assets/icons/chevron.svg'
 import bellIcon from '../assets/icons/notification-fill.svg'
 import searchIcon from '../assets/icons/search-line.svg'
 import ticketIcon from '../assets/icons/ticket-fill.svg'
+import AmbientGradient from '../components/AmbientGradient'
 import Icon from '../components/Icon'
 import TabBar from '../components/TabBar'
 import { riseIn, softSpring, spring, stagger } from '../motion/transitions'
@@ -44,6 +45,7 @@ export default function Home() {
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
     >
+      <AmbientGradient />
       <motion.header className="home__top" variants={riseIn}>
         <img src={airaLogo} width={120.206} height={22} alt="AIRA" />
         <div className="home__top-actions">

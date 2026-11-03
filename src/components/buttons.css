@@ -42,3 +42,9 @@
 .cta--hug {
   width: auto;
 }
+
+/* 조건이 채워지기 전의 버튼 (예: 4명 미만) */
+.cta--disabled {
+  opacity: 0.45;
+  cursor: default;
+}

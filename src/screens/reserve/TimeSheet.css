@@ -1,0 +1,116 @@
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(5, 12, 44, 0.25);
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px calc(34px + env(safe-area-inset-bottom));
+  border-radius: 32px 32px 0 0;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 -10px 40px rgba(130, 153, 185, 0.35);
+}
+
+.sheet__grab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding-top: 10px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sheet__handle {
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(116, 132, 163, 0.4);
+}
+
+.sheet__title {
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: var(--color-ink);
+}
+
+/* 시간 휠 — 가운데 줄이 선택된 시간 */
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+.wheel__highlight {
+  position: absolute;
+  top: 88px;
+  left: 0;
+  right: 0;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(169, 187, 212, 0.35);
+  pointer-events: none;
+}
+
+.wheel__list {
+  position: relative;
+  height: 100%;
+  padding: 88px 0;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  outline: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+
+.wheel__list::-webkit-scrollbar {
+  display: none;
+}
+
+.wheel__item {
+  display: block;
+  width: 100%;
+  height: 44px;
+  scroll-snap-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 44px;
+  color: var(--color-sub);
+  transition: color 0.2s, font-size 0.2s, opacity 0.2s;
+}
+
+.wheel__item[data-distance='0'] {
+  font-size: 30px;
+  color: var(--color-ink);
+}
+
+.wheel__item[data-distance='2'] {
+  opacity: 0.55;
+}
+
+.wheel__item[data-distance='3'] {
+  opacity: 0.3;
+}
+
+.sheet__caption {
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+  color: var(--color-sub);
+}

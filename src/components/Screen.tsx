@@ -3,12 +3,14 @@ import type { ReactNode } from 'react'
 import { pageSlide, spring } from '../motion/transitions'
 
 // 모든 화면을 감싸는 래퍼 — 전환 애니메이션 담당 (배경·여백은 각 화면이 가짐)
-export default function Screen({ children, direction }: { children: ReactNode; direction: number }) {
+type ScreenProps = { children: ReactNode; direction: number; skipEnter?: boolean }
+
+export default function Screen({ children, direction, skipEnter }: ScreenProps) {
   return (
     <motion.main
       custom={direction}
       variants={pageSlide}
-      initial="initial"
+      initial={skipEnter ? 'animate' : 'initial'}
       animate="animate"
       exit="exit"
       transition={spring}

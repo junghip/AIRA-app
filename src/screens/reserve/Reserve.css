@@ -234,3 +234,7 @@
 .reserve__center--link {
   top: calc(754px + var(--dy));
 }
+
+.booked__car {
+  position: relative;
+}

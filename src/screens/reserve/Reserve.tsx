@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useAnimation } from 'motion/react'
 import type { PanInfo, Variants } from 'motion/react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import addIcon from '../../assets/icons/add-line.svg'
 import arrowIcon from '../../assets/icons/arrow-right-s-line.svg'
@@ -12,28 +12,16 @@ import GlassIconButton from '../../components/GlassIconButton'
 import Icon from '../../components/Icon'
 import RollingText from '../../components/RollingText'
 import { riseIn, softSpring, spring, stagger } from '../../motion/transitions'
+import BoardingRiders from './BoardingRiders'
+import { SUGGESTED, TIME_MAX, TIME_MIN, TIME_STEP, formatTime, timeWithAira } from './time'
+import TimeSheet from './TimeSheet'
 import './Reserve.css'
 
 type Step = 'time' | 'passengers' | 'booked'
 const order: Step[] = ['time', 'passengers', 'booked']
 
-const BOARDING = 13 * 60 + 50
-const SUGGESTED = 11 * 60 + 50 // 탑승 2시간 전
-const TIME_MIN = 10 * 60
-const TIME_MAX = 12 * 60 + 50
-const TIME_STEP = 10
 const DRAG_PX_PER_STEP = 36
-const MAX_RIDERS = 4
-
-const formatTime = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`
-
-const beforeBoarding = (m: number) => {
-  const diff = BOARDING - m
-  const h = Math.floor(diff / 60)
-  const min = diff % 60
-  const hours = h ? `${h}${h === 1 ? 'hr' : 'hrs'}` : ''
-  return `${[hours, min ? `${min}min` : ''].filter(Boolean).join(' ')} before boarding`
-}
+const MAX_RIDERS = 4 // 이 인원이 되어야 다음으로 넘어갈 수 있음
 
 // 단계 사이 내용이 옆으로 밀리며 바뀜 (dir: 1 앞으로, -1 뒤로)
 const stepSlide: Variants = {
@@ -50,6 +38,8 @@ export default function Reserve() {
   const [timeDir, setTimeDir] = useState(1)
   const [riders, setRiders] = useState(1)
   const [ridersDir, setRidersDir] = useState(1)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [ridersNudge, setRidersNudge] = useState(0)
 
   const goTo = (next: Step) => setStepState([next, order.indexOf(next) > order.indexOf(step) ? 1 : -1])
 
@@ -73,6 +63,13 @@ export default function Reserve() {
     setRiders(next)
     return true
   }
+
+  const pickTime = (minutes: number) => {
+    changeTime(minutes - time)
+    setSheetOpen(false)
+  }
+
+  const ctaDisabled = step === 'passengers' && riders < MAX_RIDERS
 
   const cta = {
     time: { label: `Ride at ${formatTime(time)}`, arrow: true, onClick: () => goTo('passengers') },
@@ -112,7 +109,7 @@ export default function Reserve() {
           {step === 'passengers' && (
             <>
               <Headline title="How many are riding?" sub={['Add up to 4 people, including yourself.']} />
-              <RiderCounter riders={riders} direction={ridersDir} onChange={changeRiders} />
+              <RiderCounter riders={riders} direction={ridersDir} onChange={changeRiders} nudge={ridersNudge} />
             </>
           )}
           {step === 'booked' && (
@@ -132,10 +129,11 @@ export default function Reserve() {
       <div className="reserve__center reserve__center--cta">
         <motion.button
           layout
-          className={`cta${cta.arrow ? '' : ' cta--hug'}`}
+          className={`cta${cta.arrow ? '' : ' cta--hug'}${ctaDisabled ? ' cta--disabled' : ''}`}
           transition={spring}
-          whileTap={{ scale: 0.95 }}
-          onClick={cta.onClick}
+          whileTap={{ scale: ctaDisabled ? 0.98 : 0.95 }}
+          aria-disabled={ctaDisabled}
+          onClick={ctaDisabled ? () => setRidersNudge((n) => n + 1) : cta.onClick}
         >
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
@@ -179,13 +177,17 @@ export default function Reserve() {
             <motion.button
               className="text-link"
               whileTap={{ scale: 0.96 }}
-              onClick={step === 'time' ? () => changeTime(TIME_STEP) : () => goTo('time')}
+              onClick={step === 'time' ? () => setSheetOpen(true) : () => goTo('time')}
             >
               {step === 'time' ? 'Pick another time' : 'Change or cancel the reservation'}
               <img src={chevronSub} width={20} height={20} alt="" />
             </motion.button>
           </motion.div>
         )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {sheetOpen && <TimeSheet key="sheet" value={time} onConfirm={pickTime} onClose={() => setSheetOpen(false)} />}
       </AnimatePresence>
     </div>
   )
@@ -267,7 +269,7 @@ function TimePicker({
         <RollingText value={formatTime(time)} direction={direction} />
       </motion.div>
       <motion.p className="time-picker__caption" variants={riseIn}>
-        {beforeBoarding(time)}
+        {timeWithAira(time)}
       </motion.p>
     </motion.div>
   )
@@ -277,12 +279,20 @@ function RiderCounter({
   riders,
   direction,
   onChange,
+  nudge,
 }: {
   riders: number
   direction: number
   onChange: (delta: number) => boolean
+  nudge: number
 }) {
   const shake = useAnimation()
+  const plusHint = useAnimation()
+
+  // 아직 4명이 아닌데 버튼을 누르면 + 를 콩콩 눌러보라고 알려줌
+  useEffect(() => {
+    if (nudge) plusHint.start({ scale: [1, 1.25, 1, 1.18, 1], transition: { duration: 0.6 } })
+  }, [nudge, plusHint])
 
   const press = (delta: number) => {
     if (!onChange(delta)) shake.start({ x: [0, -10, 10, -6, 6, 0], transition: { duration: 0.4 } })
@@ -300,7 +310,9 @@ function RiderCounter({
         <p className="rider-counter__label">Passengers</p>
       </motion.div>
       <motion.div variants={riseIn}>
-        <StepperButton icon={addIcon} label="Add a passenger" disabled={riders >= MAX_RIDERS} onClick={() => press(1)} />
+        <motion.div animate={plusHint}>
+          <StepperButton icon={addIcon} label="Add a passenger" disabled={riders >= MAX_RIDERS} onClick={() => press(1)} />
+        </motion.div>
       </motion.div>
     </motion.div>
   )
@@ -345,6 +357,7 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
         >
           <img src={carBooked} width={1536} height={1024} alt="AIRA 07" draggable={false} />
         </motion.div>
+        <BoardingRiders riders={riders} />
       </motion.div>
       <motion.div className="booked__info" variants={stagger(0.09, 0.55)} initial="hidden" animate="show">
         <motion.p className="booked__name" variants={riseIn}>

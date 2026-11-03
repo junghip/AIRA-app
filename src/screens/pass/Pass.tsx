@@ -10,6 +10,7 @@ import flightIcon from '../../assets/icons/flight-takeoff-line.svg'
 import imageIcon from '../../assets/icons/image-fill.svg'
 import miniPlane from '../../assets/pass/mini-card-plane.svg'
 import scanCorners from '../../assets/pass/scan-corners.svg'
+import AmbientGradient from '../../components/AmbientGradient'
 import GlassIconButton from '../../components/GlassIconButton'
 import Icon from '../../components/Icon'
 import { riseIn, softSpring, spring, stagger } from '../../motion/transitions'
@@ -62,7 +63,9 @@ export default function Pass() {
 
   return (
     <div className="pass">
-      <motion.div className="pass__bg-done" animate={{ opacity: step === 'done' ? 1 : 0 }} transition={{ duration: 0.8 }} />
+      <motion.div className="pass__bg-done" animate={{ opacity: step === 'done' ? 1 : 0 }} transition={{ duration: 0.8 }}>
+        <AmbientGradient />
+      </motion.div>
 
       <div className="pass__top">
         <GlassIconButton icon={closeIcon} label="Close" onClick={close} />
