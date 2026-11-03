@@ -1,4 +1,4 @@
-/* 부모의 그라데이션 배경은 그대로 두고, 그 위에 부드러운 빛을 얹음 */
+/* 부모의 그라데이션 배경은 그대로 두고, 그 위에서 밝고 어두운 빛이 흘러다님 */
 .ambient {
   position: absolute;
   inset: 0;
@@ -10,38 +10,42 @@
 .ambient__blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(40px);
+  filter: blur(36px);
   will-change: transform;
 }
 
-.ambient__blob--sky {
-  top: -10%;
-  left: -20%;
-  width: 90%;
-  height: 45%;
-  background: radial-gradient(circle, rgba(184, 206, 236, 0.85), transparent 70%);
-}
-
-.ambient__blob--lilac {
-  top: 30%;
-  right: -30%;
-  width: 95%;
-  height: 40%;
-  background: radial-gradient(circle, rgba(200, 204, 236, 0.7), transparent 70%);
-}
-
-.ambient__blob--blush {
-  bottom: -12%;
+/* 하늘빛 하이라이트 */
+.ambient__blob--light {
+  top: 0;
   left: -15%;
-  width: 90%;
-  height: 42%;
-  background: radial-gradient(circle, rgba(244, 218, 214, 0.85), transparent 70%);
+  width: 80%;
+  height: 40%;
+  background: radial-gradient(circle, rgba(226, 238, 255, 0.95), transparent 68%);
 }
 
-.ambient__blob--mist {
-  top: 12%;
-  left: 20%;
+/* 짙은 블루 — 밝은 빛과 대비되어 일렁임이 보이게 */
+.ambient__blob--deep {
+  top: 22%;
+  right: -25%;
+  width: 85%;
+  height: 42%;
+  background: radial-gradient(circle, rgba(110, 136, 182, 0.75), transparent 68%);
+}
+
+/* 하단 분홍빛 */
+.ambient__blob--blush {
+  bottom: -5%;
+  left: -20%;
+  width: 85%;
+  height: 40%;
+  background: radial-gradient(circle, rgba(250, 210, 204, 0.95), transparent 68%);
+}
+
+/* 라일락 */
+.ambient__blob--lilac {
+  top: 50%;
+  left: 25%;
   width: 70%;
-  height: 35%;
-  background: radial-gradient(circle, rgba(132, 158, 196, 0.45), transparent 70%);
+  height: 34%;
+  background: radial-gradient(circle, rgba(196, 190, 238, 0.75), transparent 68%);
 }
