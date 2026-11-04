@@ -371,16 +371,10 @@ function DoneBackdrop() {
   )
 }
 
-// 완료 — 탑승권 위로 지나가는 빛줄기와 체크 배지
+// 완료 — 탑승권 위 체크 배지
 function DoneOverlay() {
   return (
     <motion.div className="pass__layer" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-      <motion.span
-        className="pass__streak"
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={{ scaleX: 1, opacity: [0, 1, 0.75, 1] }}
-        transition={{ scaleX: { duration: 0.7, delay: 0.35, ease: 'easeOut' }, opacity: { duration: 2.4, delay: 0.35, repeat: Infinity, ease: 'easeInOut' } }}
-      />
       <motion.span
         className="pass__badge"
         initial={{ scale: 0, rotate: -45 }}
