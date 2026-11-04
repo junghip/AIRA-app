@@ -5,7 +5,6 @@ import airaLogo from '../assets/common/aira-logo.svg'
 import carGlow from '../assets/home/car-glow.svg'
 import carShadow from '../assets/home/car-shadow.svg'
 import carSide from '../assets/home/car-side.png'
-import arrowRight from '../assets/icons/arrow-right.svg'
 import chevron from '../assets/icons/chevron.svg'
 import bellIcon from '../assets/icons/notification-fill.svg'
 import searchIcon from '../assets/icons/search-line.svg'
@@ -131,11 +130,7 @@ export default function Home() {
 
       <motion.form className="search" variants={riseIn} onSubmit={(e) => e.preventDefault()}>
         <Icon src={searchIcon} width={20} color="var(--color-sub)" />
-        <span className="search__divider" />
-        <input className="search__input" type="text" placeholder="Where are you flying to?" aria-label="Where are you flying to?" />
-        <motion.button className="search__go" type="submit" aria-label="Search" whileTap={{ scale: 0.9 }} transition={spring}>
-          <img src={arrowRight} width={16} height={13.414} alt="" />
-        </motion.button>
+        <input className="search__input" type="search" enterKeyHint="search" placeholder="Where are you flying to?" aria-label="Where are you flying to?" />
       </motion.form>
 
       <motion.div className="home__actions" variants={riseIn}>
