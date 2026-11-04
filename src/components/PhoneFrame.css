@@ -34,6 +34,16 @@
 }
 
 @media (max-width: 500px) {
+  /* Safari의 상단 상태바·하단 툴바 뒤도 앱 하늘색으로 물들도록 */
+  html {
+    background: #8ca2c0 linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3dad8 100%) no-repeat;
+    background-size: 100% 100%;
+  }
+
+  body {
+    background: none;
+  }
+
   .phone-stage {
     padding: 0;
     height: 100dvh;
