@@ -31,7 +31,7 @@ type Step = 'upload' | 'reading' | 'done'
 
 const copy: Record<Step, { title: string[]; sub: string[] }> = {
   upload: { title: ['Upload your', 'boarding pass'], sub: ['Snap it or pick a file, we read the rest.'] },
-  reading: { title: ['Reading your', 'boarding pass.'], sub: ['Pulling out the flight, gate and time.'] },
+  reading: { title: ['Reading your', 'boarding pass'], sub: ['Pulling out the flight, gate and time.'] },
   done: { title: ['Your All set!'], sub: ['KE 081 is on your trip.', 'Your gate and boarding time are saved.'] },
 }
 
@@ -120,7 +120,7 @@ export default function Pass() {
       <AnimatePresence initial={false}>
         <motion.div
           key={step}
-          className="pass__headline"
+          className={`pass__headline pass__headline--${step}`}
           initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
@@ -389,8 +389,8 @@ function DoneOverlay() {
       >
         <motion.img
           src={checkIcon}
-          width={23.182}
-          height={23.182}
+          width={20.308}
+          height={20.308}
           alt=""
           initial={{ clipPath: 'inset(0 100% 0 0)' }}
           animate={{ clipPath: 'inset(0 0% 0 0)' }}

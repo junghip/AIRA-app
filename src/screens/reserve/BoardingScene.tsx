@@ -1,13 +1,11 @@
 import { motion } from 'motion/react'
 import type { CSSProperties } from 'react'
-import carClosed from '../../assets/reserve/car-closed.png'
-import carOpen from '../../assets/reserve/car-open.png'
+import carBooked from '../../assets/reserve/car-booked.png'
 import './BoardingScene.css'
 
-// 차가 천천히 들어와 멈추면 → 문이 열리고 → 한 명씩 걸어와 타고 → 문이 닫힘 (초 단위)
+// 차가 천천히 들어와 멈추면 → 문 쪽이 빛나고 → 한 명씩 걸어와 타고 → 다시 빛남 (초 단위)
 export const CAR_ARRIVE = 2.2 // 차가 들어오는 시간
 const DOOR_OPEN_AT = 0.15 + CAR_ARRIVE * 0.85 // 거의 멈췄을 때
-const DOOR_FADE = 0.6
 const FIRST_RIDER_AT = DOOR_OPEN_AT + 0.5
 const RIDER_GAP = 0.55
 const WALK = 2
@@ -20,48 +18,24 @@ const figures = [
   { height: 34, width: 14 },
 ]
 
-// 좌표는 차량 박스(299×140) 기준. 문 안 바닥 위치를 따라 한 명씩 들어감
-const START = { x: 275, y: 130 }
+// 좌표는 차량 박스(248×144) 기준. 문 안 바닥 위치를 따라 한 명씩 들어감
+const START = { x: 250, y: 138 }
 const doorSpots = [
-  { x: 175, y: 105 },
-  { x: 163, y: 106 },
-  { x: 151, y: 107 },
-  { x: 141, y: 108 },
+  { x: 190, y: 99 },
+  { x: 176, y: 100 },
+  { x: 162, y: 101 },
+  { x: 150, y: 102 },
 ]
 
 export default function BoardingScene({ riders }: { riders: number }) {
   const count = Math.min(riders, figures.length)
   const closeAt = FIRST_RIDER_AT + (count - 1) * RIDER_GAP + WALK + 0.1
-  const keyTimes = [0, DOOR_OPEN_AT, DOOR_OPEN_AT + DOOR_FADE, closeAt, closeAt + DOOR_FADE]
-  const total = keyTimes[4]
-  const doorTiming = { duration: total, times: keyTimes.map((t) => t / total), ease: 'easeInOut' as const }
   const flashTiming = (at: number) => ({ duration: 1.1, delay: at - 0.2, ease: 'easeInOut' as const })
 
   return (
     <div className="boarding">
-      {/* 닫힌 차 ↔ 문 열린 차를 겹쳐서 바꿈 */}
-      <motion.img
-        className="boarding__car boarding__car--closed"
-        src={carClosed}
-        width={552}
-        height={280}
-        alt="AIRA 07"
-        draggable={false}
-        animate={{ opacity: [1, 1, 0, 0, 1] }}
-        transition={doorTiming}
-      />
-      <motion.img
-        className="boarding__car boarding__car--open"
-        src={carOpen}
-        width={548}
-        height={280}
-        alt=""
-        draggable={false}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0, 1, 1, 0] }}
-        transition={doorTiming}
-      />
-      {/* 문이 열리고 닫히는 순간 문 쪽에서 은은한 빛이 번짐 */}
+      <img className="boarding__car" src={carBooked} width={248.215} height={143.532} alt="AIRA 07" draggable={false} />
+      {/* 타기 시작할 때와 다 탔을 때 문 쪽에서 은은한 빛이 번짐 */}
       {[DOOR_OPEN_AT, closeAt].map((at) => (
         <motion.span
           key={at}

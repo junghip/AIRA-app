@@ -124,6 +124,7 @@ export default function Reserve() {
           {step === 'booked' && (
             <>
               <Headline
+                className="reserve__headline--booked"
                 title="Your pickup is booked!"
                 sub={['In 2 days, we’ll meet you where you arrive.', 'We’ll notify you 10 min before.']}
                 loose
@@ -230,9 +231,9 @@ export default function Reserve() {
   )
 }
 
-function Headline({ title, sub, loose }: { title: string; sub: string[]; loose?: boolean }) {
+function Headline({ title, sub, loose, className = '' }: { title: string; sub: string[]; loose?: boolean; className?: string }) {
   return (
-    <motion.div className="reserve__headline" variants={stagger(0.06, 0.05)} initial="hidden" animate="show">
+    <motion.div className={`reserve__headline ${className}`} variants={stagger(0.06, 0.05)} initial="hidden" animate="show">
       <motion.h1 className="reserve__title" variants={riseIn}>
         {title}
       </motion.h1>
@@ -409,7 +410,7 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.15 + CAR_ARRIVE * 0.7 }}
       />
-      {/* 차가 오른쪽에서 천천히 들어와 부드럽게 멈춘 뒤, 문이 열리고 탑승 */}
+      {/* 차가 오른쪽에서 천천히 들어와 부드럽게 멈춘 뒤, 한 명씩 탑승 */}
       <motion.div
         className="booked__car"
         initial={{ x: 320, opacity: 0 }}

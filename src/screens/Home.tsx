@@ -15,7 +15,7 @@ import TabBar from '../components/TabBar'
 import { riseIn, softSpring, spring, stagger } from '../motion/transitions'
 import './Home.css'
 
-const headline = [['Share', 'your', 'flight,'], ['AIRA', 'takes', 'you', 'there.']]
+const headline = [['Share', 'your', 'flight,'], ['AIRA', 'takes', 'you', 'there']]
 
 export default function Home() {
   const navigate = useNavigate()

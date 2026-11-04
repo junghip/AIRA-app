@@ -1,37 +1,24 @@
 .boarding {
   position: relative;
-  width: 299px;
-  height: 140px;
+  width: 248.215px;
+  height: 143.532px;
 }
 
 .boarding__car {
   position: absolute;
+  inset: 0;
   max-width: none;
+  object-fit: cover;
   user-select: none;
-}
-
-/* 닫힌 차: 기존 예약 차량과 같은 자리 */
-.boarding__car--closed {
-  top: 0;
-  left: 23px;
-  width: 276px;
-  height: 140px;
-}
-
-/* 열린 차: 앞 범퍼·앞 유리가 닫힌 차와 겹치도록 맞춘 크기와 위치 */
-.boarding__car--open {
-  top: -1.5px;
-  left: 28px;
-  width: 256.88px;
-  height: 131.25px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.09));
 }
 
 .boarding__flash {
   position: absolute;
-  top: 15px;
-  left: 110px;
-  width: 110px;
-  height: 100px;
+  top: 25px;
+  left: 120px;
+  width: 100px;
+  height: 90px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%);
   pointer-events: none;
