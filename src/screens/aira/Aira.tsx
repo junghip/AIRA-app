@@ -54,7 +54,10 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
   const [opening, setOpening] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setNotified(true), NOTIFY_DELAY_MS)
+    const timer = setTimeout(() => {
+      setNotified(true)
+      navigator.vibrate?.([30, 60, 30]) // 지원하는 기기에선 알림처럼 짧게 진동
+    }, NOTIFY_DELAY_MS)
     return () => clearTimeout(timer)
   }, [])
 
@@ -97,15 +100,20 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
             className={`notif${opening ? ' notif--open' : ''}`}
             onClick={open}
             aria-label="AIRA notification: 2 minutes until pickup. Open"
-            initial={{ y: 160, opacity: 0, scale: 0.92 }}
+            // iOS 알림처럼 화면 아래 밖에서 스프링으로 쑥 올라와 살짝 튕기며 멈춤
+            initial={{ y: 240, opacity: 0, scale: 0.94 }}
             animate={opening ? { y: 0, opacity: 1, scale: 1, borderRadius: 0 } : { y: 0, opacity: 1, scale: 1, borderRadius: 24 }}
             whileTap={opening ? undefined : { scale: 0.97 }}
-            transition={opening ? { type: 'spring', stiffness: 260, damping: 32 } : { type: 'spring', stiffness: 300, damping: 22 }}
+            transition={
+              opening
+                ? { type: 'spring', stiffness: 260, damping: 32 }
+                : { type: 'spring', stiffness: 210, damping: 21, mass: 0.9, opacity: { duration: 0.18 } }
+            }
           >
             <motion.div
               className="notif__body"
-              animate={opening ? { opacity: 0 } : { opacity: 1, x: [0, -3, 3, -2, 2, 0] }}
-              transition={opening ? { duration: 0.15 } : { x: { delay: 0.35, duration: 0.45 } }}
+              animate={{ opacity: opening ? 0 : 1 }}
+              transition={{ duration: 0.15 }}
             >
               <img src={airaLogoNotif} width={98} height={18} alt="AIRA" />
               <div className="notif__row">
