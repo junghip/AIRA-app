@@ -19,18 +19,106 @@
   position: absolute;
   z-index: 5;
   top: var(--safe-top);
+  left: 0;
   right: 0;
+  display: flex;
+  justify-content: space-between;
   padding: 10px 20px;
+}
+
+.pass__top > :last-child {
+  margin-left: auto;
+}
+
+/* 탑승권 뒤 빛 (피그마 블러 ellipse 그대로) */
+.pass__glow {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+}
+
+.pass__glow--upload {
+  top: calc(196.7px + var(--dy));
+  left: calc(50% - 228.8px);
+  width: 484.6px;
+  height: 484.6px;
+}
+
+.pass__glow--reading {
+  top: calc(219.7px + var(--dy));
+  left: calc(50% - 233.3px);
+  width: 453.6px;
+  height: 453.6px;
+}
+
+/* 완료 화면 장식 레이어 */
+.pass__layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pass__layer > * {
+  position: absolute;
+  max-width: none;
+}
+
+.pass__bloom {
+  top: calc(236px + var(--dy));
+  left: calc(50% - 212.5px);
+  width: 425px;
+  height: 425px;
+}
+
+.pass__shockwave {
+  top: calc(293.95px + var(--dy));
+  left: calc(50% - 189.8px);
+  width: 379.602px;
+  height: 309.091px;
+}
+
+.pass__light-pool {
+  top: calc(573.1px + var(--dy));
+  left: calc(50% - 154.545px);
+  width: 309.091px;
+  height: 59.886px;
+}
+
+.pass__streak {
+  top: calc(381.85px + var(--dy));
+  left: calc(50% - 182.56px);
+  width: 365.114px;
+  height: 2.898px;
+  border-radius: 2.898px;
+  background: linear-gradient(90deg, rgba(209, 240, 255, 0) 0%, rgba(209, 240, 255, 0.55) 30%, rgba(255, 255, 255, 0.9) 50%, rgba(209, 240, 255, 0.55) 70%, rgba(209, 240, 255, 0) 100%);
+  box-shadow:
+    0 0 46.364px rgba(103, 200, 245, 0.45),
+    0 0 17.386px rgba(103, 200, 245, 0.8);
+}
+
+.pass__badge {
+  top: calc(254.35px + var(--dy));
+  left: calc(50% + 56.51px);
+  display: grid;
+  place-items: center;
+  width: 50.227px;
+  height: 50.227px;
+  border: 1.449px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  background: #67c8f5;
+  box-shadow:
+    0 5.795px 13.523px rgba(10, 20, 34, 0.3),
+    0 0 21.25px rgba(103, 200, 245, 0.85);
 }
 
 /* 제목 */
 .pass__headline {
   position: absolute;
-  top: calc(119px + var(--dy));
-  left: 22px;
+  top: calc(133px + var(--dy));
+  left: 25px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   width: 349px;
   max-width: calc(100% - 44px);
 }
@@ -42,10 +130,9 @@
 }
 
 .pass__title {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -2px;
+  line-height: 1.3;
   color: #fff;
 }
 
@@ -104,32 +191,39 @@
 
 .pass__corners {
   position: absolute;
-  top: calc(264.5px + var(--dy));
+  top: calc(285.5px + var(--dy));
   left: calc(50% - 104px);
   pointer-events: none;
 }
 
-/* 작은 가로 카드 */
+/* 작은 가로 카드 — 피그마 중심 (136.49, 505.92), -12.98° */
 .pass__mini-anchor {
   position: absolute;
-  top: var(--dy);
-  left: calc(50% - 85.318px);
+  top: calc(451.27px + var(--dy));
+  left: calc(50% - 150.1px);
+}
+
+.mini-pass-wrap {
+  position: relative;
+  cursor: grab;
+  user-select: none;
 }
 
 .mini-pass {
   position: relative;
-  width: 170.635px;
-  height: 103.5px;
+  width: 180.184px;
+  height: 109.292px;
   overflow: hidden;
-  border-radius: 13.986px;
-  background: linear-gradient(180deg, #d7eefd 0%, #98ceeb 100%);
+  border: 0.738px solid rgba(103, 200, 245, 0.6);
+  border-radius: 13.292px;
+  background: linear-gradient(157deg, rgba(255, 255, 255, 0.34) 6%, rgba(255, 255, 255, 0.16) 46%, rgba(255, 255, 255, 0.1) 94%);
+  -webkit-backdrop-filter: blur(17.7px);
+  backdrop-filter: blur(17.7px);
   box-shadow:
-    0 4px 20px #8299b9,
-    inset 0 0 0 1.399px rgba(255, 255, 255, 0.1),
-    inset 0 0.699px 0.699px rgba(255, 255, 255, 0.7);
+    0 11.815px 22.154px rgba(10, 20, 34, 0.42),
+    0 0 35.446px rgba(103, 200, 245, 0.5),
+    inset 0 0.738px 0.738px rgba(255, 255, 255, 0.75);
   color: #fff;
-  cursor: grab;
-  user-select: none;
 }
 
 .mini-pass > * {
@@ -138,55 +232,134 @@
   line-height: normal;
 }
 
+.mini-pass__beam-glow {
+  top: -0.74px;
+  left: 9.6px;
+  width: 63.507px;
+  height: 109.292px;
+  background: linear-gradient(90deg, rgba(103, 200, 245, 0), rgba(103, 200, 245, 0.32));
+}
+
+.mini-pass__scanlines {
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 2.21px, rgba(103, 200, 245, 0.09) 2.21px 2.95px, transparent 2.95px 5.17px);
+}
+
 .mini-pass__label {
-  top: 10.49px;
-  left: 11.19px;
-  font-size: 5.595px;
-  letter-spacing: 1px;
+  top: 11.08px;
+  left: 11.81px;
+  font-size: 5.908px;
+  letter-spacing: 1.1077px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .mini-pass__route {
-  top: 21.68px;
-  left: 11.19px;
-  font-size: 13.287px;
-  letter-spacing: -0.2098px;
+  top: 22.89px;
+  left: 11.81px;
+  font-size: 14.031px;
+  letter-spacing: -0.2215px;
+}
+
+.mini-pass__key {
+  top: 51.69px;
+  left: 11.81px;
+  font-size: 5.908px;
+  letter-spacing: 0.8861px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mini-pass__gate {
+  top: 61.29px;
+  left: 11.81px;
+  font-size: 12.554px;
+  letter-spacing: -0.2215px;
 }
 
 .mini-pass__bar {
-  left: 11.19px;
-  height: 3.497px;
-  border-radius: 2.098px;
-  background: rgba(255, 255, 255, 0.3);
+  left: 54.64px;
+  height: 3.692px;
+  margin-top: -0.74px;
+  border-radius: 2.215px;
 }
 
 .mini-pass__flight {
-  top: 81.12px;
-  left: 11.19px;
-  font-size: 6.993px;
+  top: 85.66px;
+  left: 11.81px;
+  font-size: 7.385px;
   font-weight: 400;
-  letter-spacing: 0.1399px;
+  letter-spacing: 0.1477px;
   color: rgba(255, 255, 255, 0.55);
 }
 
+.mini-pass__perforation {
+  top: 94.52px;
+  left: 125.54px;
+  max-width: none;
+  transform-origin: 0 0;
+  rotate: 90deg;
+}
+
 .mini-pass__plane {
-  top: 34.97px;
-  left: 136.37px;
+  top: 36.92px;
+  left: 144px;
 }
 
 .mini-pass__seat {
-  top: 57.35px;
-  left: 135.67px;
-  font-size: 8.392px;
-  letter-spacing: 0.1399px;
+  top: 60.55px;
+  left: 143.26px;
+  font-size: 8.861px;
+  letter-spacing: 0.1477px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 카드 밖까지 이어지는 세로 빛줄기 (카드 기준 좌표) */
+.mini-pass__beam {
+  position: absolute;
+  top: -13.2px;
+  left: 73.32px;
+  width: 1.846px;
+  height: 137.353px;
+  border-radius: 1.477px;
+  background: #67c8f5;
+  box-shadow:
+    0 0 51.692px rgba(103, 200, 245, 0.45),
+    0 0 22.154px rgba(103, 200, 245, 0.75),
+    0 0 7.385px #67c8f5;
+  pointer-events: none;
 }
 
 /* 업로드 방법 3개 */
 .pass__sources {
   position: absolute;
-  top: calc(648px + var(--dy));
+  inset: 0;
+  pointer-events: none;
+}
+
+.pass__sources > * {
+  pointer-events: auto;
+}
+
+.pass__sources-row {
+  position: absolute;
+  top: calc(656px + var(--dy));
   left: calc(50% - 135.5px);
   display: flex;
   gap: 41px;
+}
+
+.pass__center--manual {
+  top: calc(765px + var(--dy));
+}
+
+.manual-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 6px;
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  color: #fff;
 }
 
 .source {
@@ -226,13 +399,13 @@
 
 .pass__caption {
   position: absolute;
-  top: calc(629px + var(--dy));
+  top: calc(638px + var(--dy));
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   line-height: normal;
   white-space: nowrap;
 }
@@ -256,15 +429,71 @@
   color: var(--color-sub);
 }
 
+.pass__progress {
+  position: absolute;
+  top: calc(711px + var(--dy));
+  left: calc(50% - 120px);
+  width: 240px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 0 14px rgba(103, 200, 245, 0.55);
+}
+
+.pass__progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #78d4ff;
+}
+
 .pass__center--cancel {
-  top: calc(731px + var(--dy));
+  top: calc(745px + var(--dy));
 }
 
 .pass__center--cta {
-  top: calc(678px + var(--dy));
+  top: calc(644px + var(--dy));
+}
+
+.pass__center--saved {
+  top: calc(708px + var(--dy));
 }
 
 .pass__center--link {
-  top: calc(754px + var(--dy));
+  top: calc(777px + var(--dy));
+}
+
+/* 완료 화면의 흰색 메인 버튼 */
+.cta--solid {
+  height: 50px;
+  gap: 8px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #fdfdfd;
+  box-shadow:
+    0 4px 16.6px rgba(0, 0, 0, 0.21),
+    0 0 10px #cac4c3;
+  font-size: 18px;
+  letter-spacing: -0.36px;
+}
+
+.saved-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  padding: 13px 22px 13px 34px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: linear-gradient(172deg, rgba(255, 255, 255, 0.28) 6%, rgba(255, 255, 255, 0.14) 45%, rgba(255, 255, 255, 0.09) 94%);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 6px 24px rgba(10, 20, 34, 0.16),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  color: var(--color-sub);
 }
 
