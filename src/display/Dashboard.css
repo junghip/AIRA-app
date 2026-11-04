@@ -1,0 +1,180 @@
+.db {
+  position: absolute;
+  inset: 0;
+}
+
+.db-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.db-bg--dark {
+  background: linear-gradient(90deg, #252526 0%, #0b0b0c 100%);
+}
+
+.db-bg--haze {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 왼쪽 레일 122×734 */
+.db-rail {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  z-index: 20;
+  width: 122px;
+  height: 734px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.25);
+  transition: border-color 0.6s, background-color 0.6s;
+}
+
+.db-rail--dark {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.db-rail__btn {
+  position: relative;
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(241, 241, 241, 0.1);
+  box-shadow: inset 0 0 10px #fff;
+  transition: border-color 0.6s, background-color 0.6s, box-shadow 0.6s;
+}
+
+.db-rail--dark .db-rail__btn {
+  border-color: rgba(255, 255, 255, 0.05);
+  background: rgba(241, 241, 241, 0.05);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.db-rail__thumb {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 0 10px #fff;
+}
+
+.db-rail__icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.db-rail__icon img {
+  position: absolute;
+  inset: 0;
+  width: 40px;
+  height: 40px;
+}
+
+/* 아래 시계 677×90 */
+.db-clock {
+  position: absolute;
+  left: 855px;
+  top: 697px;
+  z-index: 20;
+  width: 677px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px;
+  border: 1.2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 0 30px #fff;
+  white-space: nowrap;
+}
+
+.db-clock__date,
+.db-clock__extra {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.db-clock__extra {
+  min-width: 126px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.db-clock__sep {
+  width: 34px;
+  height: 1px;
+  rotate: 90deg;
+  margin: 0 -17px;
+}
+
+.db-clock__time {
+  font-family: 'Asta Sans', var(--font-sans);
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  color: var(--color-ink);
+}
+
+/* 탑승권 보기 */
+.db-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 30, 52, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  cursor: pointer;
+}
+
+.db-overlay__pass {
+  filter: drop-shadow(0 20px 40px rgba(20, 40, 80, 0.3));
+}
+
+.db-overlay__hint {
+  position: absolute;
+  bottom: 40px;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 휴식 모드 */
+.db-rest {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 80px;
+  background: rgba(5, 8, 18, 0.88);
+  cursor: pointer;
+}
+
+.db-rest p {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.56px;
+  color: #dbe7ff;
+}

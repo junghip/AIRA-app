@@ -1,0 +1,210 @@
+.wl {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+/* 1. 첫 웰컴 */
+.wl-intro {
+  position: absolute;
+  inset: 0;
+}
+
+.wl-intro__logo {
+  position: absolute;
+  left: 826px;
+  top: 294px;
+  width: 732.609px;
+  height: 134.141px;
+}
+
+.wl-intro__text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 439px;
+  font-size: 80px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 1.6px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+}
+
+/* 2. 안내 화면 */
+.wl-glow {
+  position: absolute;
+  left: 386px;
+  top: 300px;
+  width: 1616px;
+  height: 236px;
+  background: rgba(119, 159, 214, 0.26);
+  filter: blur(150px);
+}
+
+.wl-logo-small {
+  position: absolute;
+  left: 1095px;
+  top: 133px;
+  width: 197.088px;
+  height: 36.389px;
+}
+
+.wl-hint__scan {
+  position: absolute;
+  left: 1112px;
+  top: 594px;
+  width: 64px;
+  height: 64px;
+}
+
+/* 세로 화살표 svg를 시계방향 90° — 오른쪽(스캐너 쪽)을 가리킴 */
+.wl-hint__arrow {
+  position: absolute;
+  left: 1214px;
+  top: 613px;
+  width: 60px;
+  height: 26px;
+}
+
+.wl-hint__arrow img {
+  position: absolute;
+  left: 15.8px;
+  top: -18.3px;
+  width: 28.394px;
+  height: 62.525px;
+  rotate: 90deg;
+}
+
+/* 안내 문구 */
+.wl-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 294px;
+  display: flex;
+  pointer-events: none;
+}
+
+.wl-copy--center {
+  justify-content: center;
+  text-align: center;
+}
+
+.wl-copy--left {
+  justify-content: flex-start;
+  padding-left: 136px;
+}
+
+.wl-copy__lines {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wl-copy--center .wl-copy__lines {
+  align-items: center;
+}
+
+.wl-copy--left .wl-copy__lines {
+  align-items: flex-start;
+}
+
+.wl-copy__head {
+  font-size: 73.734px;
+  font-weight: 600;
+  line-height: 2;
+}
+
+.wl-copy__sub {
+  font-size: 55.301px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+.wl-copy__sub--small {
+  font-size: 52.536px;
+}
+
+/* 3~5. 오른쪽 패널 (590×788) */
+.wl-panel {
+  position: absolute;
+  left: 1772px;
+  top: 23px;
+  width: 590px;
+  height: 788.558px;
+  overflow: hidden;
+  border-radius: 40px;
+}
+
+.wl-panel__dark {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(141.78deg, #2c2c2c 10.294%, #0d0d0d 94.265%);
+}
+
+.wl-scan-square {
+  position: absolute;
+  left: 107.94px;
+  top: 154.66px;
+  width: 377px;
+  height: 379px;
+  background: #2e2e2e;
+}
+
+.wl-scan-corners {
+  position: absolute;
+  left: 97.9px;
+  top: 146px;
+  width: 394.594px;
+  height: 394.594px;
+}
+
+.wl-checkin {
+  position: absolute;
+  left: 50%;
+  top: 640px;
+  translate: -50% 0;
+  height: 65px;
+  padding: 0 32px;
+  border-radius: 999px;
+  background: rgba(99, 99, 99, 0.2);
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.1);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.56px;
+  white-space: nowrap;
+  color: var(--color-greeting);
+}
+
+.wl-pass {
+  position: absolute;
+  left: 81.65px;
+  top: 78.23px;
+  transform-origin: 0 0;
+}
+
+.wl-beam {
+  position: absolute;
+  left: 82.2px;
+  top: 284.6px;
+  width: 425.642px;
+  height: 6.78px;
+  border-radius: 3.948px;
+  background: #fff;
+  box-shadow: 0 0 19.738px #67c8f5;
+}
+
+.wl-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  height: 600px;
+  margin: -300px 0 0 -300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(160, 219, 255, 0.3) 40%, rgba(160, 219, 255, 0) 70%);
+  pointer-events: none;
+}

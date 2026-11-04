@@ -1,0 +1,388 @@
+/* 공항 콘텐츠 */
+.ap-tabs {
+  position: absolute;
+  left: 232px;
+  top: 0;
+  z-index: 6;
+}
+
+.ap-tabs .ds-tabs {
+  left: 0;
+}
+
+.ap-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+    linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3d5d2 100%);
+}
+
+.ap-back {
+  position: absolute;
+  left: 232px;
+  top: 50px;
+  z-index: 6;
+  width: 69px;
+  height: 69px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+}
+
+.ap-back img {
+  width: 40px;
+  height: 40px;
+  scale: -1 1;
+}
+
+/* 목록: 324×496 카드가 가로로 */
+.ap-list {
+  position: absolute;
+  left: 232px;
+  top: 149px;
+  right: 0;
+  height: 496px;
+}
+
+.ap-track {
+  position: relative;
+  height: 496px;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.ap-track:active {
+  cursor: grabbing;
+}
+
+.ap-card {
+  position: absolute;
+  top: 0;
+  width: 324px;
+  height: 496px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ap-card__img {
+  position: relative;
+  width: 280px;
+  height: 285px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.ap-card__img img,
+.ap-shop__img img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}
+
+.ap-card__img span {
+  position: absolute;
+  inset: 0;
+}
+
+.ap-card__name,
+.ap-shop__name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ap-card__name p:first-child {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.56px;
+}
+
+.ap-card__name p:last-child,
+.ap-card__line {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  color: var(--color-sub);
+}
+
+.ap-card__eta {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-align: center;
+}
+
+/* 상세: 가게 카드 756×496 */
+.ap-shop {
+  position: absolute;
+  left: 232px;
+  top: 149px;
+  width: 756px;
+  height: 496px;
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+.ap-shop__img {
+  position: relative;
+  width: 280px;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.ap-shop__body {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.ap-shop__info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.ap-shop__name p:first-child {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.64px;
+  color: var(--color-ink);
+}
+
+.ap-menu {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ap-menu__row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.ap-menu__thumb {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 7.5px;
+  background: #fff;
+}
+
+.ap-menu__thumb img {
+  position: absolute;
+  left: 50%;
+  top: -4.13px;
+  width: 69px;
+  height: 86.25px;
+  max-width: none;
+  translate: -50% 0;
+  object-fit: cover;
+}
+
+/* 상세: 지도 카드 1290×496 (테두리 2px 안쪽 기준이라 피그마 값에서 2px씩 뺌) */
+.ap-map {
+  position: absolute;
+  left: 1038px;
+  top: 149px;
+  width: 1290px;
+  height: 496px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+}
+
+.ap-map__union {
+  position: absolute;
+  left: -207.07px;
+  top: -349.64px;
+  width: 2749.746px;
+  height: 1206.058px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ap-map__union img {
+  width: 2682.898px;
+  height: 1012.639px;
+  flex: none;
+  rotate: 4.19deg;
+}
+
+.ap-map__dashed {
+  position: absolute;
+  left: -55px;
+  top: 163px;
+  width: 1484.5px;
+  height: 270px;
+}
+
+.ap-map__dashed img {
+  position: absolute;
+  left: 0;
+  top: -6.21px;
+  width: 1488.23px;
+  height: 283.191px;
+  max-width: none;
+}
+
+.ap-map__route {
+  position: absolute;
+  left: -19px;
+  top: 92px;
+  width: 1413px;
+  height: 329.5px;
+}
+
+.ap-map__route img {
+  position: absolute;
+  left: -3.39px;
+  top: -9.49px;
+  width: 1417.8px;
+  height: 353.599px;
+  max-width: none;
+}
+
+.ap-map__stats {
+  position: relative;
+  display: flex;
+  gap: 40px;
+  white-space: nowrap;
+}
+
+.ap-map__stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-map__stats p:first-child {
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.88px;
+}
+
+.ap-map__stats p:last-child {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.ap-map__car {
+  position: absolute;
+  left: 73px;
+  top: 265px;
+  width: 205.543px;
+  height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ap-map__car img {
+  width: 180px;
+  height: 100px;
+  flex: none;
+  object-fit: cover;
+  transform: rotate(154.38deg) scaleY(-1);
+  filter: drop-shadow(0 0 10px rgba(62, 87, 122, 0.5));
+}
+
+.ap-chip {
+  position: absolute;
+  padding: 10px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.ap-chip__pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid #fff;
+}
+
+.ap-suggest {
+  position: relative;
+  align-self: flex-end;
+  width: 320px;
+  padding: 16px 40px;
+  border-radius: 999px;
+}
+
+.ap-suggest__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.ap-suggest__text span:first-child {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.64px;
+}
+
+.ap-suggest__text span:last-child {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: var(--color-sub);
+}

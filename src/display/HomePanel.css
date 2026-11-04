@@ -1,0 +1,407 @@
+/* 홈 - 기본 메뉴 (카드 테두리 3px 안쪽 기준이라 피그마 절대좌표에서 3px씩 뺌) */
+.hp-title {
+  color: #13182e;
+}
+
+.hp-flight {
+  left: 232px;
+  top: 50px;
+  width: 479px;
+  height: 617px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 40px;
+}
+
+.hp-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.hp-key {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-sub);
+}
+
+.hp-val {
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+}
+
+.hp-val--big {
+  font-size: 44px;
+  letter-spacing: -0.88px;
+}
+
+.hp-route__trail {
+  position: absolute;
+  left: 50%;
+  top: 36px;
+  width: 191px;
+  height: 50px;
+  translate: -50% 0;
+}
+
+.hp-route__plane {
+  width: 60px;
+  height: 58.775px;
+}
+
+.hp-pass-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 20px;
+  border-radius: 999px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.56px;
+  color: #13182e;
+}
+
+.hp-pass-btn img {
+  width: 40px;
+  height: 40px;
+}
+
+/* BOARDING IN */
+.hp-boarding {
+  left: 771px;
+  top: 50px;
+  width: 1101px;
+  height: 617px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  padding: 30px 40px;
+}
+
+.hp-stats {
+  display: flex;
+  align-items: flex-start;
+  gap: 60px;
+  white-space: nowrap;
+}
+
+.hp-countdown {
+  font-size: 80px;
+  font-weight: 500;
+  letter-spacing: -1.6px;
+  line-height: normal;
+}
+
+.hp-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp-stat__k {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.hp-stat__v {
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.88px;
+}
+
+.hp-avatars {
+  display: flex;
+  filter: drop-shadow(0 0 1.325px #949aa6);
+}
+
+.hp-avatar {
+  position: relative;
+  width: 49.05px;
+  height: 60px;
+  margin-right: -9.937px;
+  overflow: hidden;
+  border-radius: 661.822px;
+  background: #7e7e7e;
+}
+
+.hp-avatar:last-child {
+  margin-right: 0;
+}
+
+.hp-avatar img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}
+
+.hp-avatar__shade {
+  position: absolute;
+  inset: 0;
+}
+
+.hp-avatar__shade--a {
+  background: linear-gradient(180deg, rgba(229, 220, 218, 0) 14.425%, rgba(229, 220, 218, 0.3) 60.543%, rgba(128, 151, 182, 0.3) 96.51%);
+}
+
+.hp-avatar__shade--b {
+  background: linear-gradient(180deg, rgba(229, 220, 218, 0) 25.684%, rgba(229, 220, 218, 0.3) 74.24%);
+}
+
+.hp-progress {
+  position: relative;
+  width: 100%;
+  height: 269px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 30px;
+  background: linear-gradient(180.213deg, rgba(255, 255, 255, 0.4) 0.69%, rgba(255, 255, 255, 0) 50%);
+}
+
+.hp-progress__line {
+  position: absolute;
+  left: 0;
+  top: 167.5px;
+  width: 1015px;
+  height: 20px;
+}
+
+.hp-progress__shine {
+  position: absolute;
+  left: 0;
+  top: 167.5px;
+  width: 160px;
+  height: 20px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: soft-light;
+}
+
+.hp-steps {
+  position: absolute;
+  left: 50%;
+  top: 207.5px;
+  width: 977px;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hp-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.hp-step p {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hp-step img {
+  width: 24px;
+  height: 24px;
+}
+
+.hp-step--done {
+  color: var(--color-sub);
+}
+
+.hp-poi {
+  position: absolute;
+  top: 96.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.25);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.hp-poi img {
+  width: 32px;
+  height: 32px;
+}
+
+.hp-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.hp-stop-btn {
+  height: 48px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-ink);
+}
+
+.hp-car {
+  position: absolute;
+  left: 364px;
+  top: 316px;
+  width: 180px;
+  height: 100px;
+}
+
+.hp-car img {
+  width: 180px;
+  height: 100px;
+  object-fit: cover;
+  scale: -1 1;
+  filter: drop-shadow(0 0 10px rgba(130, 153, 185, 0.5));
+}
+
+/* MY SEAT */
+.hp-seat {
+  left: 1932px;
+  top: 50px;
+  width: 406px;
+  height: 734px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(204, 227, 255, 0.18), inset 0 1px 20px rgba(255, 255, 255, 0.4);
+}
+
+.hp-seat__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hp-seat__head img,
+.hp-seat__row img {
+  width: 28px;
+  height: 28px;
+}
+
+.hp-seat__deg {
+  min-width: 44px;
+  color: var(--color-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-dial {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3.018px solid rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  background: rgba(232, 242, 255, 0.3);
+  cursor: grab;
+  touch-action: none;
+}
+
+.hp-dial:active {
+  cursor: grabbing;
+}
+
+.hp-dial__seat {
+  width: 293.333px;
+  height: 293.333px;
+  opacity: 0.9;
+}
+
+.hp-dial__ring {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 피그마 위치: 319×319 사각형의 오른쪽 위 4분의 1 */
+.hp-dial__arc {
+  position: absolute;
+  left: calc(50% + 0.44px);
+  top: calc(50% + 0.45px - 159.556px);
+  width: 159.556px;
+  height: 159.556px;
+}
+
+.hp-dial__dot {
+  position: absolute;
+  left: 308.09px;
+  top: 151.65px;
+  width: 14.222px;
+  height: 14.222px;
+}
+
+.hp-seat__divider {
+  width: 100%;
+  height: 2px;
+}
+
+.hp-seat__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 알림 · 언어 · 휴식 */
+.hp-round {
+  position: absolute;
+  top: 694px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px #cac4c3, inset 0 0 4px rgba(255, 255, 255, 0.25);
+  transition: background-color 0.3s;
+}
+
+.hp-round--on {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.hp-round img {
+  width: 40px;
+  height: 40px;
+}

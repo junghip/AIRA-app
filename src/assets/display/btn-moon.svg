@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="remix-icons/fill/weather/moon-clear-fill" clip-path="url(#clip0_0_40)">
+<g id="Group">
+<g id="Vector">
+</g>
+<path id="Vector_2" d="M16.37 3.73047C15.087 6.51557 14.6884 9.62699 15.2279 12.6456C15.7673 15.6642 17.219 18.4449 19.3873 20.6132C21.5556 22.7815 24.3363 24.2331 27.3549 24.7726C30.3735 25.3121 33.4849 24.9135 36.27 23.6305C34.6133 31.0905 27.9583 36.6671 20 36.6671C10.795 36.6671 3.33333 29.2055 3.33333 20.0005C3.33333 12.0421 8.91 5.38714 16.37 3.73047Z" fill="#A8B9D0"/>
+</g>
+<path id="Vector_3" d="M29.2593 9.65965V11.1411L25.3133 15.5856H29.2593V17.0671H23.3333V15.5856L27.2785 11.1411H23.3333V9.65965H29.2593ZM36.6667 3.73372V5.21521L32.7207 9.65965H36.6667V11.1411H30.7407V9.65965L34.6859 5.21521H30.7407V3.73372H36.6667Z" fill="#A8B9D0" stroke-width="0.166667" stroke="#A8B9D0"/>
+</g>
+<defs>
+<clipPath id="clip0_0_40">
+<rect width="40" height="40" fill="white"/>
+</clipPath>
+</defs>
+</svg>

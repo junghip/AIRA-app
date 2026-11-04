@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
 import Screen from './components/Screen'
+import Display from './display/Display'
 import Home from './screens/Home'
 import Pass from './screens/pass/Pass'
 import Aira from './screens/aira/Aira'
@@ -24,6 +25,15 @@ export default function App() {
   useEffect(() => {
     isFirstRender.current = false
   }, [])
+
+  // 의자 디스플레이는 폰 프레임 없이 가로 화면 전체로
+  if (location.pathname.startsWith('/display')) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <Display />
+      </MotionConfig>
+    )
+  }
 
   return (
     <MotionConfig reducedMotion="user">

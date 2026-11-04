@@ -1,0 +1,183 @@
+.ds-tabs--dark .ds-tab__bg {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mp-tabs {
+  left: 232px;
+}
+
+.mp-ellipse {
+  position: absolute;
+  left: -228px;
+  top: 166px;
+  width: 251px;
+  height: 251px;
+}
+
+.mp-view {
+  position: absolute;
+  left: 1578px;
+  top: 42px;
+}
+
+.mp-seg {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 4px rgba(130, 153, 185, 0.25);
+}
+
+.mp-seg .ds-seg__opt {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mp-seg .ds-seg__opt[aria-pressed='true'] {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* 카드 넘기기 — 가운데 카드 중심 (1194, 417) */
+.mp-carousel {
+  position: absolute;
+  left: 420px;
+  top: 120px;
+  width: 1548px;
+  height: 594px;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.mp-carousel:active {
+  cursor: grabbing;
+}
+
+.mp-card {
+  position: absolute;
+  left: calc(1194px - 420px - 237px);
+  top: calc(417px - 120px - 269px);
+  width: 474px;
+  height: 538px;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 40px;
+  box-shadow: 0 0 20px rgba(130, 153, 185, 0.8);
+  text-align: left;
+}
+
+.mp-card__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mp-card__media img {
+  position: absolute;
+  max-width: none;
+}
+
+.mp-card__tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%);
+}
+
+.mp-card__info {
+  position: absolute;
+  left: -3px;
+  bottom: -4px;
+  width: 474px;
+  height: 135px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 30px;
+  border-radius: 0 0 40px 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  white-space: nowrap;
+}
+
+.mp-card__titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-card__title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.56px;
+  color: var(--color-ink);
+}
+
+.mp-card__year,
+.mp-card__time {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  color: var(--color-sub);
+}
+
+.mp-card__time {
+  color: #fff;
+}
+
+.mp-card__glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+}
+
+/* 장르 타일 130×130 */
+.mp-genre {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px #6b7891;
+}
+
+.mp-genre__img {
+  position: absolute;
+}
+
+.mp-genre__img img,
+.mp-genre__img span {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mp-genre__name {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 16px);
+  translate: -50% 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  line-height: normal;
+  white-space: nowrap;
+  text-align: center;
+  color: #fff;
+}
+
+.mp-genre__name--two {
+  top: calc(50% - 29px);
+}
+
+.mp-genre__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 20px #fff;
+}
