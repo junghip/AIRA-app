@@ -1,15 +1,23 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import airaLogoSmall from '../../assets/aira/aira-logo-small.svg'
+import airaLogoNotif from '../../assets/aira/aira-logo-notif.svg'
+import flowChevron1 from '../../assets/aira/chevron-flow-1.svg'
+import flowChevron2 from '../../assets/aira/chevron-flow-2.svg'
 import endingScene from '../../assets/aira/ending-scene.jpg'
+import mapPin from '../../assets/aira/map-pin.svg'
 import mapScene from '../../assets/aira/map-scene.jpg'
 import notificationCar from '../../assets/aira/notification-car.png'
 import widgetMarker from '../../assets/aira/widget-marker.svg'
 import widgetRing from '../../assets/aira/widget-ring.svg'
 import widgetRings from '../../assets/aira/widget-rings.svg'
+import backIcon from '../../assets/icons/arrow-left.svg'
+import chevronDown from '../../assets/icons/chevron-down-sub.svg'
+import chevronSub from '../../assets/icons/chevron-right-sub.svg'
 import closeIcon from '../../assets/icons/close-line.svg'
+import flightIcon from '../../assets/icons/flight-takeoff-line.svg'
 import GlassIconButton from '../../components/GlassIconButton'
+import Icon from '../../components/Icon'
 import RollingText from '../../components/RollingText'
 import { riseIn, softSpring, spring, stagger } from '../../motion/transitions'
 import './Aira.css'
@@ -34,7 +42,7 @@ export default function Aira() {
     <div className="aira">
       <AnimatePresence>
         {step === 'lock' && <LockScreen key="lock" onOpen={() => setStep('map')} />}
-        {step === 'map' && <MapScreen key="map" riders={riders} onArrive={arrive} onClose={goHome} />}
+        {step === 'map' && <MapScreen key="map" riders={riders} onArrive={arrive} onBack={() => navigate(-1)} onClose={goHome} />}
         {step === 'ending' && <EndingScreen key="ending" onClose={goHome} />}
       </AnimatePresence>
     </div>
@@ -99,7 +107,7 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
               animate={opening ? { opacity: 0 } : { opacity: 1, x: [0, -3, 3, -2, 2, 0] }}
               transition={opening ? { duration: 0.15 } : { x: { delay: 0.35, duration: 0.45 } }}
             >
-              <img src={airaLogoSmall} width={76.495} height={14} alt="AIRA" />
+              <img src={airaLogoNotif} width={98} height={18} alt="AIRA" />
               <div className="notif__row">
                 <span className="notif__streak">
                   {/* 길이 뒤로 흘러가듯 빛이 오른쪽에서 왼쪽으로 계속 지나감 */}
@@ -112,14 +120,13 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
                 </span>
                 <div className="notif__text">
                   <p className="notif__title">
-                    <span className="notif__accent">2min</span> until pickup
+                    <span className="notif__accent">2min</span> until pick up
                   </p>
                   <p className="notif__desc">
                     <span>AIRA 07 is almost there.</span>
                     <span>Meet at 3F Departures.</span>
                   </p>
                 </div>
-                <p className="notif__place">3F Departures · Terminal 1</p>
                 {/* 알림 속 작은 차가 왼쪽에서 빛줄기를 따라 미끄러져 들어와, 달리는 듯 살짝 흔들림 */}
                 <motion.div
                   className="notif__car"
@@ -145,7 +152,8 @@ function LockScreen({ onOpen }: { onOpen: () => void }) {
   )
 }
 
-function MapScreen({ riders, onArrive, onClose }: { riders: number; onArrive: () => void; onClose: () => void }) {
+function MapScreen({ riders, onArrive, onBack, onClose }: { riders: number; onArrive: () => void; onBack: () => void; onClose: () => void }) {
+  const navigate = useNavigate()
   const [minutes, setMinutes] = useState(2)
 
   useEffect(() => {
@@ -165,61 +173,103 @@ function MapScreen({ riders, onArrive, onClose }: { riders: number; onArrive: ()
       exit={{ opacity: 0, scale: 1.12, transition: { duration: 0.7, ease: 'easeIn' } }}
       transition={{ duration: 0.45 }}
     >
-      {/* 차 쪽으로 천천히 다가가는 카메라 */}
+      {/* 차 쪽으로 천천히 다가가는 카메라, 탭하면 바로 도착 */}
       <motion.img
         className="map__scene"
         src={mapScene}
-        alt="Map showing AIRA 07 approaching 3F Departures"
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1.16 }}
-        transition={{ duration: ARRIVE_MS / 1000 + 1, ease: 'linear' }}
-        style={{ transformOrigin: '51% 46%' }}
-      />
-      <motion.button
-        className="map__pulse"
-        aria-label="AIRA 07 — skip to pickup"
+        alt="AIRA 07 approaching along the blue path"
         onClick={onArrive}
-        animate={{ scale: [0.6, 1.6], opacity: [0.7, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
+        initial={{ scale: 1 }}
+        animate={{ scale: 1.08 }}
+        transition={{ duration: ARRIVE_MS / 1000 + 1, ease: 'linear' }}
+        style={{ transformOrigin: '50% 40%' }}
       />
       <div className="map__fade map__fade--top" />
       <div className="map__fade map__fade--bottom" />
 
-      <div className="aira__top">
+      <div className="aira__top aira__top--split">
+        <GlassIconButton icon={backIcon} label="Back" onClick={onBack} />
         <GlassIconButton icon={closeIcon} label="Close" onClick={onClose} />
       </div>
 
       <motion.div className="aira__headline" variants={stagger(0.08, 0.3)} initial="hidden" animate="show">
         <motion.h1 className="aira__title" variants={riseIn}>
-          <span className="map__minutes">
-            <RollingText value={`${minutes}min`} direction={-1} />
-          </span>{' '}
-          until pickup
-          <br />
-          AIRA 07 is on its way
+          <span className="aira__accent">AIRA 07</span> is on its way
         </motion.h1>
         <motion.p className="aira__sub" variants={riseIn}>
-          AIRA 07 is almost there
+          AIRA 07 is almost there.
         </motion.p>
       </motion.div>
 
-      <motion.div className="map__info" variants={stagger(0.08, 0.6)} initial="hidden" animate="show">
-        <motion.p variants={riseIn}>3F Departures · Terminal 1</motion.p>
-        <motion.p variants={riseIn}>Arrives in 1~2min</motion.p>
-        <motion.p variants={riseIn}>
-          {riders} {riders === 1 ? 'rider' : 'riders'}
-        </motion.p>
-        <motion.p variants={riseIn}>To Gate 28</motion.p>
+      <motion.div
+        className="ride-card"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...softSpring, delay: 0.5 }}
+      >
+        <div className="ride-card__row">
+          <div className="ride-card__location">
+            <p className="ride-card__label">Your Location</p>
+            <p className="ride-card__value ride-card__value--sm">A12</p>
+            <p className="ride-card__place">
+              <img src={mapPin} width={10} height={10} alt="" />
+              Terminal 1 · 3F
+            </p>
+          </div>
+          <div className="ride-card__eta">
+            <p className="ride-card__label">Pick up&nbsp; in</p>
+            <p className="ride-card__value ride-card__value--sm">
+              <RollingText value={`${minutes}min`} direction={-1} />
+            </p>
+          </div>
+        </div>
+        <div className="ride-card__divider" />
+        <div className="ride-card__stats">
+          {[
+            ['RIDERS', String(riders)],
+            ['LEVEL', '3F'],
+            ['GATE', '28'],
+          ].map(([label, value]) => (
+            <div key={label} className="ride-card__stat">
+              <p className="ride-card__label ride-card__label--caps">{label}</p>
+              <p className="ride-card__value">{value}</p>
+            </div>
+          ))}
+        </div>
       </motion.div>
+
+      {/* 위치 → 픽업 방향으로 흐르는 두 개의 꺾쇠 */}
+      {[flowChevron1, flowChevron2].map((src, i) => (
+        <motion.img
+          key={src}
+          className={`map__flow map__flow--${i + 1}`}
+          src={src}
+          alt=""
+          animate={{ opacity: [0.35, 1, 0.35] }}
+          transition={{ duration: 1.2, repeat: Infinity, delay: 0.9 + i * 0.25, ease: 'easeInOut' }}
+        />
+      ))}
 
       <motion.div
         className="aira__center aira__center--cancel"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ...softSpring, delay: 0.9 }}
+        transition={{ ...softSpring, delay: 0.7 }}
       >
-        <motion.button className="cta cta--hug" whileTap={{ scale: 0.95 }} transition={spring} onClick={onClose}>
-          Cancel
+        <motion.button className="cancel-request" whileTap={{ scale: 0.96 }} transition={spring} onClick={onClose}>
+          Cancel request
+        </motion.button>
+      </motion.div>
+
+      <motion.div
+        className="aira__center aira__center--link"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9 }}
+      >
+        <motion.button className="text-link" whileTap={{ scale: 0.96 }} onClick={() => navigate('/reserve')}>
+          Change the reservation
+          <img src={chevronSub} width={20} height={20} alt="" />
         </motion.button>
       </motion.div>
     </motion.div>
@@ -261,6 +311,27 @@ function EndingScreen({ onClose }: { onClose: () => void }) {
         <motion.p className="aira__sub" variants={riseIn}>
           Starting your ride to Gate 28
         </motion.p>
+      </motion.div>
+
+      <motion.div className="ending__actions" variants={stagger(0.1, 1.1)} initial="hidden" animate="show">
+        <motion.div className="aira__center aira__center--done" variants={riseIn}>
+          <motion.button className="cta cta--solid" whileTap={{ scale: 0.95 }} transition={spring} onClick={onClose}>
+            Done
+            <Icon src={flightIcon} width={20} color="var(--color-ink)" />
+          </motion.button>
+        </motion.div>
+        <motion.div className="aira__center aira__center--help" variants={riseIn}>
+          <motion.button className="info-pill ending__help" whileTap={{ scale: 0.96 }} transition={spring}>
+            Need a help?
+            <img src={chevronDown} width={10.3} height={6.3} alt="" />
+          </motion.button>
+        </motion.div>
+        <motion.div className="aira__center aira__center--link" variants={riseIn}>
+          <motion.button className="text-link" whileTap={{ scale: 0.96 }} onClick={onClose}>
+            Go to my page
+            <img src={chevronSub} width={20} height={20} alt="" />
+          </motion.button>
+        </motion.div>
       </motion.div>
     </motion.div>
   )

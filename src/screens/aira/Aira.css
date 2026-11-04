@@ -146,9 +146,10 @@
 /* 알림 카드 */
 .notif {
   position: absolute;
-  top: calc(647px + var(--dy));
-  left: 12px;
-  right: 11px;
+  top: calc(651px + var(--dy));
+  left: calc(50% - 178.5px);
+  width: 358px;
+  height: 140px;
   z-index: 2;
   overflow: hidden;
   border-radius: 24px;
@@ -161,14 +162,16 @@
 
 .notif--open {
   inset: 0;
+  width: auto;
+  height: auto;
   background: #a9bbd4;
 }
 
 .notif__body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px 20px;
+  gap: 15px;
+  padding: 24px 20px 20px;
 }
 
 .notif__row {
@@ -181,11 +184,11 @@
 .notif__streak {
   overflow: hidden;
   position: absolute;
-  top: 24px;
-  left: 187px;
-  width: 169px;
+  top: 19px;
+  left: 193px;
+  width: 145px;
   height: 14px;
-  background: linear-gradient(225deg, rgba(219, 240, 255, 0.5) 6.74%, rgba(219, 240, 255, 0) 90.82%);
+  background: linear-gradient(229deg, rgba(219, 240, 255, 0.5) 6.74%, rgba(219, 240, 255, 0) 90.82%);
 }
 
 .notif__streak-flow {
@@ -199,19 +202,21 @@
 
 .notif__car {
   position: absolute;
-  top: 5px;
+  top: 0;
   left: 234px;
 }
 
+/* 피그마에서 좌우 반전된 차 */
 .notif__car img {
   display: block;
+  scale: -1 1;
 }
 
 .notif__text {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   white-space: nowrap;
 }
 
@@ -223,22 +228,15 @@
 }
 
 .notif__accent {
-  color: var(--color-greeting);
+  color: #dbe7ff;
 }
 
 .notif__desc {
   display: flex;
   flex-direction: column;
   font-size: 14px;
-  line-height: 18px;
-  color: #c6c6c6;
-}
-
-.notif__place {
-  position: relative;
-  font-size: 12px;
-  line-height: 18px;
-  white-space: nowrap;
+  font-weight: 500;
+  line-height: 20px;
   color: #c6c6c6;
 }
 
@@ -251,35 +249,46 @@
   padding: 10px 20px;
 }
 
+.aira__top--split {
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
 .aira__headline {
   position: absolute;
-  top: calc(119px + var(--dy));
-  left: 20px;
+  top: calc(132px + var(--dy));
+  left: 25px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   width: 349px;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 44px);
 }
 
 .aira__headline--center {
+  top: calc(130px + var(--dy));
+  left: calc(50% - 176.5px);
   align-items: center;
   text-align: center;
 }
 
 .aira__title {
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -2px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.32px;
   color: #fff;
+}
+
+.aira__accent {
+  color: var(--color-ink);
 }
 
 .aira__sub {
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: -0.32px;
+  line-height: 1.45;
   color: var(--color-sub);
 }
 
@@ -291,35 +300,39 @@
   justify-content: center;
 }
 
+.aira__center--cancel {
+  top: calc(695px + var(--dy));
+}
+
+.aira__center--done {
+  top: calc(644px + var(--dy));
+}
+
+.aira__center--help {
+  top: calc(708px + var(--dy));
+}
+
+.aira__center--link {
+  top: calc(777px + var(--dy));
+}
+
 /* ───────── 지도 ───────── */
 .map {
-  background: var(--bg-sky);
+  background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #ecdbd7 100%);
 }
 
-.map__scene,
-.ending__scene {
+.map__scene {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: calc(-37px + var(--dy));
+  left: calc(50% - 281.5px);
+  width: 563px;
+  height: 984px;
+  max-width: none;
   object-fit: cover;
-  object-position: top;
 }
 
-.map__pulse {
-  position: absolute;
-  top: calc(385px + var(--dy));
-  left: calc(50% + 4px);
-  width: 120px;
-  height: 120px;
-  margin: -60px 0 0 -60px;
-  border: 2px solid rgba(116, 206, 255, 0.9);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(116, 206, 255, 0.25), transparent 70%);
-}
-
-.map__fade {
+.map__fade,
+.ending__fade {
   position: absolute;
   left: 0;
   right: 0;
@@ -334,58 +347,170 @@
 
 .map__fade--bottom {
   bottom: 0;
-  height: 194px;
-  background: linear-gradient(0deg, rgba(226, 218, 216, 0.64) 44.37%, rgba(255, 255, 255, 0) 99.83%);
+  height: 255px;
+  background: linear-gradient(0deg, rgba(235, 218, 215, 0.78) 44.37%, rgba(255, 255, 255, 0) 99.83%);
 }
 
-.map__minutes {
-  display: inline-flex;
+/* 위치·도착시간·탑승 정보 카드 */
+.ride-card {
+  position: absolute;
+  top: calc(490px + var(--dy));
+  left: calc(50% - 176.5px);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 353px;
+  padding: 20px 0 15px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 8px 32px rgba(10, 20, 34, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16);
   color: var(--color-ink);
 }
 
-.map__info {
-  position: absolute;
-  top: calc(546px + var(--dy));
-  left: calc(50% - 174.5px);
-  width: 349px;
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.56px;
-  color: #fff;
+.ride-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.aira__center--cancel {
-  top: calc(747px + var(--dy));
+.ride-card__location {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 208px;
+  padding-left: 32px;
+}
+
+.ride-card__eta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 113px;
+  height: 64px;
+}
+
+.ride-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+  color: var(--color-sub);
+}
+
+.ride-card__label--caps {
+  height: 17px;
+  letter-spacing: 0.1px;
+}
+
+.ride-card__value {
+  height: 36px;
+  padding-top: 5px;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.52px;
+}
+
+.ride-card__value--sm {
+  display: flex;
+  height: 32px;
+  padding-top: 3px;
+  font-size: 24px;
+  letter-spacing: 0;
+}
+
+.ride-card__place {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 13px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-sub);
+}
+
+.ride-card__divider {
+  position: absolute;
+  top: 102px;
+  left: calc(50% - 149.5px);
+  width: 299px;
+  height: 1px;
+  background: rgba(116, 132, 163, 0.2);
+}
+
+.ride-card__stats {
+  display: flex;
+  gap: 1px;
+  width: 351px;
+}
+
+.ride-card__stat {
+  flex: 1;
+  text-align: center;
+}
+
+.map__flow {
+  position: absolute;
+  top: calc(531.3px + var(--dy));
+  pointer-events: none;
+}
+
+.map__flow--1 {
+  left: calc(50% + 32.5px);
+}
+
+.map__flow--2 {
+  left: calc(50% + 47.5px);
+}
+
+.cancel-request {
+  width: 353px;
+  height: 68px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: #fdfdfd;
+  filter: drop-shadow(0 8px 16px rgba(10, 20, 34, 0.18));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-ink);
 }
 
 /* ───────── 엔딩 ───────── */
 .ending {
-  background: var(--bg-sky);
+  background: linear-gradient(180deg, #90a8c8 0%, #a9bbd4 30%, #c3ccda 58%, #e3dad8 100%);
 }
 
 .ending__scene {
-  top: 1px;
-  height: calc(100% - 1px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 /* 빛줄기 위치(피그마 이미지 기준)에 겹치는 흐르는 빛 */
 .ending__beam {
   position: absolute;
-  top: calc(470px + var(--dy));
+  top: 470px;
   left: calc(50% - 50px);
   width: 100px;
-  height: 382px;
+  height: 175px;
   background: linear-gradient(0deg, transparent 0%, rgba(160, 225, 255, 0.55) 45%, transparent 60%) 0 100% / 100% 300% no-repeat;
   mix-blend-mode: screen;
   clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
-  pointer-events: none;
-}
-
-.ending__fade {
-  position: absolute;
-  left: 0;
-  right: 0;
   pointer-events: none;
 }
 
@@ -409,15 +534,30 @@
 
 .ending__fade--bottom2 {
   bottom: 0;
-  height: 279px;
-  background: linear-gradient(0deg, rgba(220, 218, 219, 0.8) 2.84%, rgba(255, 255, 255, 0) 99.83%);
+  height: 255px;
+  background: linear-gradient(0deg, rgba(235, 218, 215, 0.78) 44.37%, rgba(255, 255, 255, 0) 99.83%);
 }
 
 .ending__title {
   width: 100%;
-  font-size: 52px;
-  font-weight: 500;
+  font-size: 40px;
+  font-weight: 600;
   line-height: 1.2;
-  letter-spacing: -2px;
+  letter-spacing: -0.8px;
   color: #fff;
+}
+
+.ending__actions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ending__actions > * {
+  pointer-events: auto;
+}
+
+.ending__help {
+  padding-left: 63px;
+  gap: 15px;
 }
