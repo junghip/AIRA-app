@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import airaLogo from '../assets/common/aira-logo.svg'
 import carGlow from '../assets/home/car-glow.svg'
 import carShadow from '../assets/home/car-shadow.svg'
-import carSide from '../assets/home/car-side.png'
+import carIvory from '../assets/home/car-ivory.png'
 import chevron from '../assets/icons/chevron.svg'
 import bellIcon from '../assets/icons/notification-fill.svg'
 import searchIcon from '../assets/icons/search-line.svg'
@@ -116,10 +116,10 @@ export default function Home() {
         <motion.div style={{ x: carX, y: carY, rotate: carTilt }}>
           {/* 둥실 떠 있는 idle 모션 + 탭하면 통통 */}
           <motion.img
-            src={carSide}
+            src={carIvory}
             alt="AIRA vehicle"
-            width={275}
-            height={159}
+            width={322.734}
+            height={179.296}
             draggable={false}
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}

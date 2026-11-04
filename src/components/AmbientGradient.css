@@ -14,38 +14,40 @@
   will-change: transform;
 }
 
-/* 하늘빛 하이라이트 */
+/* 색은 배경 팔레트(#8CA2C0, #A9BBD4, #C3CCDA, #E3DAD8, #FFFFFF)만 사용 */
+
+/* 흰 빛 하이라이트 */
 .ambient__blob--light {
   top: 0;
   left: -15%;
   width: 80%;
   height: 40%;
-  background: radial-gradient(circle, rgba(226, 238, 255, 0.95), transparent 68%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.85), transparent 68%);
 }
 
-/* 짙은 블루 — 밝은 빛과 대비되어 일렁임이 보이게 */
+/* 짙은 블루 #8CA2C0 — 밝은 빛과 대비되어 일렁임이 보이게 */
 .ambient__blob--deep {
   top: 22%;
   right: -25%;
   width: 85%;
   height: 42%;
-  background: radial-gradient(circle, rgba(110, 136, 182, 0.75), transparent 68%);
+  background: radial-gradient(circle, rgba(140, 162, 192, 0.95), transparent 68%);
 }
 
-/* 하단 분홍빛 */
+/* 하단 웜 그레이 #E3DAD8 */
 .ambient__blob--blush {
   bottom: -5%;
   left: -20%;
   width: 85%;
   height: 40%;
-  background: radial-gradient(circle, rgba(250, 210, 204, 0.95), transparent 68%);
+  background: radial-gradient(circle, rgba(227, 218, 216, 0.95), transparent 68%);
 }
 
-/* 라일락 */
+/* 중간 블루 #A9BBD4 */
 .ambient__blob--lilac {
   top: 50%;
   left: 25%;
   width: 70%;
   height: 34%;
-  background: radial-gradient(circle, rgba(196, 190, 238, 0.75), transparent 68%);
+  background: radial-gradient(circle, rgba(169, 187, 212, 0.9), transparent 68%);
 }

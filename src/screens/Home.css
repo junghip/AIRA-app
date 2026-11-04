@@ -96,30 +96,29 @@
 }
 
 .home__car-glow {
-  top: calc(223.7px + var(--dy));
-  left: calc(50% - 301.8px);
-  width: 603.6px;
-  height: 436.6px;
+  top: calc(235.7px + var(--dy));
+  left: calc(50% - 310.7px);
+  width: 617.511px;
+  height: 444.6px;
 }
 
 .home__car-shadow {
-  top: calc(405.9px + var(--dy));
-  left: calc(50% - 123.6px);
-  width: 359.2px;
-  height: 190.2px;
+  top: calc(422.08px + var(--dy));
+  left: calc(50% - 128.47px);
+  width: 369.005px;
+  height: 194.023px;
 }
 
 .home__car {
   position: absolute;
-  top: calc(381px + var(--dy));
-  left: calc(50% - 99.5px);
+  top: calc(367.92px + var(--dy));
+  left: calc(50% - 129.83px);
 }
 
 .home__car img {
-  width: 275px;
-  height: 159px;
+  width: 322.734px;
+  height: 179.296px;
   object-fit: cover;
-  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.09));
   cursor: pointer;
   user-select: none;
 }
