@@ -48,3 +48,38 @@
   opacity: 0.45;
   cursor: default;
 }
+
+/* 흰색 메인 버튼 (PASS 완료, RESERVE) */
+.cta--solid {
+  height: 50px;
+  gap: 8px;
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #fdfdfd;
+  box-shadow:
+    0 4px 16.6px rgba(0, 0, 0, 0.21),
+    0 0 10px #cac4c3;
+  font-size: 18px;
+  letter-spacing: -0.36px;
+}
+
+/* 메인 버튼 아래 반투명 알약 (Saved to your trip, Pick up details) */
+.info-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  padding: 13px 22px 13px 34px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: linear-gradient(172deg, rgba(255, 255, 255, 0.28) 6%, rgba(255, 255, 255, 0.14) 45%, rgba(255, 255, 255, 0.09) 94%);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 6px 24px rgba(10, 20, 34, 0.16),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  color: var(--color-sub);
+}
+

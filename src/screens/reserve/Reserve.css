@@ -32,20 +32,20 @@
 
 .reserve__headline {
   position: absolute;
-  top: calc(119px + var(--dy));
-  left: 20px;
+  top: calc(134px + var(--dy));
+  left: 25px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   width: 349px;
   max-width: calc(100% - 40px);
 }
 
 .reserve__title {
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -2px;
+  white-space: pre-line;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
   color: #fff;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .reserve__sub--loose {
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* 도착 시간 */
@@ -77,11 +77,10 @@
 }
 
 .time-picker__hint {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 18px;
   line-height: 1.2;
-  letter-spacing: -0.32px;
-  color: var(--color-greeting);
+  letter-spacing: -0.36px;
+  color: #f1f6ff;
 }
 
 .time-picker__hint:disabled {
@@ -90,7 +89,7 @@
 
 .time-picker__value {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 100px;
   line-height: normal;
   letter-spacing: -2px;
@@ -102,16 +101,17 @@
 }
 
 .time-picker__caption {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
   line-height: normal;
-  letter-spacing: -0.36px;
   color: var(--color-sub);
+  text-shadow: 0 4px 4px rgba(255, 255, 255, 0.09);
 }
 
 /* 탑승 인원 */
 .rider-counter {
   position: absolute;
-  top: calc(350px + var(--dy));
+  top: calc(361.5px + var(--dy));
   left: 0;
   right: 0;
   display: flex;
@@ -127,6 +127,11 @@
   line-height: normal;
 }
 
+.rider-counter__value {
+  width: 75px;
+  height: 147px;
+}
+
 .rider-counter__number {
   font-family: var(--font-display);
   font-weight: 600;
@@ -135,10 +140,16 @@
 }
 
 .rider-counter__label {
-  width: 93px;
-  font-size: 18px;
-  letter-spacing: -0.36px;
+  position: absolute;
+  top: calc(504px + var(--dy));
+  left: 0;
+  right: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
   color: var(--color-sub);
+  text-shadow: 0 4px 4px rgba(255, 255, 255, 0.09);
 }
 
 .stepper {
@@ -149,61 +160,104 @@
   border: 1.3px solid var(--glass-border);
   border-radius: 23px;
   background: var(--glass-chip);
-  transition: opacity 0.25s;
+  box-shadow:
+    inset 0 -1px 1px rgba(255, 255, 255, 0.25),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.65);
+  transition: background-color 0.25s, border-color 0.25s;
 }
 
-/* 더 줄이거나 늘릴 수 없을 때는 같은 모양에서 흐리게만 */
+/* 더 줄이거나 늘릴 수 없을 때 — 피그마의 비활성 버튼 */
 .stepper.is-disabled {
-  opacity: 0.35;
+  border-color: rgba(227, 227, 227, 0.3);
+  background: #b7c1d1;
   cursor: default;
 }
 
-/* 예약 완료 요약 */
-.booked {
+/* 예약 완료 요약 — 반투명 카드 위에 차와 정보 */
+.booked__card,
+.booked__glow,
+.booked__shadow,
+.booked__car {
   position: absolute;
-  top: calc(278px + var(--dy));
+  max-width: none;
+  pointer-events: none;
+}
+
+.booked__card {
+  top: calc(263px + var(--dy));
+  left: calc(50% - 171.5px);
+  width: 340px;
+  height: 347px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 28px;
+  background: linear-gradient(144deg, rgba(255, 255, 255, 0.28) 6%, rgba(255, 255, 255, 0.14) 45%, rgba(255, 255, 255, 0.09) 94%);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 8px 32px rgba(10, 20, 34, 0.18),
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16);
+}
+
+.booked__glow {
+  top: calc(137.7px + var(--dy));
+  left: calc(50% - 282.2px);
+  width: 563.988px;
+  height: 415.384px;
+}
+
+.booked__shadow {
+  top: calc(308.8px + var(--dy));
+  left: calc(50% - 159.53px);
+  width: 374.442px;
+  height: 197.278px;
+}
+
+/* 탑승 장면의 차(3/4 각도)를 피그마 차 자리에 — 바닥선과 가로 중심을 맞춰 1.1배 */
+.booked__car {
+  top: calc(279.6px + var(--dy));
+  left: calc(50% - 146.8px);
+  scale: 1.1;
+  transform-origin: 0 0;
+}
+
+.booked__info {
+  position: absolute;
+  top: calc(434px + var(--dy));
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-
-.booked__info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  gap: 9.6px;
 }
 
 .booked__name {
+  align-self: center;
+  margin-bottom: 3.6px;
   font-size: 44px;
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -2px;
+  letter-spacing: 1px;
   color: #fff;
 }
 
 .booked__row {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 206px auto;
+  width: 263px;
+  margin-left: calc(50% - 138.5px);
+  font-size: 18px;
+  line-height: 1.3;
   white-space: nowrap;
 }
 
 .booked__key {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: -0.32px;
+  font-weight: 700;
   color: rgba(116, 132, 163, 0.5);
 }
 
 .booked__value {
-  font-size: 20px;
-  line-height: normal;
-  letter-spacing: -0.4px;
+  font-weight: 600;
   color: var(--color-sub);
 }
 
@@ -217,13 +271,18 @@
 }
 
 .reserve__center--cta {
-  top: calc(678px + var(--dy));
+  top: calc(680px + var(--dy));
+}
+
+.reserve__center--details {
+  top: calc(708px + var(--dy));
+}
+
+.reserve__details {
+  padding-left: 46px;
+  gap: 15px;
 }
 
 .reserve__center--link {
-  top: calc(754px + var(--dy));
-}
-
-.booked__car {
-  position: relative;
+  top: calc(777px + var(--dy));
 }

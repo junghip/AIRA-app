@@ -3,10 +3,15 @@ import type { PanInfo, Variants } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import addIcon from '../../assets/icons/add-line.svg'
+import backIcon from '../../assets/icons/arrow-left.svg'
 import arrowIcon from '../../assets/icons/arrow-right-s-line.svg'
+import chevronDown from '../../assets/icons/chevron-down-sub.svg'
 import chevronSub from '../../assets/icons/chevron-right-sub.svg'
 import closeIcon from '../../assets/icons/close-line.svg'
+import flightIcon from '../../assets/icons/flight-takeoff-line.svg'
 import subtractIcon from '../../assets/icons/subtract-line.svg'
+import carGlow from '../../assets/reserve/booked-car-glow.svg'
+import carShadow from '../../assets/reserve/booked-car-shadow.svg'
 import AmbientGradient from '../../components/AmbientGradient'
 import GlassIconButton from '../../components/GlassIconButton'
 import Icon from '../../components/Icon'
@@ -40,6 +45,7 @@ export default function Reserve() {
   const [ridersDir, setRidersDir] = useState(1)
   const [sheetOpen, setSheetOpen] = useState(false)
   const [ridersNudge, setRidersNudge] = useState(0)
+  const [detailsOpen, setDetailsOpen] = useState(false)
 
   const goTo = (next: Step) => setStepState([next, order.indexOf(next) > order.indexOf(step) ? 1 : -1])
 
@@ -72,9 +78,9 @@ export default function Reserve() {
   const ctaDisabled = step === 'passengers' && riders < MAX_RIDERS
 
   const cta = {
-    time: { label: `Ride at ${formatTime(time)}`, arrow: true, onClick: () => goTo('passengers') },
-    passengers: { label: `Ride with ${riders}`, arrow: true, onClick: () => goTo('booked') },
-    booked: { label: 'Done!', arrow: false, onClick: () => navigate('/aira', { state: { riders } }) },
+    time: { icon: flightIcon, iconSize: 20, onClick: () => goTo('passengers') },
+    passengers: { icon: arrowIcon, iconSize: 24, onClick: () => goTo('booked') },
+    booked: { icon: flightIcon, iconSize: 20, onClick: () => navigate('/aira', { state: { riders } }) },
   }[step]
 
   return (
@@ -83,7 +89,7 @@ export default function Reserve() {
         <AmbientGradient />
       </motion.div>
       <div className="reserve__top">
-        <GlassIconButton icon={arrowIcon} label="Back" flip onClick={back} />
+        <GlassIconButton icon={backIcon} label="Back" onClick={back} />
         <GlassIconButton icon={closeIcon} label="Close" onClick={() => navigate('/')} />
       </div>
 
@@ -100,7 +106,7 @@ export default function Reserve() {
         >
           {step === 'time' && (
             <>
-              <Headline title="What time will you arrive on Dec 24?" sub={['We picked a time based on your boarding.']} />
+              <Headline title={'What time will you\narrive on Dec 24?'} sub={['We picked a time based on your boarding.']} />
               <TimePicker
                 time={time}
                 direction={timeDir}
@@ -111,7 +117,7 @@ export default function Reserve() {
           )}
           {step === 'passengers' && (
             <>
-              <Headline title="How many are riding?" sub={['Add up to 4 people, including yourself.']} />
+              <Headline title="How many are riding?" sub={['Add up to 4 people, including yourself.']} loose />
               <RiderCounter riders={riders} direction={ridersDir} onChange={changeRiders} nudge={ridersNudge} />
             </>
           )}
@@ -128,11 +134,15 @@ export default function Reserve() {
         </motion.div>
       </AnimatePresence>
 
-      {/* 하단 버튼은 단계가 바뀌어도 그대로 두고 글자·너비만 바뀜 */}
-      <div className="reserve__center reserve__center--cta">
+      {/* 하단 버튼은 단계가 바뀌어도 그대로 두고 글자만 바뀜 (예약 완료에선 살짝 위로) */}
+      <motion.div
+        className="reserve__center reserve__center--cta"
+        initial={false}
+        animate={{ y: step === 'booked' ? -36 : 0 }}
+        transition={softSpring}
+      >
         <motion.button
-          layout
-          className={`cta${cta.arrow ? '' : ' cta--hug'}${ctaDisabled ? ' cta--disabled' : ''}`}
+          className={`cta cta--solid${ctaDisabled ? ' cta--disabled' : ''}`}
           transition={spring}
           whileTap={{ scale: ctaDisabled ? 0.98 : 0.95 }}
           aria-disabled={ctaDisabled}
@@ -146,7 +156,7 @@ export default function Reserve() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={spring}
-              style={{ display: 'flex', alignItems: 'center', gap: 10 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 8 }}
             >
               {step === 'time' ? (
                 <span style={{ display: 'flex' }}>
@@ -159,13 +169,37 @@ export default function Reserve() {
                   <RollingText value={String(riders)} direction={ridersDir} />
                 </span>
               ) : (
-                cta.label
+                'Done'
               )}
-              {cta.arrow && <Icon src={arrowIcon} width={24} color="var(--color-ink)" />}
+              <Icon src={cta.icon} width={cta.iconSize} color="var(--color-ink)" />
             </motion.span>
           </AnimatePresence>
         </motion.button>
-      </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {step === 'booked' && (
+          <motion.div
+            key="details"
+            className="reserve__center reserve__center--details"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ ...softSpring, delay: 0.3 }}
+          >
+            <motion.button
+              className="info-pill reserve__details"
+              whileTap={{ scale: 0.96 }}
+              transition={spring}
+              aria-expanded={detailsOpen}
+              onClick={() => setDetailsOpen((open) => !open)}
+            >
+              Pick up details
+              <motion.img src={chevronDown} width={10.3} height={6.3} alt="" animate={{ rotate: detailsOpen ? 180 : 0 }} transition={spring} />
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {step !== 'passengers' && (
@@ -303,7 +337,8 @@ function RiderCounter({
   }
 
   return (
-    <motion.div className="rider-counter" variants={stagger(0.08, 0.15)} initial="hidden" animate="show">
+    <motion.div variants={stagger(0.08, 0.15)} initial="hidden" animate="show">
+      <div className="rider-counter">
       <motion.div variants={riseIn}>
         <motion.div animate={minusHint}>
           <StepperButton icon={subtractIcon} label="Remove a passenger" disabled={riders <= 1} onClick={() => press(-1)} />
@@ -313,13 +348,16 @@ function RiderCounter({
         <motion.div animate={shake}>
           <RollingText className="rider-counter__number" value={String(riders)} direction={direction} />
         </motion.div>
-        <p className="rider-counter__label">Passengers</p>
       </motion.div>
       <motion.div variants={riseIn}>
         <motion.div animate={plusHint}>
           <StepperButton icon={addIcon} label="Add a passenger" disabled={riders >= MAX_RIDERS} onClick={() => press(1)} />
         </motion.div>
       </motion.div>
+      </div>
+      <motion.p className="rider-counter__label" variants={riseIn}>
+        Passengers
+      </motion.p>
     </motion.div>
   )
 }
@@ -334,7 +372,7 @@ function StepperButton({ icon, label, disabled, onClick }: { icon: string; label
       transition={spring}
       onClick={onClick}
     >
-      <Icon src={icon} width={36} color="#fff" />
+      <Icon src={icon} width={36} color={disabled ? 'rgba(116, 132, 163, 0.4)' : '#fff'} />
     </motion.button>
   )
 }
@@ -347,7 +385,30 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
   ]
 
   return (
-    <div className="booked">
+    <>
+      {/* 반투명 카드가 먼저 깔리고, 그 안으로 차가 들어옴 */}
+      <motion.div
+        className="booked__card"
+        initial={{ opacity: 0, scale: 0.94, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: smoothEase }}
+      />
+      <motion.img
+        className="booked__glow"
+        src={carGlow}
+        alt=""
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.4 }}
+      />
+      <motion.img
+        className="booked__shadow"
+        src={carShadow}
+        alt=""
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.15 + CAR_ARRIVE * 0.7 }}
+      />
       {/* 차가 오른쪽에서 천천히 들어와 부드럽게 멈춘 뒤, 문이 열리고 탑승 */}
       <motion.div
         className="booked__car"
@@ -368,6 +429,6 @@ function BookedSummary({ time, riders }: { time: string; riders: number }) {
           </motion.div>
         ))}
       </motion.div>
-    </div>
+    </>
   )
 }

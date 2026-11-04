@@ -317,7 +317,7 @@ export default function Pass() {
               </motion.button>
             </motion.div>
             <motion.div className="pass__center pass__center--saved" variants={riseIn}>
-              <div className="saved-pill" role="status">
+              <div className="info-pill" role="status">
                 Saved to your trip
                 <img src={bookmarkIcon} width={20} height={16} alt="" />
               </div>
