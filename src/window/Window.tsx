@@ -32,6 +32,16 @@ const ROUTE_FLOW: Partial<Record<Scene, [RouteVariant, RouteVariant]>> = {
   route47: ['coffee', 'gate47'],
 }
 
+// 온보딩·마무리 장면은 손대지 않아도 이만큼(ms) 지나면 저절로 넘어감 — 터치하면 바로 넘어가는 건 그대로
+const AUTO_NEXT: Partial<Record<Scene, number>> = {
+  welcome: 4500,
+  seat: 5000,
+  waiting: 4500,
+  starting: 4000,
+  arrivedGate: 5000,
+  bye: 6000, // 마지막 → 처음으로 (전시 반복)
+}
+
 const TEXT: Partial<Record<Scene, { title: string; sub: string; weight?: 'semibold' }>> = {
   seat: { title: 'Take a seat to get started', sub: 'Your seat will recognize your flight and guide you through check-in' },
   waiting: { title: 'Waiting for everyone', sub: '2 of 4 seated' },
@@ -72,6 +82,13 @@ export default function Window() {
     enter(0)
     setRun((n) => n + 1)
   }, [enter])
+
+  useEffect(() => {
+    const wait = AUTO_NEXT[scene]
+    if (!wait) return
+    const t = setTimeout(() => (scene === 'bye' ? restart() : go(1)), wait)
+    return () => clearTimeout(t)
+  }, [scene, run, go, restart])
 
   // 전시용 키 — →/스페이스 다음, ← 이전, R 처음부터, Esc 메뉴 닫기
   useEffect(() => {

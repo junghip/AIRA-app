@@ -6,7 +6,7 @@
 
 **의자 디스플레이** (`/display`, 2388×834 가로 화면): 웰컴 → 탑승권 스캔 → 홈 / 미디어 / 공항 콘텐츠. 주소: https://junghip.github.io/AIRA-app/display — `R` 키로 처음부터 다시, 아래 시계를 더블클릭해도 처음으로.
 
-**차량 창문** (`/window`, 1920×1080 가로 화면): 웰컴 → 좌석 안내 → 탑승 대기 → 출발 → 대시보드(MENU: AIRA Route / OUR FLIGHT / PHOTO) → Haeun 추천 → 경로에 Lounge Coffee 추가 → 카페 도착 → 게이트 변경 16→47 → 바뀐 경로 → Gate 47 도착 → See you. 주소: https://junghip.github.io/AIRA-app/window — 화면 클릭·→·스페이스로 다음, ← 이전, `R` 처음부터, Esc 메뉴 닫기.
+**차량 창문** (`/window`, 1920×1080 가로 화면): 웰컴 → 좌석 안내 → 탑승 대기 → 출발 → 대시보드(MENU: AIRA Route / OUR FLIGHT / PHOTO) → Haeun 추천 → 경로에 Lounge Coffee 추가 → 카페 도착 → 게이트 변경 16→47 → 바뀐 경로 → Gate 47 도착 → See you. 주소: https://junghip.github.io/AIRA-app/window — 온보딩(웰컴~출발)과 마무리(Gate 47 도착·See you)는 몇 초 뒤 저절로 넘어가고, See you 다음엔 처음으로 돌아감. 화면 클릭·→·스페이스로 다음, ← 이전, `R` 처음부터, Esc 메뉴 닫기.
 
 ## 실행
 
