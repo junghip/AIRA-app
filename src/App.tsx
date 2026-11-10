@@ -8,6 +8,7 @@ import Home from './screens/Home'
 import Pass from './screens/pass/Pass'
 import Aira from './screens/aira/Aira'
 import Reserve from './screens/reserve/Reserve'
+import Window from './window/Window'
 
 // 피그마 화면이 추가될 때마다 여기에 한 줄씩
 const routes = [
@@ -27,6 +28,15 @@ export default function App() {
   }, [])
 
   // 의자 디스플레이는 폰 프레임 없이 가로 화면 전체로
+  // 차량 창문(Section 10)도 1920×1080 가로 화면 전체로
+  if (location.pathname.startsWith('/window')) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <Window />
+      </MotionConfig>
+    )
+  }
+
   if (location.pathname.startsWith('/display')) {
     return (
       <MotionConfig reducedMotion="user">
