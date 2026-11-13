@@ -1,15 +1,11 @@
+/* 첫 웰컴 — 좌표는 피그마 2388×834 기준 */
 .wl {
   position: absolute;
   inset: 0;
   cursor: pointer;
 }
 
-/* 1. 첫 웰컴 */
-.wl-intro {
-  position: absolute;
-  inset: 0;
-}
-
+/* 1. 시작 화면 */
 .wl-intro__logo {
   position: absolute;
   left: 826px;
@@ -23,109 +19,243 @@
   left: 0;
   right: 0;
   top: 439px;
-  font-size: 80px;
-  font-weight: 500;
+  font-size: 75px;
+  font-weight: 600;
   line-height: 1.4;
-  letter-spacing: 1.6px;
+  letter-spacing: 1.5px;
   text-align: center;
   white-space: nowrap;
   color: #fff;
 }
 
-/* 2. 안내 화면 */
+.wl-meta span {
+  position: absolute;
+  top: 750px;
+  height: 41px;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 28px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #3b4256;
+}
+
+.wl-lang {
+  position: absolute;
+  top: 733px;
+  height: 62px;
+  border-radius: 31px;
+  border: 2.013px solid #f0eeee;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1.61px);
+  -webkit-backdrop-filter: blur(1.61px);
+  font-family: 'Inter', var(--font-sans);
+  font-size: 22.545px;
+  font-weight: 600;
+  color: #3b4256;
+}
+
+.wl-lang__thumb {
+  position: absolute;
+  inset: -2.013px;
+  border-radius: 31px;
+  border: 2.013px solid #f0eeee;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.wl-lang__text {
+  position: relative;
+}
+
+.wl-start p {
+  position: absolute;
+  left: 2018px;
+  top: 396px;
+  width: 183px;
+  height: 41px;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+}
+
+/* 세로로 그려진 화살표를 시계방향 90° — 오른쪽을 가리킴 */
+.wl-start__arrow {
+  position: absolute;
+  left: 2239px;
+  top: 404px;
+  width: 60px;
+  height: 26px;
+}
+
+.wl-start__line {
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 59px;
+  height: 4px;
+}
+
+.wl-start__head {
+  position: absolute;
+  left: 40.8px;
+  top: 5.95px;
+  width: 28.394px;
+  height: 14.109px;
+  rotate: 90deg;
+}
+
+/* 2~6. 공통 */
+.wl-logo-small {
+  position: absolute;
+  left: 1095px;
+  top: 59px;
+  width: 197.088px;
+  height: 36.389px;
+}
+
+.wl-back {
+  position: absolute;
+  left: 86px;
+  top: 51px;
+  width: 124px;
+  height: 56px;
+  border-radius: 27.762px;
+  border: 1.803px solid rgba(240, 238, 238, 0.26);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(1.442px);
+  -webkit-backdrop-filter: blur(1.442px);
+  font-family: 'Inter', var(--font-sans);
+  font-size: 20.19px;
+  font-weight: 600;
+  color: #3b4256;
+}
+
+/* 2. 안내 */
 .wl-glow {
   position: absolute;
   left: 386px;
-  top: 300px;
+  top: 299px;
   width: 1616px;
   height: 236px;
   background: rgba(119, 159, 214, 0.26);
   filter: blur(150px);
 }
 
-.wl-logo-small {
-  position: absolute;
-  left: 1095px;
-  top: 133px;
-  width: 197.088px;
-  height: 36.389px;
-}
-
-.wl-hint__scan {
-  position: absolute;
-  left: 1112px;
-  top: 594px;
-  width: 64px;
-  height: 64px;
-}
-
-/* 세로 화살표 svg를 시계방향 90° — 오른쪽(스캐너 쪽)을 가리킴 */
-.wl-hint__arrow {
-  position: absolute;
-  left: 1214px;
-  top: 613px;
-  width: 60px;
-  height: 26px;
-}
-
-.wl-hint__arrow img {
-  position: absolute;
-  left: 15.8px;
-  top: -18.3px;
-  width: 28.394px;
-  height: 62.525px;
-  rotate: 90deg;
-}
-
-/* 안내 문구 */
-.wl-copy {
+.wl-prompt {
   position: absolute;
   left: 0;
   right: 0;
-  top: 294px;
-  display: flex;
-  pointer-events: none;
-}
-
-.wl-copy--center {
-  justify-content: center;
+  top: 356px;
+  font-size: 75px;
+  font-weight: 600;
+  line-height: 1.66;
   text-align: center;
-}
-
-.wl-copy--left {
-  justify-content: flex-start;
-  padding-left: 136px;
-}
-
-.wl-copy__lines {
-  display: flex;
-  flex-direction: column;
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.wl-copy--center .wl-copy__lines {
-  align-items: center;
-}
-
-.wl-copy--left .wl-copy__lines {
-  align-items: flex-start;
-}
-
-.wl-copy__head {
-  font-size: 73.734px;
+/* 3. 스캐너 안내 */
+.wl-stepno {
+  position: absolute;
+  left: 136px;
+  top: 277px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 2;
+  letter-spacing: 1.2px;
+  color: #fff;
 }
 
-.wl-copy__sub {
+.wl-scan-head {
+  position: absolute;
+  left: 136px;
+  top: 335px;
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 2;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wl-scan-sub {
+  position: absolute;
+  left: 135px;
+  top: 435px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  font-size: 40px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #1e2638;
+}
+
+.wl-scan-sub img {
+  width: 40px;
+  height: 40px;
+}
+
+/* 4~5. 체크리스트 */
+.wl-check-title {
+  position: absolute;
+  left: 138px;
+  top: 323px;
   font-size: 55.301px;
-  font-weight: 500;
-  line-height: 1.75;
+  font-weight: 600;
+  line-height: 76px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.wl-copy__sub--small {
-  font-size: 52.536px;
+.wl-check {
+  position: absolute;
+  left: 142px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  font-size: 24px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #1e2638;
+}
+
+.wl-check__dot {
+  position: relative;
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+}
+
+.wl-check__dot > img,
+.wl-check__mark {
+  position: absolute;
+  inset: 0;
+  width: 33px;
+  height: 33px;
+}
+
+/* 피그마의 두 선 그대로 — 짧은 선 + 긴 선 */
+.wl-check__mark img {
+  position: absolute;
+  height: 3px;
+}
+
+.wl-check__short {
+  left: 6.59px;
+  top: 19.06px;
+  width: 9.822px;
+  rotate: 44.55deg;
+}
+
+.wl-check__long {
+  left: 12.79px;
+  top: 17.11px;
+  width: 15.945px;
+  rotate: -44.72deg;
 }
 
 /* 3~5. 오른쪽 패널 (590×788) */
@@ -154,12 +284,58 @@
   background: #2e2e2e;
 }
 
-.wl-scan-corners {
+.wl-corners {
   position: absolute;
-  left: 97.9px;
+  inset: 0;
+}
+
+.wl-corner {
+  position: absolute;
+  width: 64.925px;
+  height: 64.925px;
+}
+
+.wl-corner--tl {
+  left: 98px;
   top: 146px;
-  width: 394.594px;
-  height: 394.594px;
+}
+
+.wl-corner--tr {
+  left: 427.7px;
+  top: 146px;
+}
+
+.wl-corner--br {
+  left: 427.7px;
+  top: 475.7px;
+}
+
+.wl-corner--bl {
+  left: 98px;
+  top: 475.7px;
+}
+
+.wl-scanline {
+  position: absolute;
+  left: 127px;
+  top: 416px;
+  width: 339px;
+  height: 2px;
+  background: #bcd7ff;
+  box-shadow: 0 4px 4px #7089ad, 0 4px 30.9px 7px rgba(255, 255, 255, 0.25);
+}
+
+.wl-waiting {
+  position: absolute;
+  left: 143px;
+  top: 588px;
+  width: 304px;
+  height: 33px;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 22.545px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-greeting);
 }
 
 .wl-checkin {
@@ -207,4 +383,104 @@
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(160, 219, 255, 0.3) 40%, rgba(160, 219, 255, 0) 70%);
   pointer-events: none;
+}
+
+/* 6. 환영 */
+.wl-done-ring {
+  position: absolute;
+  left: 1153px;
+  top: 235px;
+  width: 82px;
+  height: 82px;
+}
+
+/* 세로로 그려진 체크를 시계방향 90° */
+.wl-done-check {
+  position: absolute;
+  left: calc(1194.12px - 15.716px);
+  top: calc(277.48px - 22.88px);
+  width: 31.433px;
+  height: 45.76px;
+  rotate: 90deg;
+}
+
+.wl-done-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 325px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.wl-done-copy p:first-child {
+  font-size: 73.734px;
+  font-weight: 600;
+  line-height: 1.94;
+}
+
+.wl-done-copy p:last-child {
+  margin-top: -20px;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.94;
+}
+
+.wl-chip {
+  position: absolute;
+  top: 557px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 35px;
+  border: 2.013px solid #f0eeee;
+  background: #ebecf0;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 22.545px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #3b4256;
+}
+
+.wl-chip--bright {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(1.61px);
+  -webkit-backdrop-filter: blur(1.61px);
+}
+
+.wl-opening {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 739px;
+  height: 38px;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 22.545px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  color: #3b4256;
+}
+
+.wl-progress {
+  position: absolute;
+  left: 1007px;
+  top: 791px;
+  width: 374px;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.wl-progress span {
+  display: block;
+  height: 100%;
+  border-radius: 30px;
+  background: #fff;
 }

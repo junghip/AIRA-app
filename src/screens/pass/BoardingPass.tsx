@@ -12,9 +12,10 @@ import './BoardingPass.css'
 export const PASS_W = 216.342
 export const PASS_H = 348.551
 
-export default function BoardingPass() {
+// 의자 디스플레이는 피그마대로 승객·게이트만 다르게 씀
+export default function BoardingPass({ passenger = 'HAHA', gate = '28' }: { passenger?: string; gate?: string }) {
   return (
-    <div className="bp" role="img" aria-label="Boarding pass KE 081, ICN to LAX, 03 NOV, gate 28, boarding 13:50, seat 28A">
+    <div className="bp" role="img" aria-label={`Boarding pass KE 081, ICN to LAX, 03 NOV, gate ${gate}, boarding 13:50, seat 28A`}>
       <img className="bp__fill" src={ticketShape} alt="" />
       <img className="bp__fill" src={ticketFill} alt="" />
 
@@ -36,7 +37,7 @@ export default function BoardingPass() {
       <p className="bp__t bp__val bp__val--date">03 NOV</p>
 
       <p className="bp__t bp__key bp__key--gate">GATE</p>
-      <p className="bp__t bp__big bp__big--gate">28</p>
+      <p className="bp__t bp__big bp__big--gate">{gate}</p>
       <p className="bp__t bp__key bp__key--boarding">BOARDING</p>
       <p className="bp__t bp__big bp__big--boarding">13:50</p>
       <p className="bp__t bp__key bp__key--seat">SEAT</p>
@@ -45,7 +46,7 @@ export default function BoardingPass() {
       <div className="bp__v bp__perforation"><img src={perforation} alt="" /></div>
 
       <p className="bp__t bp__passenger-key">PASSENGER</p>
-      <p className="bp__t bp__passenger">HAHA</p>
+      <p className="bp__t bp__passenger">{passenger}</p>
       <p className="bp__t bp__class">Economy</p>
 
       <div className="bp__v bp__barcode"><img src={barcode} alt="" /></div>
