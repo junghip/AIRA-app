@@ -37,6 +37,23 @@
   overflow: hidden;
 }
 
+.cv-reveal {
+  position: absolute;
+  inset: 0;
+}
+
+.cv-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 60px;
+  margin-left: -30px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(220, 235, 255, 0.85) 50%, rgba(255, 255, 255, 0) 100%);
+  filter: blur(6px);
+}
+
 /* 평면용 .ds-stage의 가운데 정렬은 끄고 조각 안에 그대로 놓음 */
 .cv-screen {
   transform: none;
