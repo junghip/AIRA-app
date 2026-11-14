@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useState, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
 import backArrow from '../assets/display/back-arrow.svg'
 import carMap from '../assets/display/car-map.png'
 import foodCoffee from '../assets/display/food-coffee.jpg'
@@ -9,6 +9,7 @@ import mapDashed from '../assets/display/map-dashed.svg'
 import mapRouteBlue from '../assets/display/map-route-blue.svg'
 import mapUnion from '../assets/display/map-union.svg'
 import { smoothEase, softSpring, spring } from '../motion/transitions'
+import { useSharedMotionValue, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './AirportPanel.css'
 
@@ -72,8 +73,8 @@ const LIST_VISIBLE = 2388 - 232 - 50
 const TAB_OPTIONS = ['Cafe & Dessert', 'Dining', 'Shopping', 'Services', 'Experiences']
 
 export default function AirportPanel() {
-  const [tab, setTab] = useState(TAB_OPTIONS[0])
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [tab, setTab] = useSharedState('ap.tab', TAB_OPTIONS[0])
+  const [openId, setOpenId] = useSharedState<string | null>('ap.open', null)
   const place = PLACES.find((p) => p.id === openId)
 
   return (
@@ -113,9 +114,11 @@ export default function AirportPanel() {
 }
 
 function List({ onOpen }: { onOpen: (id: string) => void }) {
+  // 끄는 위치를 모든 조각이 같이 씀
+  const trackX = useSharedMotionValue('ap.trackX')
   return (
     <motion.div className="ap-list" exit={{ opacity: 0, filter: 'blur(8px)' }} transition={{ duration: 0.4 }}>
-      <motion.div className="ap-track" drag="x" dragConstraints={{ left: -(LIST_W - LIST_VISIBLE), right: 0 }} dragElastic={0.1} style={{ width: LIST_W }}>
+      <motion.div className="ap-track" drag="x" dragConstraints={{ left: -(LIST_W - LIST_VISIBLE), right: 0 }} dragElastic={0.1} _dragX={trackX} style={{ width: LIST_W, x: trackX }}>
         {PLACES.map((p, i) => (
           <motion.div
             key={p.id}
@@ -150,7 +153,7 @@ function List({ onOpen }: { onOpen: (id: string) => void }) {
 }
 
 function Detail({ place }: { place: Place }) {
-  const [sent, setSent] = useState(false)
+  const [sent, setSent] = useSharedState('ap.sent', false)
 
   return (
     <motion.div className="ds-layer ap-detail" exit={{ opacity: 0, filter: 'blur(8px)' }} transition={{ duration: 0.4 }}>

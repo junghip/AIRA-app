@@ -1,5 +1,4 @@
 import { motion, type PanInfo } from 'motion/react'
-import { useState } from 'react'
 import genreAction from '../assets/display/genre-action.jpg'
 import genreAnimation from '../assets/display/genre-animation.jpg'
 import genreComedy from '../assets/display/genre-comedy.jpg'
@@ -16,6 +15,7 @@ import movieRoadtrip from '../assets/display/movie-roadtrip.jpg'
 import movieVacation from '../assets/display/movie-vacation.jpg'
 import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
+import { useSharedMotionValue, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './MediaPanel.css'
 
@@ -49,11 +49,12 @@ const GENRES = [
 ]
 
 export default function MediaPanel() {
-  const [active, setActive] = useState(2)
-  const [section, setSection] = useState('Movie')
-  const [view, setView] = useState('Scroll')
-  const [genre, setGenre] = useState('Travel')
+  const [active, setActive] = useSharedState('mp.active', 2)
+  const [section, setSection] = useSharedState('mp.section', 'Movie')
+  const [view, setView] = useSharedState('mp.view', 'Scroll')
+  const [genre, setGenre] = useSharedState('mp.genre', 'Travel')
   const n = MOVIES.length
+  const dragX = useSharedMotionValue('mp.dragX')
   const go = (d: number) => setActive((a) => (a + d + n) % n)
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
@@ -73,7 +74,7 @@ export default function MediaPanel() {
       </motion.div>
 
       {/* 카드 넘기기 — 끌거나, 옆 카드를 누르면 가운데로 */}
-      <motion.div className="mp-carousel" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.12} onDragEnd={onDragEnd}>
+      <motion.div className="mp-carousel" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.12} _dragX={dragX} style={{ x: dragX }} onDragEnd={onDragEnd}>
         {MOVIES.map((m, i) => {
           let off = i - active
           if (off > n / 2) off -= n

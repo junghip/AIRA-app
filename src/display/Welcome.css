@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.wl--autoplay {
+  pointer-events: none;
+}
+
 /* 1. 시작 화면 */
 .wl-intro__logo {
   position: absolute;
@@ -117,6 +121,7 @@
 
 .wl-back {
   position: absolute;
+  z-index: 5; /* 뒤에 오는 전체 화면 글자 레이어보다 위 */
   left: 86px;
   top: 51px;
   width: 124px;
@@ -154,6 +159,33 @@
   text-align: center;
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.9);
+}
+
+/* 안내 화면 오른쪽 힌트 — 피그마에선 프레임 밖 그룹(Group 1948757569) */
+.wl-hint__scan {
+  position: absolute;
+  left: 2137px;
+  top: 385px;
+  width: 64px;
+  height: 64px;
+}
+
+/* 세로로 그려진 화살표를 시계방향 90° — 오른쪽(스캐너 쪽)을 가리킴 */
+.wl-hint__arrow {
+  position: absolute;
+  left: 2239px;
+  top: 404px;
+  width: 60px;
+  height: 26px;
+}
+
+.wl-hint__arrow img {
+  position: absolute;
+  left: 15.8px;
+  top: -18.3px;
+  width: 28.394px;
+  height: 62.525px;
+  rotate: 90deg;
 }
 
 /* 3. 스캐너 안내 */

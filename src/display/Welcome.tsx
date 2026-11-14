@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import checkLong from '../assets/display/check-long.svg'
 import checkShort from '../assets/display/check-short.svg'
 import cornerBl from '../assets/display/corner-bl.svg'
@@ -9,6 +9,8 @@ import cornerTr from '../assets/display/corner-tr.svg'
 import logoSmall from '../assets/display/logo-small.svg'
 import logoWelcome from '../assets/display/logo-welcome.svg'
 import qrCode from '../assets/display/qr-code.svg'
+import scanArrow from '../assets/display/scan-arrow.svg'
+import scanIcon from '../assets/display/scan-icon.svg'
 import startArrowHead from '../assets/display/start-arrow-head.svg'
 import startArrowLine from '../assets/display/start-arrow-line.svg'
 import stepDone from '../assets/display/step-done.svg'
@@ -17,6 +19,7 @@ import welcomeCheck from '../assets/display/welcome-check.svg'
 import welcomeRing from '../assets/display/welcome-ring.svg'
 import { smoothEase, softSpring, spring } from '../motion/transitions'
 import BoardingPass, { PASS_H, PASS_W } from '../screens/pass/BoardingPass'
+import { usePrimaryCopy, useSharedState } from './shared'
 import './Welcome.css'
 
 // 피그마 Section 8 "첫 웰컴" 6장: 시작 → 안내 → 스캐너(STEP 1 OF 2) → 읽는 중 → 확인 → 환영
@@ -65,25 +68,28 @@ const stop = { onPointerDown: (e: React.PointerEvent) => e.stopPropagation() }
 const pinned = new URLSearchParams(window.location.search).get('step') as Step | null
 const START = Math.max(0, STEPS.indexOf(pinned as Step))
 
-export default function Welcome({ onDone }: { onDone: () => void }) {
-  const [i, setI] = useState(START)
-  const [lang, setLang] = useState('EN')
+export default function Welcome({ onDone, autoplay = false }: { onDone: () => void; autoplay?: boolean }) {
+  const [i, setI] = useSharedState('wl.i', START)
+  const [lang, setLang] = useSharedState('wl.lang', 'EN')
   const step = STEPS[i]
   const next = () => (i < STEPS.length - 1 ? setI(i + 1) : onDone())
 
+  // 저절로 넘기는 타이머는 한 조각만 (여러 조각이 동시에 넘기지 않게)
+  const primary = usePrimaryCopy()
   useEffect(() => {
-    if (pinned) return
+    if (pinned || !primary) return
     const t = setTimeout(next, HOLD[step])
     return () => clearTimeout(t)
   })
 
   const panelOpen = step === 'scanner' || step === 'reading' || step === 'confirmed'
   const checking = step === 'reading' || step === 'confirmed'
-  // 읽는 중: 첫 줄 완료·둘째 줄 진행 / 확인: 모두 완료
-  const doneCount = step === 'confirmed' ? 3 : 1
+  // 읽는 중: 첫째·둘째 줄이 차례로 체크, 셋째 줄 진행 / 확인: 모두 완료 (피그마의 체크 표시 그대로)
+  const doneCount = step === 'confirmed' ? 3 : 2
 
   return (
-    <div className="wl" onPointerDown={next}>
+    // autoplay면 화면 전체가 눌리지 않고 정해진 시간대로만 흘러감
+    <div className={`wl ${autoplay ? 'wl--autoplay' : ''}`} onPointerDown={autoplay ? undefined : next}>
       {/* 1. 시작 화면 */}
       <AnimatePresence>
         {step === 'intro' && (
@@ -178,6 +184,17 @@ export default function Welcome({ onDone }: { onDone: () => void }) {
             <motion.p className="wl-prompt" initial={{ y: 24 }} animate={{ y: 0 }} transition={{ duration: 1, ease: smoothEase }}>
               Start your journey with your boarding pass.
             </motion.p>
+            {/* 오른쪽 스캐너를 가리키는 힌트 */}
+            <motion.img
+              className="wl-hint__scan"
+              src={scanIcon}
+              alt=""
+              animate={{ scale: [1, 0.9, 1] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div className="wl-hint__arrow" animate={{ x: [0, 12, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}>
+              <img src={scanArrow} alt="" />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -206,7 +223,7 @@ export default function Welcome({ onDone }: { onDone: () => void }) {
               </motion.p>
             </AnimatePresence>
             {CHECKS.map((c, n) => (
-              <CheckRow key={c} n={n} text={c} done={n < doneCount} active={n === doneCount} />
+              <CheckRow key={c} n={n} text={c} done={n < doneCount} active={n === doneCount} delay={step === 'reading' ? 0.3 + n * 1.1 : 0.1} />
             ))}
           </motion.div>
         )}
@@ -351,7 +368,7 @@ export default function Welcome({ onDone }: { onDone: () => void }) {
   )
 }
 
-function CheckRow({ n, text, done, active }: { n: number; text: string; done: boolean; active: boolean }) {
+function CheckRow({ n, text, done, active, delay }: { n: number; text: string; done: boolean; active: boolean; delay: number }) {
   const top = 420 + n * 48.5
   return (
     <motion.div className="wl-check" style={{ top }} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ ...softSpring, delay: 0.15 + n * 0.1 }}>
@@ -362,9 +379,9 @@ function CheckRow({ n, text, done, active }: { n: number; text: string; done: bo
           src={stepDone}
           alt=""
           animate={done ? { opacity: 1, scale: 1 } : active ? { opacity: [0.2, 0.9, 0.2], scale: 1 } : { opacity: 0, scale: 0.4 }}
-          transition={done ? spring : active ? { duration: 1.2, repeat: Infinity } : { duration: 0.2 }}
+          transition={done ? { ...spring, delay } : active ? { duration: 1.2, repeat: Infinity } : { duration: 0.2 }}
         />
-        <motion.span className="wl-check__mark" initial={false} animate={{ opacity: done ? 1 : 0, scale: done ? 1 : 0.5 }} transition={{ ...spring, delay: done ? 0.1 : 0 }}>
+        <motion.span className="wl-check__mark" initial={false} animate={{ opacity: done ? 1 : 0, scale: done ? 1 : 0.5 }} transition={{ ...spring, delay: done ? delay + 0.1 : 0 }}>
           <img className="wl-check__short" src={checkShort} alt="" />
           <img className="wl-check__long" src={checkLong} alt="" />
         </motion.span>

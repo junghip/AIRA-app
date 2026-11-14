@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
 import Screen from './components/Screen'
+import CurvedDisplay from './display/CurvedDisplay'
 import Display from './display/Display'
 import Home from './screens/Home'
 import Pass from './screens/pass/Pass'
@@ -37,10 +38,11 @@ export default function App() {
     )
   }
 
+  // 휘어진 화면 미리보기는 /display-curved
   if (location.pathname.startsWith('/display')) {
     return (
       <MotionConfig reducedMotion="user">
-        <Display />
+        {location.pathname.startsWith('/display-curved') ? <CurvedDisplay /> : <Display />}
       </MotionConfig>
     )
   }

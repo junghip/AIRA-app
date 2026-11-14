@@ -1,0 +1,58 @@
+/* 휘어진 의자 디스플레이 미리보기 */
+.cv-viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 40%, #1b1f2a 0%, #0d0f14 60%, #08090c 100%);
+}
+
+.cv-room {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  perspective-origin: 50% 40%;
+}
+
+.cv-floor {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(169, 187, 212, 0.35), rgba(227, 213, 210, 0.12) 55%, rgba(0, 0, 0, 0) 100%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.cv-cylinder {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.cv-strip {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 평면용 .ds-stage의 가운데 정렬은 끄고 조각 안에 그대로 놓음 */
+.cv-screen {
+  transform: none;
+}
+
+/* 같은 화면이 조각 수만큼 그려지므로 무거운 배경 흐림은 끔 (밑이 은은한 그라데이션이라 차이가 거의 없음)
+   영화 카드 아래 정보 띠만은 포스터 글씨를 가려야 해서 남김 */
+.cv-cylinder *:not(.mp-card__info) {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.cv-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0.06) 50%, rgba(0, 0, 0, 0) 82%, rgba(255, 255, 255, 0.1) 100%);
+}

@@ -1,5 +1,5 @@
 import { motion, useSpring, useTransform } from 'motion/react'
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, type PointerEvent } from 'react'
 import arrowRight from '../assets/display/arrow-right-s.svg'
 import avatar1 from '../assets/display/avatar-1.png'
 import avatar2 from '../assets/display/avatar-2.jpg'
@@ -23,6 +23,7 @@ import qrCode from '../assets/display/qr-code.svg'
 import seatTop from '../assets/display/seat-top.png'
 import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
+import { useSharedState } from './shared'
 import './HomePanel.css'
 
 // 피그마 "홈 - 기본 메뉴"
@@ -43,7 +44,7 @@ const AVATARS = [
 type Props = { onShowPass: () => void; onRest: () => void }
 
 export default function HomePanel({ onShowPass, onRest }: Props) {
-  const [remind, setRemind] = useState(false)
+  const [remind, setRemind] = useSharedState('hp.remind', false)
 
   return (
     <>
@@ -120,7 +121,7 @@ function Field({ k, v, big }: { k: string; v: string; big?: boolean }) {
 }
 
 function BoardingIn() {
-  const [stopAdded, setStopAdded] = useState(false)
+  const [stopAdded, setStopAdded] = useSharedState('hp.stop', false)
 
   return (
     <motion.section className="ds-card hp-boarding" {...enter(0.18)}>
@@ -220,9 +221,9 @@ function Poi({ icon, n, x, w, d }: { icon: string; n: string; x: number; w?: num
 // MY SEAT — 링을 돌려 좌석 각도 조절 (점 위치 0~180° → 좌석 0~90°)
 // 원호·점은 피그마 이미지 그대로, 끌면 함께 링을 따라 돎 (피그마 기본 = 점이 3시, 45°)
 function MySeat() {
-  const [sweep, setSweep] = useState(90)
-  const [mode, setMode] = useState('Private')
-  const [size, setSize] = useState('Compact')
+  const [sweep, setSweep] = useSharedState('hp.sweep', 90)
+  const [mode, setMode] = useSharedState('hp.mode', 'Private')
+  const [size, setSize] = useSharedState('hp.size', 'Compact')
   const dialRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
 

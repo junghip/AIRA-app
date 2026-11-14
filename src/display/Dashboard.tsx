@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useState } from 'react'
 import airNavHome from '../assets/display/air-nav-home.svg'
 import airNavFlight from '../assets/display/air-nav-flight.svg'
 import clockSep from '../assets/display/clock-sep.svg'
@@ -14,6 +13,7 @@ import BoardingPass, { PASS_H, PASS_W } from '../screens/pass/BoardingPass'
 import AirportPanel from './AirportPanel'
 import HomePanel from './HomePanel'
 import MediaPanel from './MediaPanel'
+import { useSharedState } from './shared'
 import './Dashboard.css'
 
 export type Tab = 'home' | 'media' | 'airport'
@@ -26,9 +26,9 @@ const NAV: { id: Tab; label: string; on: string; offLight: string; offDark: stri
 ]
 
 export default function Dashboard({ onRestart }: { onRestart: () => void }) {
-  const [tab, setTab] = useState<Tab>('home')
-  const [passOpen, setPassOpen] = useState(false)
-  const [resting, setResting] = useState(false)
+  const [tab, setTab] = useSharedState<Tab>('db.tab', 'home')
+  const [passOpen, setPassOpen] = useSharedState('db.pass', false)
+  const [resting, setResting] = useSharedState('db.rest', false)
   const dark = tab === 'media'
 
   return (
