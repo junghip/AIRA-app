@@ -19,9 +19,13 @@ const loadVideo = (src: string) =>
   new Promise<void>((resolve) => {
     const v = document.createElement('video')
     v.muted = true
+    v.setAttribute('muted', '')
+    v.setAttribute('playsinline', '')
     v.preload = 'auto'
     v.oncanplaythrough = () => resolve()
     v.onerror = () => resolve()
+    // Safari는 화면에 없는 영상을 끝까지 안 받기도 함 → 첫 장면만 준비되면 통과
+    v.onloadeddata = () => resolve()
     v.src = src
     v.load()
   })

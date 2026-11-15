@@ -263,8 +263,23 @@ export function MoviePlayer({ onClose }: { onClose: () => void }) {
 function ClipVideo() {
   const ref = useRef<HTMLVideoElement>(null)
   useEffect(() => {
-    playingVideo = ref.current
+    const v = ref.current!
+    playingVideo = v
+    // Safari는 '소리 없음'이 확실해야 자동 재생을 허락함 — React가 muted를 속성으로 안 써 줘서 직접 지정
+    v.muted = true
+    v.defaultMuted = true
+    v.setAttribute('muted', '')
+    v.setAttribute('playsinline', '')
+    const play = () => {
+      v.play().catch(() => {})
+    }
+    play()
+    // 아직 준비가 덜 됐으면 준비되는 대로 다시 재생 시도
+    v.addEventListener('canplay', play)
+    v.addEventListener('loadeddata', play)
     return () => {
+      v.removeEventListener('canplay', play)
+      v.removeEventListener('loadeddata', play)
       playingVideo = null
     }
   }, [])
