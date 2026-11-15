@@ -32,7 +32,7 @@ type Step = 'upload' | 'reading' | 'done'
 const copy: Record<Step, { title: string[]; sub: string[] }> = {
   upload: { title: ['Upload your', 'boarding pass'], sub: ['Snap it or pick a file, we read the rest.'] },
   reading: { title: ['Reading your', 'boarding pass'], sub: ['Pulling out the flight, gate and time.'] },
-  done: { title: ['Your All set!'], sub: ['KE 081 is on your trip.', 'Your gate and boarding time are saved.'] },
+  done: { title: ['Your All set!'], sub: ['LH 702 is on your trip.', 'Your gate and boarding time are saved.'] },
 }
 
 // 단계별 탑승권 위치 — 피그마 프레임(393×852) 기준 중심 좌표, 크기, 기울기
@@ -217,12 +217,12 @@ export default function Pass() {
                   <motion.span className="mini-pass__beam-glow" animate={beamSweep} transition={beamSweepTransition} />
                   <span className="mini-pass__scanlines" />
                   <p className="mini-pass__label">BOARDING PASS</p>
-                  <p className="mini-pass__route">ICN → LAX</p>
+                  <p className="mini-pass__route">ICN → BER</p>
                   <p className="mini-pass__key">GATE</p>
-                  <p className="mini-pass__gate">28</p>
+                  <p className="mini-pass__gate">16</p>
                   <span className="mini-pass__bar" style={{ top: 56.86, width: 38.4, background: 'rgba(255, 255, 255, 0.26)' }} />
                   <span className="mini-pass__bar" style={{ top: 67.2, width: 28.061, background: 'rgba(255, 255, 255, 0.2)' }} />
-                  <p className="mini-pass__flight">KE 081</p>
+                  <p className="mini-pass__flight">LH 702</p>
                   <img className="mini-pass__perforation" src={miniPerforation} width={82.707} height={0.738} alt="" />
                   <img className="mini-pass__plane" src={miniPlane} width={16.246} height={16.246} alt="" />
                   <p className="mini-pass__seat">28A</p>

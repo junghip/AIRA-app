@@ -236,7 +236,7 @@ function MapScreen({ riders, onArrive, onBack, onClose }: { riders: number; onAr
           {[
             ['RIDERS', String(riders)],
             ['LEVEL', '3F'],
-            ['GATE', '28'],
+            ['GATE', '16'],
           ].map(([label, value]) => (
             <div key={label} className="ride-card__stat">
               <p className="ride-card__label ride-card__label--caps">{label}</p>
@@ -317,7 +317,7 @@ function EndingScreen({ onClose }: { onClose: () => void }) {
           Here we go
         </motion.h1>
         <motion.p className="aira__sub" variants={riseIn}>
-          Starting your ride to Gate 28
+          Starting your ride to Gate 16
         </motion.p>
       </motion.div>
 

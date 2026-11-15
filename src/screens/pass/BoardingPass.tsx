@@ -13,9 +13,9 @@ export const PASS_W = 216.342
 export const PASS_H = 348.551
 
 // 의자 디스플레이는 피그마대로 승객·게이트만 다르게 씀
-export default function BoardingPass({ passenger = 'Halle', gate = '28' }: { passenger?: string; gate?: string }) {
+export default function BoardingPass({ passenger = 'Halle', gate = '16' }: { passenger?: string; gate?: string }) {
   return (
-    <div className="bp" role="img" aria-label={`Boarding pass KE 081, ICN to LAX, 03 NOV, gate ${gate}, boarding 13:50, seat 28A`}>
+    <div className="bp" role="img" aria-label={`Boarding pass LH 702, ICN to BER, 03 NOV, gate ${gate}, boarding 14:20, seat 28A`}>
       <img className="bp__fill" src={ticketShape} alt="" />
       <img className="bp__fill" src={ticketFill} alt="" />
 
@@ -23,23 +23,23 @@ export default function BoardingPass({ passenger = 'Halle', gate = '28' }: { pas
       <div className="bp__v bp__plane"><img src={plane} alt="" /></div>
 
       <p className="bp__t bp__city">ICN</p>
-      <p className="bp__t bp__city bp__city--to">LAX</p>
+      <p className="bp__t bp__city bp__city--to">BER</p>
       <div className="bp__v bp__route-line"><img src={routeLine} alt="" /></div>
       <div className="bp__v bp__route-arrow"><img src={routeArrow} alt="" /></div>
       <p className="bp__t bp__city-name">Seoul Incheon</p>
-      <p className="bp__t bp__city-name bp__city-name--to">Los Angeles</p>
+      <p className="bp__t bp__city-name bp__city-name--to">Berlin</p>
 
       <img className="bp__divider" src={divider} alt="" />
 
       <p className="bp__t bp__key bp__key--flight">FLIGHT</p>
-      <p className="bp__t bp__val bp__val--flight">KE 081</p>
+      <p className="bp__t bp__val bp__val--flight">LH 702</p>
       <p className="bp__t bp__key bp__key--date">DATE</p>
       <p className="bp__t bp__val bp__val--date">03 NOV</p>
 
       <p className="bp__t bp__key bp__key--gate">GATE</p>
       <p className="bp__t bp__big bp__big--gate">{gate}</p>
       <p className="bp__t bp__key bp__key--boarding">BOARDING</p>
-      <p className="bp__t bp__big bp__big--boarding">13:50</p>
+      <p className="bp__t bp__big bp__big--boarding">14:20</p>
       <p className="bp__t bp__key bp__key--seat">SEAT</p>
       <p className="bp__t bp__big bp__big--seat">28A</p>
 
@@ -50,7 +50,7 @@ export default function BoardingPass({ passenger = 'Halle', gate = '28' }: { pas
       <p className="bp__t bp__class">Economy</p>
 
       <div className="bp__v bp__barcode"><img src={barcode} alt="" /></div>
-      <p className="bp__t bp__code">KE081 · ICNLAX · 28A</p>
+      <p className="bp__t bp__code">LH702 · ICNBER · 28A</p>
     </div>
   )
 }
