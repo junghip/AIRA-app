@@ -1,10 +1,9 @@
 import { motion } from 'motion/react'
-import icBag from '../assets/window/ic-bag.svg'
 import icClockDark from '../assets/window/ic-clock-dark.svg'
 import icCup from '../assets/window/ic-cup.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "창문" 525:2647(카페 도착) · 525:2775(Gate 47 도착)
+// 피그마 "창문 디벨롭할게요" 532:4055 — 카페 도착, 다시 출발할 때까지 막대가 차오름
 const rise = (delay: number) => ({
   initial: { opacity: 0, y: 26, filter: 'blur(10px)' },
   animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
@@ -14,8 +13,8 @@ const rise = (delay: number) => ({
 export function ArrivedCoffee() {
   return (
     <div className="wn-layer wn-noclick">
-      <div className="wn-arrive-text" style={{ top: 401 }}>
-        <motion.p className="wn-arrive-title" style={{ fontSize: 69 }} {...rise(0.9)}>
+      <div className="wn-arrive-text" style={{ top: 410 }}>
+        <motion.p className="wn-arrive-title" style={{ fontSize: 56 }} {...rise(0.9)}>
           We’ve arrived at Lounge Coffee
         </motion.p>
         <motion.p className="wn-arrive-sub" {...rise(1.1)}>
@@ -45,50 +44,15 @@ export function ArrivedCoffee() {
         </motion.div>
       </div>
 
-      {/* 남은 정차 시간 — 막대가 아주 천천히 차오름 */}
+      {/* 남은 정차 시간 — 막대가 차오르며 앞쪽 빛이 함께 흐름 */}
       <motion.div className="wn-arrive-next" {...rise(2)}>
         <div className="wn-arrive-bar">
-          <motion.span initial={{ width: 0 }} animate={{ width: 480 }} transition={{ duration: 60, ease: 'linear', delay: 2.4 }} />
+          <motion.span initial={{ width: 0 }} animate={{ width: [0, 39, 480] }} transition={{ duration: 14, ease: [0.3, 0, 0.7, 1], times: [0, 0.1, 1], delay: 2.3 }}>
+            <motion.i className="wn-arrive-glow" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }} />
+          </motion.span>
         </div>
-        <p>Next: Gate 16 · 6 min ride</p>
+        <p>Gate 16 · 6 min ride</p>
       </motion.div>
-    </div>
-  )
-}
-
-export function ArrivedGate() {
-  return (
-    <div className="wn-layer wn-noclick">
-      <div className="wn-arrive-text" style={{ top: 388 }}>
-        <motion.p className="wn-arrive-title" style={{ fontSize: 75, letterSpacing: -1.125 }} {...rise(0.9)}>
-          We’ve arrived at Gate 47
-        </motion.p>
-        <motion.p className="wn-arrive-sub" {...rise(1.1)}>
-          Have a wonderful trip to Berlin
-        </motion.p>
-      </div>
-
-      <motion.div className="wn-summary" style={{ x: '-50%' }} {...rise(1.5)}>
-        <div className="wn-summary-cell">
-          <p>FLIGHT</p>
-          <b>LH 702</b>
-        </div>
-        <span className="wn-summary-div" />
-        <div className="wn-summary-cell">
-          <p>BOARDING</p>
-          <b>14:20 · in 18 min</b>
-        </div>
-        <span className="wn-summary-div" />
-        <div className="wn-summary-cell">
-          <p>SEATS</p>
-          <b>32A – 32D</b>
-        </div>
-      </motion.div>
-
-      <motion.p className="wn-reminder" {...rise(2)}>
-        <img src={icBag} alt="" width={27} height={27} />
-        Please take all your belongings · doors open on your right
-      </motion.p>
     </div>
   )
 }

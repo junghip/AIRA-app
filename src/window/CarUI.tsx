@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import vlineClock from '../assets/window/vline-clock.svg'
+import vlineClock from '../assets/window/v3-vline-clock.svg'
 import { smoothEase } from '../motion/transitions'
 import Dashboard from './Dashboard'
 import Menu from './Menu'

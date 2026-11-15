@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import { smoothEase } from '../motion/transitions'
-import { ArrivedCoffee, ArrivedGate } from './Arrival'
+import { ArrivedCoffee } from './Arrival'
 import Backdrop from './Backdrop'
 import CarUI from './CarUI'
 import { BottomBar, TopBar } from './Chrome'
@@ -30,8 +30,10 @@ function useStageScale() {
 // 장면에 들어올 때 보여줄 경로 → 잠시 뒤 바뀔 경로 (끼어드는 모션을 보여주려고 한 박자 늦춤)
 const ROUTE_FLOW: Partial<Record<Scene, [RouteVariant, RouteVariant]>> = {
   dashboard: ['base', 'base'],
-  route: ['base', 'coffee'],
+  route: ['base', 'base'],
+  routeCoffee: ['base', 'coffee'],
   route47: ['coffee', 'gate47'],
+  flight: ['gate47', 'gate47'],
 }
 
 const layerExit = { opacity: 0, filter: 'blur(14px)', transition: { duration: 0.6, ease: smoothEase } }
@@ -50,7 +52,7 @@ export default function Window() {
   const enter = useCallback((i: number) => {
     const s = SCENES[i]
     setIndex(i)
-    setMenu(s === 'route' || s === 'route47' ? 'route' : null)
+    setMenu(s === 'flight' ? 'flight' : s === 'route' || s === 'routeCoffee' || s === 'route47' ? 'route' : null)
     const flow = ROUTE_FLOW[s]
     if (flow) setVariant(flow[0])
   }, [])
@@ -121,11 +123,6 @@ export default function Window() {
           {scene === 'gate' && (
             <motion.div key={`gate-${run}`} className="wn-layer" exit={layerExit}>
               <GateUpdated onNext={() => go(1)} />
-            </motion.div>
-          )}
-          {scene === 'arrivedGate' && (
-            <motion.div key={`arrive-${run}`} className="wn-layer" exit={layerExit}>
-              <ArrivedGate />
             </motion.div>
           )}
         </AnimatePresence>

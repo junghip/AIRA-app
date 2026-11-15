@@ -1,9 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
-import avatar1 from '../assets/window/avatar-1.png'
-import avatar2 from '../assets/window/avatar-2.png'
-import avatar3 from '../assets/window/avatar-3.png'
-import avatar4 from '../assets/window/avatar-4.png'
 import carTop from '../assets/window/car-top.png'
 import dunkin from '../assets/window/dunkin.png'
 import icCheckbox from '../assets/window/ic-checkbox.svg'
@@ -20,7 +16,7 @@ import sugRoad from '../assets/window/sug-road-v2.svg'
 import sugRoute from '../assets/window/sug-route-v2.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "창문" 기본 v3 (525:2459) — 일행이 추천한 Dunkin, 미리 주문하고 경로에 넣을지 고르기
+// 피그마 "창문 디벨롭할게요" 기본 v3 (532:3684) — 일행이 추천한 Dunkin, 미리 주문하고 경로에 넣을지 고르기
 const MENU = [
   { name: 'Original Glazed', img: menuGlazed, size: { width: 54, height: 67 } },
   { name: 'Boston Kreme', img: menuBoston, size: { width: 54, height: 68 } },
@@ -46,14 +42,12 @@ export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: 
     <motion.div className="wn-layer wn-noclick" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.16, delayChildren: 0.3 } } }}>
       {/* 맨 위 — 누가 추천했는지 알림이 내려옴 */}
       <motion.div className="wn-s-banner" style={{ x: '-50%' }} variants={{ hidden: { opacity: 0, y: -40, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 22 } } }}>
-        <div className="wn-s-banner-avatar">
-          <img src={avatar4} alt="" />
-          <span className="wn-avatar-shade is-a" />
-        </div>
-        <p className="wn-s-banner-title">Seha suggested a stop</p>
+        <p className="wn-s-banner-title">Eden suggested a stop</p>
         <p className="wn-s-banner-time"> just now</p>
       </motion.div>
 
+      {/* 카드 두 장 — 피그마에서 이전 시안보다 0.9배로 줄어듦 */}
+      <div className="wn-s-scale">
       {/* 가게 카드 */}
       <motion.div className="wn-s-place" variants={rise}>
         <div className="wn-s-photo">
@@ -158,23 +152,10 @@ export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: 
         </motion.div>
       </motion.div>
 
-      {/* 일행 투표 + 결정 버튼 */}
+      </div>
+
+      {/* 결정 버튼 */}
       <motion.div className="wn-s-decision" style={{ x: '-50%' }} variants={fadeIn}>
-        <div className="wn-s-votes">
-          <div className="wn-s-vote-avatars">
-            <span className="wn-s-vote is-jk">
-              <img src={avatar3} alt="" />
-            </span>
-            <span className="wn-s-vote is-sm">
-              <img src={avatar1} alt="" />
-            </span>
-            {/* 아직 고민 중인 Minjun — 점선 테두리가 천천히 숨 쉼 */}
-            <motion.span className="wn-s-vote is-ml" animate={{ opacity: [1, 0.55, 1] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}>
-              <img src={avatar2} alt="" />
-            </motion.span>
-          </div>
-          <p>Jiho and Sora are in · waiting for Minjun</p>
-        </div>
         <div className="wn-s-actions">
           <motion.button
             type="button"

@@ -4,12 +4,14 @@ import { smoothEase } from '../motion/transitions'
 import type { Scene } from './scenes'
 
 // AIRA 로고 하나가 장면 사이를 옮겨다님 — 웰컴의 큰 로고가 그대로 줄어들어 위쪽 작은 로고가 됨
-const HERO = { left: 591.9, top: 411, width: 732.6, height: 134.1 }
+const HERO = { left: 668.5, top: 398, width: 581.3, height: 106.3 }
+const BYE = { left: 650, top: 430, width: 618, height: 113.2 }
 const TOP = { left: 861, top: 133, width: 197.1, height: 36.4 }
 
 const placeOf = (s: Scene) => {
-  if (s === 'welcome' || s === 'bye') return 'hero'
-  if (s === 'seat' || s === 'gate' || s === 'arrivedCoffee' || s === 'arrivedGate') return 'top'
+  if (s === 'welcome') return 'hero'
+  if (s === 'bye') return 'bye'
+  if (s === 'gate' || s === 'arrivedCoffee') return 'top'
   return 'hidden'
 }
 
@@ -21,7 +23,7 @@ const rise = (delay: number) => ({
 
 export default function Logo({ scene, run }: { scene: Scene; run: number }) {
   const place = placeOf(scene)
-  const box = place === 'hero' ? HERO : TOP
+  const box = place === 'hero' ? HERO : place === 'bye' ? BYE : TOP
 
   return (
     <>
@@ -52,7 +54,7 @@ export default function Logo({ scene, run }: { scene: Scene; run: number }) {
               Welcome aboard AIRA
             </motion.p>
             <motion.p className="wn-hero-sub" {...rise(1.2)}>
-              Doors are open - Please step inside
+              Doors are open. Please step inside.
             </motion.p>
           </motion.div>
         )}

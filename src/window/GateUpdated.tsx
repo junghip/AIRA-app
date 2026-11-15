@@ -1,14 +1,13 @@
 import { motion } from 'motion/react'
-import arrowRight from '../assets/window/arrow-right-v2.svg'
 import icAlert from '../assets/window/ic-alert.svg'
 import icCheckWhite from '../assets/window/ic-check-white.svg'
 import icClockGray from '../assets/window/ic-clock-gray.svg'
 import icPhone from '../assets/window/ic-phone.svg'
 import icRouteSign2 from '../assets/window/ic-route-sign-2.svg'
-import icRouteSign from '../assets/window/ic-route-sign.svg'
+import arrowRight from '../assets/window/v3-gate-arrow.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "창문" GATE UPDATED (525:2692) — 16에 줄이 그어지고, 화살표를 따라 47이 내려앉음
+// 피그마 "창문 디벨롭할게요" GATE UPDATED (532:4099) — 16에 줄이 그어지고, 화살표를 따라 47이 내려앉음
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -54,32 +53,21 @@ export default function GateUpdated({ onNext }: { onNext: () => void }) {
         </div>
       </motion.div>
 
-      <motion.div className="wn-gate-actions" {...fade(3)}>
-        <motion.button
-          type="button"
-          className="wn-gate-btn is-light"
-          whileTap={{ scale: 0.95 }}
-          onClick={(e) => {
-            e.stopPropagation()
-            onNext()
-          }}
-        >
-          <img src={icRouteSign} alt="" width={26.93} height={26.93} />
-          See new route
-        </motion.button>
-        <motion.button
-          type="button"
-          className="wn-gate-btn is-dark"
-          whileTap={{ scale: 0.95 }}
-          onClick={(e) => {
-            e.stopPropagation()
-            onNext()
-          }}
-        >
-          <img src={icCheckWhite} alt="" width={26.93} height={26.93} />
-          Got it
-        </motion.button>
-      </motion.div>
+      <motion.button
+        type="button"
+        className="wn-gate-btn"
+        style={{ x: '-50%' }}
+        {...fade(3)}
+        whileTap={{ scale: 0.95 }}
+        onClick={(e) => {
+          e.stopPropagation()
+          onNext()
+        }}
+      >
+        {/* 체크 표시가 그려지듯 */}
+        <motion.img src={icCheckWhite} alt="" width={26.93} height={26.93} initial={{ clipPath: 'inset(0 100% 0 0)' }} animate={{ clipPath: 'inset(0 0% 0 0)' }} transition={{ duration: 0.5, ease: smoothEase, delay: 3.4 }} />
+        Got it
+      </motion.button>
 
       <motion.p className="wn-gate-notified" style={{ x: '-50%' }} {...fade(3.3)}>
         {/* 일행 휴대폰에 알림 — 진동하듯 */}

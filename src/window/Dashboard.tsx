@@ -1,41 +1,29 @@
 import { AnimatePresence, motion } from 'motion/react'
-import arrowRightUp from '../assets/window/arrow-right-up.svg'
-import avatar1 from '../assets/window/avatar-1.png'
-import avatar2 from '../assets/window/avatar-2.png'
-import avatar3 from '../assets/window/avatar-3.png'
-import avatar4 from '../assets/window/avatar-4.png'
 import carGlass from '../assets/window/car-glass.png'
-import cardSheen from '../assets/window/card-sheen-2.svg'
-import destLine from '../assets/window/dest-line-2.svg'
-import icDone from '../assets/window/ic-done.svg'
-import icGatePlane from '../assets/window/ic-gate-plane.svg'
-import icNow from '../assets/window/ic-now.svg'
-import jline1 from '../assets/window/jline-1.svg'
-import jline2 from '../assets/window/jline-2.svg'
 import plane from '../assets/window/plane.svg'
+import jCheck from '../assets/window/v3-j-check.svg'
+import jGate from '../assets/window/v3-j-gate.svg'
+import jline1 from '../assets/window/v3-j-line1.svg'
+import jline2 from '../assets/window/v3-j-line2.svg'
+import jNow from '../assets/window/v3-j-now.svg'
+import destLine from '../assets/window/v3-dest-line.svg'
+import menuArrow from '../assets/window/v3-menu-arrow.svg'
+import cardSheen from '../assets/window/v3-sheen.svg'
 import vlineDest from '../assets/window/vline-dest.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "창문" 기본 v3 (525:1952) — 창가 대시보드. 메뉴를 열면(525:2048) BOARDING 카드가 접히고 MENU가 X로 바뀜
-const AVATARS = [
-  { src: avatar1, style: { left: -8.09, top: -4.04, width: 54.09, height: 54.09 }, shade: 'a' },
-  { src: avatar2, style: { left: -3.58, top: -10.28, width: 42.741, height: 75.958 }, shade: 'b' },
-  { src: avatar3, style: { left: 0, top: -3.47, width: 37.761, height: 50.433 }, shade: 'a' },
-  { src: avatar4, style: { left: -2.2, top: -1.27, width: 41.733, height: 51.057 }, shade: 'a' },
-]
-
-// 카드가 하나씩 김 서린 유리에서 맺히듯 떠오름
+// 피그마 "창문 디벨롭할게요" 기본 v3 (532:3177) — 창가 대시보드. 메뉴를 열면(532:3265) BOARDING 카드가 접히고 왼쪽 버튼이 펼쳐짐
 const card = {
   hidden: { opacity: 0, y: 30, scale: 0.97, filter: 'blur(14px)' },
   show: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 1, ease: smoothEase } },
   exit: { opacity: 0, y: 18, scale: 0.98, filter: 'blur(10px)', transition: { duration: 0.4, ease: smoothEase } },
 }
 
-// 세로 연결선 — 피그마에선 가로선을 90° 돌린 것
-function VLine({ src, top, length }: { src: string; top: number; length: number }) {
+// 세로 연결선 — 피그마에선 가로선을 90° 돌린 것. 위에서 아래로 그어지며 나타남
+function VLine({ src, left, top, length, delay }: { src: string; left: number; top: number; length: number; delay: number }) {
   return (
-    <div className="wn-jline" style={{ top, height: length }}>
-      <motion.div style={{ width: length, originX: 0 }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, ease: smoothEase, delay: 0.7 }}>
+    <div className="wn-jline" style={{ left, top, height: length }}>
+      <motion.div style={{ width: length, originX: 0 }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, ease: smoothEase, delay }}>
         <img src={src} alt="" />
       </motion.div>
     </div>
@@ -53,47 +41,36 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
     >
       {/* OUR JOURNEY */}
       <motion.div className="wn-dcard wn-journey" variants={card}>
-        <div className="wn-journey-head">
-          <p>OUR JOURNEY</p>
-          <div className="wn-avatars">
-            {AVATARS.map((a, i) => (
-              <motion.div key={i} className="wn-avatar" initial={{ opacity: 0, x: -10, scale: 0.6 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 380, damping: 22, delay: 0.7 + i * 0.08 }}>
-                <img src={a.src} alt="" style={a.style} />
-                <div className={`wn-avatar-shade is-${a.shade}`} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        <p className="wn-journey-head">OUR JOURNEY</p>
         <div className="wn-journey-list">
-          <VLine src={jline1} top={31.77} length={40} />
-          <VLine src={jline2} top={113.77} length={45} />
-          <div className="wn-jrow">
-            <div className="wn-jrow-left">
-              <img src={icDone} alt="" width={33} height={33} />
-              <p className="wn-jtext is-done">Security Check</p>
+          <VLine src={jline1} left={14.42} top={31.88} length={60} delay={0.8} />
+          <VLine src={jline2} left={14} top={104.9} length={65} delay={1.2} />
+          <div className="wn-jrow" style={{ top: 0, height: 33 }}>
+            <div className="wn-jrow-left" style={{ gap: 20 }}>
+              {/* 지금 지나는 곳 — 화살표가 앞으로 살짝살짝 */}
+              <motion.img src={jNow} alt="" width={32} height={32} animate={{ x: [0, 2, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }} />
+              <p className="wn-jtext is-now">Security Check</p>
             </div>
-            <p className="wn-jtime is-done">12:20</p>
+            <p className="wn-jtime is-now">12:20</p>
           </div>
-          <div className="wn-jrow">
-            <div className="wn-jrow-left is-top">
-              <div style={{ width: 25.405, height: 39.262 }} />
-              <div className="wn-jnow">
-                <p className="wn-jtext is-now">T1 Lounge</p>
-                <p className="wn-jsub">Arriving in 3 min</p>
-              </div>
-            </div>
-            <p className="wn-jtime is-now">12:43</p>
+          <div className="wn-jrow" style={{ top: 69.95, height: 52 }}>
+            <p className="wn-jtext" style={{ marginLeft: 54.4 }}>
+              T1 Lounge
+            </p>
+            <p className="wn-jtime">12:43</p>
           </div>
-          <div className="wn-jrow">
+          <div className="wn-jrow" style={{ top: 158.9, height: 29 }}>
             <div className="wn-jrow-left">
-              <img src={icGatePlane} alt="" width={25.405} height={25.405} />
-              <p className="wn-jtext is-done">Gate 16</p>
+              <img src={jGate} alt="" width={28.595} height={28.595} />
+              <p className="wn-jtext">Gate 16</p>
             </div>
-            <p className="wn-jtime is-next">14:20</p>
+            <p className="wn-jtime">14:20</p>
           </div>
         </div>
-        {/* 지금 향하는 곳 — 화살표 점이 앞으로 살짝살짝 */}
-        <motion.img className="wn-jnow-ic" src={icNow} alt="" width={33} height={33} animate={{ x: [0, 3, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }} />
+        {/* 메뉴를 열면 다음 경유지 자리에 회색 표시가 맺힘 */}
+        <AnimatePresence>
+          {menuOpen && <motion.img key="t1" className="wn-jcheck" src={jCheck} alt="" width={30.25} height={30.25} initial={{ opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.4 }} transition={{ type: 'spring', stiffness: 380, damping: 20 }} />}
+        </AnimatePresence>
       </motion.div>
 
       {/* BOARDING IN — 메뉴를 열면 위로 접혀 들어감 */}
@@ -101,7 +78,7 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
         <motion.div
           className="wn-dcard wn-boarding"
           initial={false}
-          animate={menuOpen ? { height: 24, top: 371, opacity: 0 } : { height: 191, top: 423, opacity: 1 }}
+          animate={menuOpen ? { height: 24, top: 371, opacity: 0 } : { height: 167, top: 423, opacity: 1 }}
           transition={{ duration: 0.55, ease: smoothEase }}
         >
           <div className="wn-sheen">
@@ -125,7 +102,7 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
         </div>
         <div className="wn-dest-head">
           <p>DESTINATION</p>
-          <p className="is-flight">KE 905</p>
+          <p className="is-flight">LH 702</p>
         </div>
         <div className="wn-dest-row">
           <motion.img src={plane} alt="" width={68} height={66.611} initial={{ x: -24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1.1, ease: smoothEase, delay: 0.8 }} />
@@ -135,10 +112,10 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
           </div>
           <p className="wn-dest-temp">-1°</p>
         </div>
-        <p className="wn-dest-small" style={{ left: 124.8 }}>
+        <p className="wn-dest-small" style={{ left: 125 }}>
           Berlin
         </p>
-        <p className="wn-dest-small" style={{ left: 235.8 }}>
+        <p className="wn-dest-small" style={{ left: 236 }}>
           Little cloudy
         </p>
         <div className="wn-dest-sep" />
@@ -169,7 +146,7 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
             }}
           >
             <span className="wn-menu-ic">
-              <img src={arrowRightUp} alt="" width={32} height={32} />
+              <img src={menuArrow} alt="" width={25.6} height={25.6} />
             </span>
             <span className="wn-menu-text">MENU</span>
           </motion.button>

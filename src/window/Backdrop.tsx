@@ -16,11 +16,13 @@ const placeOf = (s: Scene): Place => {
   return 'terminal'
 }
 
-// 터미널 사진의 모습 — intro: 탑승 안내(살짝 흐림 + 하늘빛 안개), car: 차량 UI(깊게 흐린 회색 유리), arrive: Gate 47 도착
-type Look = 'intro' | 'car' | 'arrive'
-const lookOf = (s: Scene): Look => {
-  if (s === 'arrivedGate') return 'arrive'
-  if (s === 'dashboard' || s === 'suggest' || s === 'route' || s === 'route47') return 'car'
+// 터미널 사진의 모습 — intro: 탑승 안내(살짝 흐림 + 하늘빛 안개), car: 대시보드(흐린 회색 유리), clear: 경로 패널을 열어 창밖이 또렷해짐
+type Look = 'intro' | 'car' | 'clear'
+const lookOf = (s: Scene, menu: MenuState): Look => {
+  if (s === 'dashboard' || s === 'suggest' || s === 'route' || s === 'routeCoffee' || s === 'route47' || s === 'flight') {
+    // 경로 패널을 열면 창밖 초점이 다시 맞음
+    return menu === 'route' || menu === 'flight' ? 'clear' : 'car'
+  }
   return 'intro'
 }
 
@@ -28,7 +30,7 @@ const fade = { duration: 1.1, ease: smoothEase }
 
 export default function Backdrop({ scene, menu }: { scene: Scene; menu: MenuState }) {
   const place = placeOf(scene)
-  const look = lookOf(scene)
+  const look = lookOf(scene, menu)
 
   return (
     <div className="wn-layer wn-backdrop">
@@ -41,14 +43,12 @@ export default function Backdrop({ scene, menu }: { scene: Scene; menu: MenuStat
               src={bgTerminal}
               alt=""
               initial={false}
-              animate={{ filter: look === 'car' ? 'blur(40px)' : 'blur(10.45px)', scale: look === 'car' ? 1.06 : 1 }}
+              animate={{ filter: look === 'car' ? 'blur(18px)' : look === 'clear' ? 'blur(0px)' : 'blur(10.45px)', scale: look === 'car' ? 1.04 : 1 }}
               transition={{ duration: 1.4, ease: smoothEase }}
             />
             <motion.div className="wn-layer wn-tint-intro" initial={false} animate={{ opacity: look === 'intro' ? 1 : 0 }} transition={fade} />
-            <motion.div className="wn-layer wn-tint-arrive-haze" initial={false} animate={{ opacity: look === 'arrive' ? 1 : 0 }} transition={fade} />
             <motion.div className="wn-layer wn-scrim" initial={false} animate={{ opacity: look === 'intro' ? 1 : 0 }} transition={fade} />
-            <motion.div className="wn-layer wn-scrim-arrive" initial={false} animate={{ opacity: look === 'arrive' ? 1 : 0 }} transition={fade} />
-            <motion.div className="wn-layer wn-tint-car" initial={false} animate={{ opacity: look === 'car' ? 1 : 0 }} transition={fade} />
+            <motion.div className="wn-layer wn-tint-car" initial={false} animate={{ opacity: look === 'intro' ? 0 : 1 }} transition={fade} />
           </motion.div>
         )}
 
