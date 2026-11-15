@@ -75,7 +75,7 @@ export default function Home() {
 
       <motion.div className="home__headline" variants={stagger(0.06, 0)}>
         <motion.p className="home__greeting" variants={riseIn}>
-          Hello, HAHA
+          Hello, Halle
         </motion.p>
         <h1 className="home__title">
           {headline.map((line, l) => (

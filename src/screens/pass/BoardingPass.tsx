@@ -13,7 +13,7 @@ export const PASS_W = 216.342
 export const PASS_H = 348.551
 
 // 의자 디스플레이는 피그마대로 승객·게이트만 다르게 씀
-export default function BoardingPass({ passenger = 'HAHA', gate = '28' }: { passenger?: string; gate?: string }) {
+export default function BoardingPass({ passenger = 'Halle', gate = '28' }: { passenger?: string; gate?: string }) {
   return (
     <div className="bp" role="img" aria-label={`Boarding pass KE 081, ICN to LAX, 03 NOV, gate ${gate}, boarding 13:50, seat 28A`}>
       <img className="bp__fill" src={ticketShape} alt="" />
