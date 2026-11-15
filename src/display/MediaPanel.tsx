@@ -1,4 +1,5 @@
 import { motion, type PanInfo } from 'motion/react'
+import type { CSSProperties } from 'react'
 import genreAction from '../assets/display/genre-action.jpg'
 import genreAnimation from '../assets/display/genre-animation.jpg'
 import genreComedy from '../assets/display/genre-comedy.jpg'
@@ -11,23 +12,89 @@ import mediaEllipse from '../assets/display/media-ellipse.svg'
 import movieArt from '../assets/display/movie-art.jpg'
 import movieAvion from '../assets/display/movie-avion.png'
 import movieJourney from '../assets/display/movie-journey.jpg'
+import movieParis from '../assets/display/movie-paris.jpg'
 import movieRoadtrip from '../assets/display/movie-roadtrip.jpg'
 import movieVacation from '../assets/display/movie-vacation.jpg'
+import posterMidnight from '../assets/display/poster-midnight.jpg'
+import posterRoman from '../assets/display/poster-roman.jpg'
+import posterSunrise from '../assets/display/poster-sunrise.jpg'
 import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
 import { useSharedMotionValue, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './MediaPanel.css'
 
-// 피그마 "홈 - 기본 메뉴"(미디어) — 가운데 474×538 카드, 양옆은 같은 카드를 줄여서 겹침
-type Movie = { title: string; year: string; time: string; src: string; img: React.CSSProperties }
+// 피그마 Section 8 "영화" (522:1467) — 가운데 474×538 카드, 양옆은 같은 카드를 줄여서 겹침
+// 각 카드: 바탕 사진 + 색 덮개(tint) + (있으면) 포스터를 위에 한 겹 더 + 아래 정보 띠(bar)
+type Movie = {
+  title: string
+  year: string
+  time: string
+  src: string
+  img: CSSProperties
+  tint: string
+  poster?: { src: string; style: CSSProperties; shade?: string }
+  bar: string
+}
 
+const TINT = 'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%)'
+const BAR = 'linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%)'
+const BAR_BRIGHT = 'linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 100%)'
+
+// 포스터 크기·위치는 피그마의 작은 카드 값을 474px 카드 기준으로 되돌린 값
 const MOVIES: Movie[] = [
-  { title: 'The Journey', year: '2014', time: '1hr 36min', src: movieJourney, img: { width: '100%', height: '124.78%', left: 0, top: '-23.15%' } },
-  { title: 'Tanya & Tom’s Vacation', year: '2004', time: '1hr 36min', src: movieVacation, img: { width: '102.13%', height: '125.48%', left: '-1.15%', top: '-6.93%' } },
-  { title: 'EN MODE AVION', year: '2020', time: '1hr 36min', src: movieAvion, img: { width: '100%', height: '100%', left: 0, top: 0, objectFit: 'cover', objectPosition: 'bottom' } },
-  { title: 'The Road Trip', year: '2004', time: '2hr 10min', src: movieRoadtrip, img: { width: '100%', height: '132.39%', left: '0.11%', top: '-16.17%' } },
-  { title: 'The Art of Travel', year: '2014', time: '1hr 56min', src: movieArt, img: { width: '100%', height: '145.62%', left: 0, top: '-15.69%' } },
+  {
+    title: 'Midnight In Paris',
+    year: '2011',
+    time: '1hr 36min',
+    src: movieJourney,
+    img: { width: '100%', height: '124.78%', left: 0, top: '-23.15%' },
+    tint: TINT,
+    poster: { src: posterMidnight, style: { left: -4.5, bottom: -5, width: 470, height: 671.4 } },
+    bar: BAR,
+  },
+  {
+    title: 'Roman Holiday',
+    year: '1953',
+    time: '1hr 36min',
+    src: movieVacation,
+    img: { width: '102.13%', height: '125.48%', left: '-1.15%', top: '-6.93%' },
+    tint: 'linear-gradient(90deg, rgba(252, 252, 252, 0.2) 0%, rgba(252, 252, 252, 0.2) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%)',
+    poster: { src: posterRoman, style: { left: -3.8, bottom: -4.3, width: 378.6, height: 541 } },
+    bar: BAR_BRIGHT,
+  },
+  {
+    title: 'Before Sunrise',
+    year: '1995',
+    time: '1hr 36min',
+    src: movieAvion,
+    img: { width: '100%', height: '100%', left: 0, top: 0, objectFit: 'cover', objectPosition: 'bottom' },
+    tint: 'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 100%)',
+    poster: {
+      src: posterSunrise,
+      style: { left: -3, top: -150, width: 474, height: 684 },
+      shade: 'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 77.047%, rgba(24, 23, 22, 0.8) 100%)',
+    },
+    bar: 'linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 100%)',
+  },
+  {
+    title: 'The Road Trip',
+    year: '2004',
+    time: '2hr 10min',
+    src: movieRoadtrip,
+    img: { width: '100%', height: '132.39%', left: '0.11%', top: '-16.17%' },
+    tint: TINT,
+    bar: BAR,
+  },
+  {
+    title: 'The Art of Travel',
+    year: '2014',
+    time: '1hr 56min',
+    src: movieArt,
+    img: { width: '100%', height: '145.62%', left: 0, top: '-15.69%' },
+    tint: TINT,
+    bar: BAR,
+  },
 ]
 
 // 가운데에서 몇 칸 떨어졌는지 → 위치·크기·투명도 (피그마 값)
@@ -53,6 +120,7 @@ export default function MediaPanel() {
   const [section, setSection] = useSharedState('mp.section', 'Movie')
   const [view, setView] = useSharedState('mp.view', 'Scroll')
   const [genre, setGenre] = useSharedState('mp.genre', 'Travel')
+  const [, setPlaying] = useSharedState<string | null>('mp.playing', null)
   const n = MOVIES.length
   const dragX = useSharedMotionValue('mp.dragX')
   const go = (d: number) => setActive((a) => (a + d + n) % n)
@@ -89,14 +157,21 @@ export default function MediaPanel() {
               initial={{ opacity: 0, x: Math.sign(off) * slot.x * 0.6, scale: slot.scale * 0.9 }}
               animate={{ x: Math.sign(off) * slot.x, scale: slot.scale, opacity: slot.opacity }}
               transition={{ ...softSpring, delay: 0 }}
-              onClick={() => off !== 0 && setActive(i)}
+              // 옆 카드는 가운데로, 가운데 카드는 재생
+              onClick={() => (off === 0 ? setPlaying(m.title) : setActive(i))}
               aria-label={m.title}
             >
               <span className="mp-card__media">
                 <img src={m.src} alt="" style={m.img} />
-                <span className="mp-card__tint" />
+                <span className="mp-card__tint" style={{ background: m.tint }} />
+                {m.poster && (
+                  <span className="mp-card__poster" style={m.poster.style}>
+                    <img src={m.poster.src} alt="" />
+                    {m.poster.shade && <span style={{ background: m.poster.shade }} />}
+                  </span>
+                )}
               </span>
-              <span className="mp-card__info">
+              <span className="mp-card__info" style={{ background: m.bar }}>
                 <span className="mp-card__titles">
                   <span className="mp-card__title">{m.title}</span>
                   <span className="mp-card__year">{m.year}</span>
@@ -136,5 +211,34 @@ export default function MediaPanel() {
         )
       })}
     </>
+  )
+}
+
+// 피그마 "영화 ㅋㅋ" — 가운데 카드를 누르면 화면 전체로 재생, 누르면 돌아옴
+// 피그마에 재생 장면은 한 장(파리 밤)뿐이라 어떤 영화든 이 장면을 띄움
+export function MoviePlayer({ onClose }: { onClose: () => void }) {
+  return (
+    <motion.div
+      className="db-player"
+      onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.div
+        className="db-player__frame"
+        initial={{ scale: 0.92, opacity: 0, filter: 'blur(12px)' }}
+        animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+        exit={{ scale: 0.96, opacity: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* 장면이 천천히 다가오는 느낌 */}
+        <motion.img src={movieParis} alt="" initial={{ scale: 1 }} animate={{ scale: 1.06 }} transition={{ duration: 14, ease: 'linear' }} />
+      </motion.div>
+      <motion.p className="db-player__hint" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ duration: 3.5, times: [0, 0.15, 0.7, 1], delay: 0.8 }}>
+        Tap to return
+      </motion.p>
+    </motion.div>
   )
 }

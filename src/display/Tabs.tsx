@@ -30,7 +30,7 @@ export default function Tabs({ id, options, value, onChange, dark, className = '
           >
             <span className="ds-tab__bg" />
             {on && <motion.span layoutId={`${id}-thumb`} className="ds-tab__thumb" transition={spring} />}
-            <span className="ds-tab__text" style={{ color: on ? 'var(--color-ink)' : dark ? 'rgba(255, 255, 255, 0.5)' : 'var(--color-sub)', fontWeight: on ? 600 : 500 }}>{o}</span>
+            <span className="ds-tab__text" style={{ color: on ? 'var(--color-ink)' : dark ? 'rgba(255, 255, 255, 0.81)' : 'var(--color-sub)', fontWeight: on ? 600 : 500 }}>{o}</span>
           </motion.button>
         )
       })}

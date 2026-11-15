@@ -2,34 +2,39 @@ import { AnimatePresence, motion } from 'motion/react'
 import airNavHome from '../assets/display/air-nav-home.svg'
 import airNavFlight from '../assets/display/air-nav-flight.svg'
 import clockSep from '../assets/display/clock-sep.svg'
+import clockSepHome from '../assets/display/clock-sep-v2.svg'
 import mediaNavFlight from '../assets/display/media-nav-flight.svg'
 import mediaNavHome from '../assets/display/media-nav-home.svg'
 import mediaNavPlay from '../assets/display/media-nav-play.svg'
 import navFlight from '../assets/display/nav-flight.svg'
 import navHome from '../assets/display/nav-home.svg'
 import navPlay from '../assets/display/nav-play.svg'
+import navFlightHome from '../assets/display/nav-flight-v2.svg'
+import navPlayHome from '../assets/display/nav-play-v2.svg'
 import { smoothEase, spring } from '../motion/transitions'
 import BoardingPass, { PASS_H, PASS_W } from '../screens/pass/BoardingPass'
 import AirportPanel from './AirportPanel'
 import HomePanel from './HomePanel'
-import MediaPanel from './MediaPanel'
+import MediaPanel, { MoviePlayer } from './MediaPanel'
 import { useSharedState } from './shared'
 import './Dashboard.css'
 
 export type Tab = 'home' | 'media' | 'airport'
 
-// 아이콘마다 [선택됨(남색), 밝은 배경에서 꺼짐, 어두운 배경에서 꺼짐] — 피그마 세 화면의 아이콘 그대로
-const NAV: { id: Tab; label: string; on: string; offLight: string; offDark: string }[] = [
-  { id: 'home', label: 'Home', on: navHome, offLight: airNavHome, offDark: mediaNavHome },
-  { id: 'media', label: 'Media', on: mediaNavPlay, offLight: navPlay, offDark: navPlay },
-  { id: 'airport', label: 'Airport', on: airNavFlight, offLight: navFlight, offDark: mediaNavFlight },
+// 아이콘마다 [선택됨(남색), 홈에서 꺼짐, 공항에서 꺼짐, 미디어(어두운 배경)에서 꺼짐] — 피그마 화면의 아이콘 그대로
+const NAV: { id: Tab; label: string; on: string; offHome: string; offLight: string; offDark: string }[] = [
+  { id: 'home', label: 'Home', on: navHome, offHome: navHome, offLight: airNavHome, offDark: mediaNavHome },
+  { id: 'media', label: 'Media', on: mediaNavPlay, offHome: navPlayHome, offLight: navPlay, offDark: navPlay },
+  { id: 'airport', label: 'Airport', on: airNavFlight, offHome: navFlightHome, offLight: navFlight, offDark: mediaNavFlight },
 ]
 
 export default function Dashboard({ onRestart }: { onRestart: () => void }) {
   const [tab, setTab] = useSharedState<Tab>('db.tab', 'home')
   const [passOpen, setPassOpen] = useSharedState('db.pass', false)
   const [resting, setResting] = useSharedState('db.rest', false)
+  const [playing, setPlaying] = useSharedState<string | null>('mp.playing', null)
   const dark = tab === 'media'
+  const home = tab === 'home'
 
   return (
     <div className="db">
@@ -54,7 +59,7 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
 
       {/* 왼쪽 레일 */}
       <motion.nav
-        className={`db-rail ${dark ? 'db-rail--dark' : ''}`}
+        className={`db-rail ${dark ? 'db-rail--dark' : ''} ${home ? 'db-rail--home' : ''}`}
         initial={{ x: -180, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ ...spring, delay: 0.15 }}
@@ -74,7 +79,8 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
               {active && <motion.span layoutId="rail-thumb" className="db-rail__thumb" transition={spring} />}
               <span className="db-rail__icon">
                 <motion.img src={n.on} alt="" animate={{ opacity: active ? 1 : 0 }} />
-                <motion.img src={n.offLight} alt="" animate={{ opacity: !active && !dark ? 1 : 0 }} />
+                <motion.img src={n.offHome} alt="" animate={{ opacity: !active && home ? 1 : 0 }} />
+                <motion.img src={n.offLight} alt="" animate={{ opacity: !active && tab === 'airport' ? 1 : 0 }} />
                 <motion.img src={n.offDark} alt="" animate={{ opacity: !active && dark ? 1 : 0 }} />
               </span>
             </motion.button>
@@ -86,7 +92,7 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
       <AnimatePresence>
         {!dark && (
           <motion.div
-            className="db-clock"
+            className={`db-clock ${home ? 'db-clock--home' : ''}`}
             onDoubleClick={onRestart}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,11 +100,11 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
             transition={{ ...spring, delay: 0.25 }}
           >
             <span className="db-clock__date">Thu, Dec 24 </span>
-            <img className="db-clock__sep" src={clockSep} alt="" />
+            <img className="db-clock__sep" src={home ? clockSepHome : clockSep} alt="" />
             <span className="db-clock__time">
               12<motion.span animate={{ opacity: [1, 0.25, 1] }} transition={{ duration: 2, repeat: Infinity }}>:</motion.span>40
             </span>
-            <img className="db-clock__sep" src={clockSep} alt="" />
+            <img className="db-clock__sep" src={home ? clockSepHome : clockSep} alt="" />
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
                 key={tab}
@@ -121,6 +127,9 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 영화 재생 — 레일까지 덮는 전체 화면 */}
+      <AnimatePresence>{playing && <MoviePlayer onClose={() => setPlaying(null)} />}</AnimatePresence>
 
       {/* View boarding pass — 탑승권이 아래에서 떠오름 */}
       <AnimatePresence>

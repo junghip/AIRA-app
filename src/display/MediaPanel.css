@@ -28,7 +28,15 @@
 }
 
 .mp-seg .ds-seg__opt {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.mp-seg .ds-seg__thumb.ds-pill-on {
+  background: rgba(232, 242, 255, 0.96);
+}
+
+.ds-tabs--dark .ds-tab__thumb {
+  background: rgba(255, 255, 255, 0.93);
 }
 
 .mp-seg .ds-seg__opt[aria-pressed='true'] {
@@ -78,8 +86,21 @@
 .mp-card__tint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%);
+}
+
+/* 바탕 사진 위에 한 겹 더 얹는 포스터 */
+.mp-card__poster {
+  position: absolute;
+  overflow: hidden;
+}
+
+.mp-card__poster img,
+.mp-card__poster span {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .mp-card__info {
@@ -93,8 +114,6 @@
   justify-content: space-between;
   padding: 30px;
   border-radius: 0 0 40px 40px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.04) 100%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   white-space: nowrap;
@@ -103,6 +122,7 @@
 .mp-card__titles {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .mp-card__title {
@@ -121,7 +141,7 @@
 }
 
 .mp-card__time {
-  color: #fff;
+  color: var(--color-ink);
 }
 
 .mp-card__glow {
