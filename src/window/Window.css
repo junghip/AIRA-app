@@ -175,6 +175,9 @@
 
 .wn-bottombar {
   position: absolute;
+  left: 58.5px;
+  top: 974px;
+  width: 1803px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -184,6 +187,8 @@
   display: flex;
   align-items: center;
   gap: 15.405px;
+  height: 60px;
+  padding: 0 24px;
   box-sizing: border-box;
   border: 1.541px solid rgba(255, 255, 255, 0.35);
   border-radius: 36.973px;
@@ -194,11 +199,6 @@
   white-space: nowrap;
 }
 
-.wn-pill-label {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-}
 
 /* ── 로고 · 큰 문구 ── */
 .wn-logo {

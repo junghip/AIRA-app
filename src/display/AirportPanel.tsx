@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { type CSSProperties } from 'react'
+import { useEffect, type CSSProperties } from 'react'
 import backArrow from '../assets/display/back-arrow.svg'
 import btnBag from '../assets/display/btn-bag.svg'
 import btnDot from '../assets/display/btn-dot.svg'
@@ -20,7 +20,7 @@ import menuBoston from '../assets/display/menu-boston.png'
 import menuGlazed from '../assets/display/menu-glazed.png'
 import menuMunchkin from '../assets/display/menu-munchkin.png'
 import { smoothEase, softSpring, spring } from '../motion/transitions'
-import { useSharedState } from './shared'
+import { usePrimaryCopy, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './AirportPanel.css'
 
@@ -129,8 +129,10 @@ export default function AirportPanel() {
   const [, setSent] = useSharedState('ap.sent', false)
   const [, setPicked] = useSharedState<string[]>('ap.picked', [])
   const place = PLACES.find((p) => p.id === openId)
+  const [, setToast] = useSharedState('ap.toast', false)
   const open = (id: string | null) => {
     setSent(false)
+    setToast(false)
     // 가게마다 첫 메뉴 하나만 담긴 채로 시작
     const next = PLACES.find((p) => p.id === id)
     if (next) setPicked([next.menu[0].name])
@@ -170,7 +172,51 @@ export default function AirportPanel() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <StopToast />
     </>
+  )
+}
+
+// 경유 제안을 보내면 위에서 내려오는 알림 — 4초 뒤 사라짐
+function StopToast() {
+  const [toast, setToast] = useSharedState('ap.toast', false)
+  const [openId] = useSharedState<string | null>('ap.open', null)
+  const [picked] = useSharedState<string[]>('ap.picked', [])
+  const [stop] = useSharedState('ap.stop', STOP_OPTIONS[0])
+  const primary = usePrimaryCopy()
+  const place = PLACES.find((p) => p.id === openId)
+
+  useEffect(() => {
+    if (!toast || !primary) return
+    const t = setTimeout(() => setToast(false), 4000)
+    return () => clearTimeout(t)
+  }, [toast, primary, setToast])
+
+  const order = picked.length === 0 ? '' : picked.length === 1 ? ` · ${picked[0]} ready when you arrive` : ` · ${picked.length} items ready when you arrive`
+  return (
+    <AnimatePresence>
+      {toast && place && (
+        <motion.div
+          key="toast"
+          className="ap-toast"
+          initial={{ y: -120, opacity: 0, scale: 0.9 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: -120, opacity: 0, scale: 0.95 }}
+          transition={spring}
+        >
+          <motion.span className="ap-toast__icon" initial={{ scale: 0 }} animate={{ scale: [0, 1.25, 1] }} transition={{ delay: 0.25, duration: 0.5 }}>
+            <img src={checkWhite} alt="" />
+          </motion.span>
+          <span className="ap-toast__text">
+            <span>Stop added</span>
+            <span>
+              {place.name} · {stop} stop{order}
+            </span>
+          </span>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -229,6 +275,7 @@ function List({ onOpen }: { onOpen: (id: string) => void }) {
 
 function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
   const [sent, setSent] = useSharedState('ap.sent', false)
+  const [, setToast] = useSharedState('ap.toast', false)
   const [picked, setPicked] = useSharedState<string[]>('ap.picked', [])
   const [stop, setStop] = useSharedState('ap.stop', STOP_OPTIONS[0])
   const count = picked.length
@@ -371,7 +418,10 @@ function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
               <motion.button type="button" className="ap-btn ap-btn--ghost" onClick={onClose} whileTap={{ scale: 0.95 }}>
                 Cancel
               </motion.button>
-              <motion.button type="button" className="ap-btn ap-btn--main" onClick={() => setSent(true)} whileTap={{ scale: 0.95 }}>
+              <motion.button type="button" className="ap-btn ap-btn--main" onClick={() => {
+                  setSent(true)
+                  setToast(true)
+                }} whileTap={{ scale: 0.95 }}>
                 Suggest a Stop
               </motion.button>
             </motion.div>

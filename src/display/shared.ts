@@ -45,3 +45,13 @@ export function resetShared(keep: string[] = []) {
 // 여러 조각 중 타이머·키보드를 맡는 한 조각만 primary
 export const SceneCopy = createContext({ primary: true })
 export const usePrimaryCopy = () => useContext(SceneCopy).primary
+
+// 컴포넌트 밖(자동 둘러보기 대본)에서 상태를 읽고 바꿀 때
+export function getShared<T>(key: string, fallback: T): T {
+  return values.has(key) ? (values.get(key) as T) : fallback
+}
+export function setShared<T>(key: string, value: T) {
+  if (Object.is(values.get(key), value)) return
+  values.set(key, value)
+  emit()
+}

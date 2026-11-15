@@ -34,38 +34,20 @@ export function TopBar({ scene }: { scene: Scene }) {
   )
 }
 
-// 웰컴에선 큰 버튼("English · 한국어"), 탑승이 시작되면 작아지며 "English"만 남음
-const BIG = { left: 48, top: 950, width: 1824 }
-const SMALL = { left: 58.5, top: 974, width: 1803 }
-
+// 언어·도움말 버튼 — 피그마 534:6071부터 웰컴도 다른 장면과 같은 작은 버튼
 export function BottomBar({ scene }: { scene: Scene }) {
-  const big = scene === 'welcome'
-  const pill = { height: big ? 73.946 : 60, paddingLeft: big ? 30.811 : 24, paddingRight: big ? 30.811 : 24 }
-  const settle = { duration: 0.8, ease: smoothEase }
   return (
     <AnimatePresence>
       {isIntroScene(scene) && (
-        <motion.div
-          key="bottom"
-          className="wn-bottombar"
-          initial={{ ...(big ? BIG : SMALL), opacity: 0, y: 16 }}
-          animate={{ ...(big ? BIG : SMALL), opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          transition={settle}
-        >
-          <motion.button type="button" className="wn-pill-btn" initial={false} animate={pill} transition={settle} onClick={(e) => e.stopPropagation()}>
+        <motion.div key="bottom" className="wn-bottombar" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16 }} transition={{ duration: 0.8, ease: smoothEase }}>
+          <button type="button" className="wn-pill-btn" onClick={(e) => e.stopPropagation()}>
             <img src={icGlobe} alt="" width={27.73} height={27.73} />
-            <span>
-              English
-              <motion.span className="wn-pill-label" initial={false} animate={{ width: big ? 'auto' : 0, opacity: big ? 1 : 0 }} transition={settle}>
-                &nbsp;· 한국어
-              </motion.span>
-            </span>
-          </motion.button>
-          <motion.button type="button" className="wn-pill-btn" initial={false} animate={pill} transition={settle} onClick={(e) => e.stopPropagation()}>
+            English
+          </button>
+          <button type="button" className="wn-pill-btn" onClick={(e) => e.stopPropagation()}>
             <img src={icHelp} alt="" width={27.73} height={27.73} />
             Help
-          </motion.button>
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

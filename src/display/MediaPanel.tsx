@@ -1,5 +1,5 @@
 import { motion, type PanInfo } from 'motion/react'
-import type { CSSProperties } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import genreAction from '../assets/display/genre-action.jpg'
 import genreAnimation from '../assets/display/genre-animation.jpg'
 import genreComedy from '../assets/display/genre-comedy.jpg'
@@ -13,6 +13,7 @@ import movieArt from '../assets/display/movie-art.jpg'
 import movieAvion from '../assets/display/movie-avion.png'
 import movieJourney from '../assets/display/movie-journey.jpg'
 import movieParis from '../assets/display/movie-paris.jpg'
+import parisClip from '../assets/display/paris.mp4'
 import movieRoadtrip from '../assets/display/movie-roadtrip.jpg'
 import movieVacation from '../assets/display/movie-vacation.jpg'
 import posterMidnight from '../assets/display/poster-midnight.jpg'
@@ -20,7 +21,7 @@ import posterRoman from '../assets/display/poster-roman.jpg'
 import posterSunrise from '../assets/display/poster-sunrise.jpg'
 import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
-import { useSharedMotionValue, useSharedState } from './shared'
+import { usePrimaryCopy, useSharedMotionValue, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './MediaPanel.css'
 
@@ -214,9 +215,12 @@ export default function MediaPanel() {
   )
 }
 
-// 피그마 "영화 ㅋㅋ" — 가운데 카드를 누르면 화면 전체로 재생, 누르면 돌아옴
-// 피그마에 재생 장면은 한 장(파리 밤)뿐이라 어떤 영화든 이 장면을 띄움
+// 피그마 "영화 ㅋㅋ" — 가운데 카드를 누르면 화면 전체로 재생(paris.mp4), 누르면 돌아옴
+// 휘어진 화면에선 조각이 16개라, 영상은 한 조각만 틀고 나머지는 그 화면을 그대로 베껴 그림
+let playingVideo: HTMLVideoElement | null = null
+
 export function MoviePlayer({ onClose }: { onClose: () => void }) {
+  const primary = usePrimaryCopy()
   return (
     <motion.div
       className="db-player"
@@ -233,12 +237,47 @@ export function MoviePlayer({ onClose }: { onClose: () => void }) {
         exit={{ scale: 0.96, opacity: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* 장면이 천천히 다가오는 느낌 */}
-        <motion.img src={movieParis} alt="" initial={{ scale: 1 }} animate={{ scale: 1.06 }} transition={{ duration: 14, ease: 'linear' }} />
+        {primary ? <ClipVideo /> : <ClipMirror />}
       </motion.div>
       <motion.p className="db-player__hint" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ duration: 3.5, times: [0, 0.15, 0.7, 1], delay: 0.8 }}>
         Tap to return
       </motion.p>
     </motion.div>
   )
+}
+
+function ClipVideo() {
+  const ref = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    playingVideo = ref.current
+    return () => {
+      playingVideo = null
+    }
+  }, [])
+  return <video ref={ref} src={parisClip} poster={movieParis} autoPlay muted playsInline loop preload="auto" />
+}
+
+// 1665×834 칸에 object-fit: cover 처럼 맞춰 그림
+const FRAME_W = 1665
+const FRAME_H = 834
+
+function ClipMirror() {
+  const ref = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    const ctx = ref.current!.getContext('2d')!
+    let raf = 0
+    const draw = () => {
+      const v = playingVideo
+      if (v && v.readyState >= 2) {
+        const s = Math.max(FRAME_W / v.videoWidth, FRAME_H / v.videoHeight)
+        const w = v.videoWidth * s
+        const h = v.videoHeight * s
+        ctx.drawImage(v, (FRAME_W - w) / 2, (FRAME_H - h) / 2, w, h)
+      }
+      raf = requestAnimationFrame(draw)
+    }
+    raf = requestAnimationFrame(draw)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+  return <canvas ref={ref} width={FRAME_W} height={FRAME_H} style={{ background: `url(${movieParis}) center / cover` }} />
 }

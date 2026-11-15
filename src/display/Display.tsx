@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
+import Tour, { TouchMark } from './Tour'
 import Welcome from './Welcome'
 import { resetShared, usePrimaryCopy, useSharedState } from './shared'
 import './Display.css'
@@ -49,6 +50,8 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
         {boarded ? (
           <motion.div key={`dash-${run}`} className="ds-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
             <Dashboard onRestart={restart} />
+            {/* 홈에 들어오면 자동 둘러보기 시작 — 끝나면 처음(웰컴)부터 다시 */}
+            <Tour onFinish={restart} />
           </motion.div>
         ) : (
           <motion.div
@@ -61,6 +64,7 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
           </motion.div>
         )}
       </AnimatePresence>
+      <TouchMark />
     </>
   )
 }
