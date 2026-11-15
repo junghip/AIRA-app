@@ -340,7 +340,7 @@ export default function Welcome({ onDone, autoplay = false }: { onDone: () => vo
               transition={{ type: 'spring', stiffness: 500, damping: 18, delay: 0.35 }}
             />
             <motion.div className="wl-done-copy" initial={{ y: 24 }} animate={{ y: 0 }} transition={{ duration: 1, ease: smoothEase }}>
-              <p>Welcome, Seha. Your journey starts here.</p>
+              <p>Welcome, Halle. Your journey starts here.</p>
               <p>Boarding pass confirmed</p>
             </motion.div>
             {CHIPS.map((c, n) => (

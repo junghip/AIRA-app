@@ -132,41 +132,21 @@
 
 .hp-avatars {
   display: flex;
-  filter: drop-shadow(0 0 1.325px #949aa6);
+  gap: 3.62px;
 }
 
 .hp-avatar {
-  position: relative;
-  width: 49.05px;
-  height: 60px;
-  margin-right: -9.937px;
-  overflow: hidden;
-  border: 1px solid #fff;
-  border-radius: 661.822px;
-  background: #7e7e7e;
-}
-
-.hp-avatar:last-child {
-  margin-right: 0;
-}
-
-.hp-avatar img {
-  position: absolute;
-  max-width: none;
-  object-fit: cover;
-}
-
-.hp-avatar__shade {
-  position: absolute;
-  inset: 0;
-}
-
-.hp-avatar__shade--a {
-  background: linear-gradient(180deg, rgba(229, 220, 218, 0) 14.425%, rgba(229, 220, 218, 0.3) 60.543%, rgba(128, 151, 182, 0.3) 96.51%);
-}
-
-.hp-avatar__shade--b {
-  background: linear-gradient(180deg, rgba(229, 220, 218, 0) 25.684%, rgba(229, 220, 218, 0.3) 74.24%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(86, 98, 123, 0.6);
+  font-size: 11.52px;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
 }
 
 .hp-progress {

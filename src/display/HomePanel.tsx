@@ -1,10 +1,6 @@
 import { motion, useSpring, useTransform } from 'motion/react'
 import { useEffect, useRef, type PointerEvent } from 'react'
 import arrowRight from '../assets/display/arrow-right-s.svg'
-import avatar1 from '../assets/display/avatar-1.png'
-import avatar2 from '../assets/display/avatar-2.jpg'
-import avatar3 from '../assets/display/avatar-3.jpg'
-import avatar4 from '../assets/display/avatar-4.jpg'
 import btnBell from '../assets/display/btn-bell-v2.svg'
 import btnDot from '../assets/display/btn-dot.svg'
 import btnGlobe from '../assets/display/btn-globe-v2.svg'
@@ -40,13 +36,8 @@ const enter = (delay: number) => ({
   transition: { ...softSpring, delay },
 })
 
-// 승객 얼굴 — 피그마 크롭 그대로 (흰 테두리 1px 안쪽, 원 49×60 안에서 이미지 위치·크기)
-const AVATARS = [
-  { src: avatar1, left: -11.51, top: -6.25, w: 70.261, h: 70.261, shade: 'a' },
-  { src: avatar2, left: -5.65, top: -14.35, w: 55.519, h: 98.667, shade: 'b' },
-  { src: avatar3, left: -1, top: -5.5, w: 49.05, h: 65.511, shade: 'a' },
-  { src: avatar4, left: -3.87, top: -2.64, w: 54.21, h: 66.321, shade: 'a' },
-]
+// 함께 타는 승객 — 이름 동그라미 (피그마 534:6938)
+const PASSENGERS = ['Min', 'Halle', 'Noel', 'Eden']
 
 // 진행선 위 주변 시설 칩
 const CHIPS = [
@@ -164,17 +155,16 @@ function BoardingIn() {
         <div className="hp-stat">
           <p className="hp-stat__k">PASSENGERS</p>
           <div className="hp-avatars">
-            {AVATARS.map((a, i) => (
-              <motion.div
-                key={i}
+            {PASSENGERS.map((name, i) => (
+              <motion.span
+                key={name}
                 className="hp-avatar"
                 initial={{ opacity: 0, x: -14, scale: 0.8 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 transition={{ ...spring, delay: 0.6 + i * 0.07 }}
               >
-                <img src={a.src} alt="" style={{ left: a.left, top: a.top, width: a.w, height: a.h }} />
-                <span className={`hp-avatar__shade hp-avatar__shade--${a.shade}`} />
-              </motion.div>
+                {name}
+              </motion.span>
             ))}
           </div>
         </div>
