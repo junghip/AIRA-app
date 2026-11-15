@@ -74,10 +74,7 @@ export default function Tour({ onFinish }: { onFinish: () => void }) {
       await wait(2800)
       await tap(AT.glazed, () => setShared<string[]>('ap.picked', ['Original Glazed']))
       await wait(1600)
-      await tap(AT.suggest, () => {
-        setShared('ap.sent', true)
-        setShared('ap.toast', true)
-      })
+      await tap(AT.suggest, () => setShared('ap.sent', true))
 
       // 알림을 보여 준 뒤 처음부터 다시
       await wait(7000)

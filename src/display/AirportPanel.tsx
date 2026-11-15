@@ -129,10 +129,8 @@ export default function AirportPanel() {
   const [, setSent] = useSharedState('ap.sent', false)
   const [, setPicked] = useSharedState<string[]>('ap.picked', [])
   const place = PLACES.find((p) => p.id === openId)
-  const [, setToast] = useSharedState('ap.toast', false)
   const open = (id: string | null) => {
     setSent(false)
-    setToast(false)
     // 가게마다 첫 메뉴 하나만 담긴 채로 시작
     const next = PLACES.find((p) => p.id === id)
     if (next) setPicked([next.menu[0].name])
@@ -173,47 +171,7 @@ export default function AirportPanel() {
         )}
       </AnimatePresence>
 
-      <StopToast />
     </>
-  )
-}
-
-// 경유 제안을 보내면 위에서 내려오는 알림 — 4초 뒤 사라짐
-function StopToast() {
-  const [toast, setToast] = useSharedState('ap.toast', false)
-  const [openId] = useSharedState<string | null>('ap.open', null)
-  const [picked] = useSharedState<string[]>('ap.picked', [])
-  const primary = usePrimaryCopy()
-  const place = PLACES.find((p) => p.id === openId)
-
-  useEffect(() => {
-    if (!toast || !primary) return
-    const t = setTimeout(() => setToast(false), 4000)
-    return () => clearTimeout(t)
-  }, [toast, primary, setToast])
-
-  const items = `${picked.length} item${picked.length === 1 ? '' : 's'}`
-  return (
-    <AnimatePresence>
-      {toast && place && (
-        <motion.div
-          key="toast"
-          className="ap-toast"
-          initial={{ y: -120, opacity: 0, scale: 0.9 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: -120, opacity: 0, scale: 0.95 }}
-          transition={spring}
-        >
-          <motion.span className="ap-toast__icon" initial={{ scale: 0 }} animate={{ scale: [0, 1.25, 1] }} transition={{ delay: 0.25, duration: 0.5 }}>
-            <img src={checkWhite} alt="" />
-          </motion.span>
-          <span className="ap-toast__text">
-            <span>Stop Suggested</span>
-            <span>Your order of {items} was sent · Gate 16 at 14:07</span>
-          </span>
-        </motion.div>
-      )}
-    </AnimatePresence>
   )
 }
 
@@ -272,7 +230,6 @@ function List({ onOpen }: { onOpen: (id: string) => void }) {
 
 function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
   const [sent, setSent] = useSharedState('ap.sent', false)
-  const [, setToast] = useSharedState('ap.toast', false)
   const [picked, setPicked] = useSharedState<string[]>('ap.picked', [])
   const [stop, setStop] = useSharedState('ap.stop', STOP_OPTIONS[0])
   const count = picked.length
@@ -389,15 +346,35 @@ function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
           {place.name}
         </motion.div>
 
-        {/* 경유 확인 — 제안하면 내려가고 지도만 남음 */}
-        <AnimatePresence>
-          {!sent && (
+        {/* 경유 확인 → 제안하면 같은 자리에 "Stop suggested" 알림으로 바뀜 */}
+        <AnimatePresence mode="wait">
+          {sent ? (
+            <motion.div
+              key="notice"
+              className="ap-notice"
+              initial={{ y: 60, opacity: 0, scale: 0.97 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={softSpring}
+            >
+              <motion.span className="ap-notice__icon" initial={{ scale: 0 }} animate={{ scale: [0, 1.25, 1] }} transition={{ delay: 0.25, duration: 0.5 }}>
+                <img src={checkWhite} alt="" />
+              </motion.span>
+              <div className="ap-notice__text">
+                <p>
+                  Stop suggested · {stop} at {place.name}
+                </p>
+                <p>
+                  Your order of {count} item{count === 1 ? '' : 's'} was sent · Gate 16 at 14:07
+                </p>
+              </div>
+            </motion.div>
+          ) : (
             <motion.div
               key="confirm"
               className="ap-confirm"
               initial={{ y: 160, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 160, opacity: 0 }}
+              exit={{ y: 40, opacity: 0, transition: { duration: 0.25 } }}
               transition={{ ...softSpring, delay: 0.2 }}
             >
               <div className="ap-confirm__text">
@@ -415,10 +392,7 @@ function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
               <motion.button type="button" className="ap-btn ap-btn--ghost" onClick={onClose} whileTap={{ scale: 0.95 }}>
                 Cancel
               </motion.button>
-              <motion.button type="button" className="ap-btn ap-btn--main" onClick={() => {
-                  setSent(true)
-                  setToast(true)
-                }} whileTap={{ scale: 0.95 }}>
+              <motion.button type="button" className="ap-btn ap-btn--main" onClick={() => setSent(true)} whileTap={{ scale: 0.95 }}>
                 Suggest a Stop
               </motion.button>
             </motion.div>

@@ -335,7 +335,8 @@
   top: 154px;
   width: 1290px;
   height: 496px;
-  overflow: hidden;
+  /* clip: 안쪽이 넘쳐도 눌렀을 때 스크롤되어 밀리지 않게 */
+  overflow: clip;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.2);
@@ -581,29 +582,29 @@
   color: #fff;
 }
 
-/* 경유 제안 알림 */
-.ap-toast {
+/* 경유 제안 후 알림 — 확인 패널 자리에 (1251×120) */
+.ap-notice {
   position: absolute;
-  left: calc(50% - 300px);
-  top: 36px;
-  z-index: 30;
-  width: 600px;
+  left: 20px;
+  right: 20px;
+  top: 354px;
+  height: 120px;
   display: flex;
   align-items: center;
-  gap: 18px;
-  padding: 16px 28px 16px 18px;
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 16px 40px rgba(20, 30, 60, 0.18);
+  gap: 21px;
+  padding: 0 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5);
   white-space: nowrap;
-  color: #050c2c;
 }
 
-.ap-toast__icon {
+.ap-notice__icon {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -611,29 +612,27 @@
   background: #050c2c;
 }
 
-.ap-toast__icon img {
-  width: 26px;
-  height: 26px;
+.ap-notice__icon img {
+  width: 20px;
+  height: 20px;
 }
 
-.ap-toast__text {
+.ap-notice__text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+  gap: 8px;
 }
 
-.ap-toast__text span:first-child {
-  font-size: 26px;
+.ap-notice__text p:first-child {
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: -0.52px;
+  letter-spacing: -0.48px;
+  color: #141b2b;
 }
 
-.ap-toast__text span:last-child {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 18px;
+.ap-notice__text p:last-child {
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: -0.36px;
-  color: #56627b;
+  letter-spacing: -0.32px;
+  color: #7484a3;
 }
