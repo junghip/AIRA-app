@@ -21,7 +21,7 @@ import posterRoman from '../assets/display/poster-roman.jpg'
 import posterSunrise from '../assets/display/poster-sunrise.jpg'
 import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
-import { usePrimaryCopy, useSharedMotionValue, useSharedState } from './shared'
+import { usePrimaryCopy, useSharedState } from './shared'
 import Tabs from './Tabs'
 import './MediaPanel.css'
 
@@ -123,10 +123,21 @@ export default function MediaPanel() {
   const [genre, setGenre] = useSharedState('mp.genre', 'Travel')
   const [, setPlaying] = useSharedState<string | null>('mp.playing', null)
   const n = MOVIES.length
-  const dragX = useSharedMotionValue('mp.dragX')
   const go = (d: number) => setActive((a) => (a + d + n) % n)
+  // 카드마다 직전 칸을 기억 — 맨 끝에서 반대편 끝으로 넘어가는 카드는 가로지르지 않고 그 자리에서 나타남
+  const shown = useRef(active)
+  useEffect(() => {
+    shown.current = active
+  }, [active])
+  const offset = (i: number, a: number) => {
+    let o = i - a
+    if (o > n / 2) o -= n
+    if (o < -n / 2) o += n
+    return o
+  }
 
-  const onDragEnd = (_: unknown, info: PanInfo) => {
+  // 손으로 넘길 때도 목록 전체는 가만히, 카드만 한 칸씩
+  const onPanEnd = (_: unknown, info: PanInfo) => {
     const swipe = info.offset.x + info.velocity.x * 0.2
     if (swipe < -80) go(1)
     else if (swipe > 80) go(-1)
@@ -143,12 +154,11 @@ export default function MediaPanel() {
       </motion.div>
 
       {/* 카드 넘기기 — 끌거나, 옆 카드를 누르면 가운데로 */}
-      <motion.div className="mp-carousel" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.12} _dragX={dragX} style={{ x: dragX }} onDragEnd={onDragEnd}>
+      <motion.div className="mp-carousel" onPanEnd={onPanEnd}>
         {MOVIES.map((m, i) => {
-          let off = i - active
-          if (off > n / 2) off -= n
-          if (off < -n / 2) off += n
+          const off = offset(i, active)
           const slot = SLOT[Math.abs(off)]
+          const wrapped = Math.abs(off - offset(i, shown.current)) > 2
           return (
             <motion.button
               key={m.title}
@@ -156,8 +166,12 @@ export default function MediaPanel() {
               className="mp-card"
               style={{ zIndex: slot.z }}
               initial={{ opacity: 0, x: Math.sign(off) * slot.x * 0.6, scale: slot.scale * 0.9 }}
-              animate={{ x: Math.sign(off) * slot.x, scale: slot.scale, opacity: slot.opacity }}
-              transition={{ ...softSpring, delay: 0 }}
+              animate={{ x: Math.sign(off) * slot.x, scale: slot.scale, opacity: wrapped ? [0, slot.opacity] : slot.opacity }}
+              transition={
+                wrapped
+                  ? { x: { duration: 0 }, scale: { duration: 0 }, opacity: { duration: 0.7, delay: 0.3 } }
+                  : { duration: 0.85, ease: [0.22, 1, 0.36, 1] }
+              }
               // 옆 카드는 가운데로, 가운데 카드는 재생
               onClick={() => (off === 0 ? setPlaying(m.title) : setActive(i))}
               aria-label={m.title}

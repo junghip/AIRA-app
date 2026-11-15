@@ -51,12 +51,7 @@
   top: 120px;
   width: 1548px;
   height: 594px;
-  cursor: grab;
   touch-action: pan-y;
-}
-
-.mp-carousel:active {
-  cursor: grabbing;
 }
 
 .mp-card {

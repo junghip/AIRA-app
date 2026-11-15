@@ -1,6 +1,7 @@
 import { LayoutGroup, motion } from 'motion/react'
 import { useMemo } from 'react'
 import { DisplayScene, STAGE_H, STAGE_W, useFitScale } from './Display'
+import { usePreloaded } from './preload'
 import { tourEnabled } from './Tour'
 import { SceneCopy } from './shared'
 import './CurvedDisplay.css'
@@ -46,6 +47,9 @@ function useCylinder() {
 export default function CurvedDisplay() {
   const { w, boxW, boxH, strips } = useCylinder()
   const scale = useFitScale(boxW * 1.03, boxH + FLOOR)
+  // 사진·영상을 다 받아 둔 뒤에 켜짐 (켜지는 쓸림 효과도 그때부터)
+  const ready = usePreloaded()
+  if (!ready) return <div className="cv-viewport" />
 
   return (
     <div className={`cv-viewport ${tourEnabled() ? 'ds-no-cursor' : ''}`}>

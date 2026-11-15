@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
+import { usePreloaded } from './preload'
 import Tour, { tourEnabled } from './Tour'
 import Welcome from './Welcome'
 import { resetShared, usePrimaryCopy, useSharedState } from './shared'
@@ -70,6 +71,9 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
 
 export default function Display() {
   const scale = useFitScale(STAGE_W, STAGE_H)
+  // 사진·영상을 다 받아 둔 뒤에 시작
+  const ready = usePreloaded()
+  if (!ready) return <div className="ds-viewport" />
 
   return (
     <div className={`ds-viewport ${tourEnabled() ? 'ds-no-cursor' : ''}`}>
