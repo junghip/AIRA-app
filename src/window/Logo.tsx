@@ -9,19 +9,19 @@ const TOP = { left: 861, top: 133, width: 197.1, height: 36.4 }
 
 const placeOf = (s: Scene) => {
   if (s === 'welcome' || s === 'bye') return 'hero'
-  if (s === 'seat' || s === 'waiting' || s === 'starting' || s === 'gate' || s === 'arrivedCoffee' || s === 'arrivedGate') return 'top'
+  if (s === 'seat' || s === 'gate' || s === 'arrivedCoffee' || s === 'arrivedGate') return 'top'
   return 'hidden'
 }
 
-const CAPTION: Partial<Record<Scene, string>> = {
-  welcome: 'Welcome aboard AIRA',
-  bye: 'See you on the way back',
-}
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 24, filter: 'blur(10px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: smoothEase, delay } },
+  exit: { opacity: 0, y: -12, filter: 'blur(10px)', transition: { duration: 0.45, ease: smoothEase } },
+})
 
 export default function Logo({ scene, run }: { scene: Scene; run: number }) {
   const place = placeOf(scene)
   const box = place === 'hero' ? HERO : TOP
-  const caption = CAPTION[scene]
 
   return (
     <>
@@ -44,18 +44,34 @@ export default function Logo({ scene, run }: { scene: Scene; run: number }) {
           opacity: { duration: place === 'hidden' ? 0.5 : 0.9, ease: smoothEase, delay: place === 'hidden' ? 0 : 0.15 },
         }}
       />
-      <AnimatePresence mode="wait">
-        {caption && (
-          <motion.p
-            key={`${caption}-${run}`}
-            className="wn-hero-caption"
-            initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -12, filter: 'blur(10px)', transition: { duration: 0.45, ease: smoothEase } }}
-            transition={{ duration: 1, ease: smoothEase, delay: scene === 'welcome' ? 0.9 : 0.6 }}
-          >
-            {caption}
-          </motion.p>
+
+      <AnimatePresence>
+        {scene === 'welcome' && (
+          <motion.div key={`welcome-${run}`} className="wn-layer wn-noclick" exit={{ opacity: 0, transition: { duration: 0.5 } }}>
+            <motion.p className="wn-hero-caption" {...rise(0.9)}>
+              Welcome aboard AIRA
+            </motion.p>
+            <motion.p className="wn-hero-sub" {...rise(1.2)}>
+              Doors are open - Please step inside
+            </motion.p>
+          </motion.div>
+        )}
+        {scene === 'bye' && (
+          <motion.div key={`bye-${run}`} className="wn-layer wn-noclick" exit={{ opacity: 0, transition: { duration: 0.5 } }}>
+            <motion.p className="wn-hero-caption is-bye" {...rise(0.6)}>
+              See you on the way back
+            </motion.p>
+            {/* 문이 닫히듯 가운데서 양옆으로 퍼지는 빛줄기 */}
+            <motion.div
+              className="wn-sweep"
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={{ scaleX: [0, 1, 1], opacity: [0, 1, 0.6] }}
+              transition={{ duration: 2.2, ease: smoothEase, delay: 1.1, times: [0, 0.6, 1] }}
+            />
+            <motion.p className="wn-bye-foot" {...rise(1.6)}>
+              Doors closing · AIRA 07 is heading back to Terminal 1
+            </motion.p>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

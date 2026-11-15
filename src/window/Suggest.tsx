@@ -1,14 +1,32 @@
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
+import avatar1 from '../assets/window/avatar-1.png'
+import avatar2 from '../assets/window/avatar-2.png'
+import avatar3 from '../assets/window/avatar-3.png'
+import avatar4 from '../assets/window/avatar-4.png'
 import carTop from '../assets/window/car-top.png'
-import coffee from '../assets/window/coffee.png'
-import sugMap from '../assets/window/sug-map.svg'
-import sugRoad from '../assets/window/sug-road.svg'
-import sugRoute from '../assets/window/sug-route.svg'
+import dunkin from '../assets/window/dunkin.png'
+import icCheckbox from '../assets/window/ic-checkbox.svg'
+import icClock from '../assets/window/ic-clock.svg'
+import icPin from '../assets/window/ic-pin.svg'
+import icPlus from '../assets/window/ic-plus.svg'
+import icTick from '../assets/window/ic-tick.svg'
+import menuAmericano from '../assets/window/menu-americano.png'
+import menuBoston from '../assets/window/menu-boston.png'
+import menuGlazed from '../assets/window/menu-glazed.png'
+import menuMunchkin from '../assets/window/menu-munchkin.png'
+import sugMap from '../assets/window/sug-map-v2.svg'
+import sugRoad from '../assets/window/sug-road-v2.svg'
+import sugRoute from '../assets/window/sug-route-v2.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "suggested" (484:2455) — 동행이 추천한 카페, 경로에 넣을지 묻기
-const MENU_ITEMS = ['Signature Latte', 'Americano', 'Croissant', 'Croissant']
+// 피그마 "창문" 기본 v3 (525:2459) — 일행이 추천한 Dunkin, 미리 주문하고 경로에 넣을지 고르기
+const MENU = [
+  { name: 'Original Glazed', img: menuGlazed, size: { width: 54, height: 67 } },
+  { name: 'Boston Kreme', img: menuBoston, size: { width: 54, height: 68 } },
+  { name: 'Munchkin', img: menuMunchkin, size: { width: 52, height: 65 } },
+  { name: 'Americano', img: menuAmericano, size: { width: 60, height: 60 } },
+]
 
 const rise = {
   hidden: { opacity: 0, y: 40, filter: 'blur(14px)' },
@@ -19,44 +37,92 @@ const fadeIn = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: smoothEase } },
 }
 
-export default function Suggest({ onAdd }: { onAdd: () => void }) {
+export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: () => void }) {
+  const [picked, setPicked] = useState<boolean[]>([true, false, false, false])
   const [adding, setAdding] = useState(false)
+  const count = picked.filter(Boolean).length
 
   return (
-    <motion.div className="wn-layer" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.18, delayChildren: 0.3 } } }}>
-      {/* 카페 카드 */}
-      <motion.div className="wn-scard wn-scard-cafe" variants={rise}>
-        <div className="wn-cafe-photo">
-          <motion.img src={coffee} alt="" initial={{ scale: 1.15 }} animate={{ scale: 1 }} transition={{ duration: 2.4, ease: smoothEase }} />
+    <motion.div className="wn-layer wn-noclick" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.16, delayChildren: 0.3 } } }}>
+      {/* 맨 위 — 누가 추천했는지 알림이 내려옴 */}
+      <motion.div className="wn-s-banner" style={{ x: '-50%' }} variants={{ hidden: { opacity: 0, y: -40, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 22 } } }}>
+        <div className="wn-s-banner-avatar">
+          <img src={avatar4} alt="" />
+          <span className="wn-avatar-shade is-a" />
         </div>
-        <motion.div className="wn-cafe-info" variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.5 } } }}>
-          <div className="wn-cafe-head">
-            <motion.div className="wn-cafe-name" variants={fadeIn}>
-              <p className="wn-cafe-title">Lounge Coffee</p>
-              <p className="wn-cafe-meta">Cafe</p>
-            </motion.div>
-            <motion.p className="wn-cafe-meta" variants={fadeIn}>
+        <p className="wn-s-banner-title">Seha suggested a stop</p>
+        <p className="wn-s-banner-time"> just now</p>
+      </motion.div>
+
+      {/* 가게 카드 */}
+      <motion.div className="wn-s-place" variants={rise}>
+        <div className="wn-s-photo">
+          <motion.img src={dunkin} alt="" initial={{ scale: 1.15 }} animate={{ scale: 1 }} transition={{ duration: 2.4, ease: smoothEase }} />
+        </div>
+        <motion.div className="wn-s-info" variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.4 } } }}>
+          <motion.div className="wn-s-title-row" variants={fadeIn}>
+            <p className="wn-s-title">Dunkin</p>
+            <p className="wn-s-tag">Donuts &amp; coffee</p>
+          </motion.div>
+          <motion.div className="wn-s-meta" variants={fadeIn}>
+            <span>
+              <img src={icPin} alt="" width={22.629} height={22.629} />
               Near Gate 28 · 3F
-            </motion.p>
-            <motion.p className="wn-cafe-meta" variants={fadeIn}>
-              ~3min wait
-            </motion.p>
-          </div>
-          <div className="wn-cafe-menu">
-            {MENU_ITEMS.map((name, i) => (
-              <motion.div key={i} className="wn-cafe-item" variants={fadeIn}>
-                <div className="wn-cafe-thumb">
-                  <img src={coffee} alt="" />
-                </div>
-                <p className="wn-cafe-meta">{name}</p>
-              </motion.div>
-            ))}
-          </div>
+            </span>
+            <span>
+              <img src={icClock} alt="" width={22.629} height={22.629} />
+              ~3 min wait
+            </span>
+          </motion.div>
+          <motion.div className="wn-s-divider" variants={fadeIn} />
+          <motion.p className="wn-s-order-title" variants={fadeIn}>
+            Order ahead
+          </motion.p>
+          <div className="wn-s-spacer" />
+          <motion.div className="wn-s-order-sum" variants={fadeIn}>
+            <img src={icCheckbox} alt="" width={30.172} height={30.172} />
+            <p>
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span key={count} initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -12, opacity: 0 }} transition={{ duration: 0.3 }} style={{ display: 'inline-block' }}>
+                  {count}
+                </motion.span>
+              </AnimatePresence>{' '}
+              {count === 1 ? 'item' : 'items'} · ready when you arrive
+            </p>
+          </motion.div>
         </motion.div>
+
+        {/* 미리 주문 — 눌러서 고르기 */}
+        <div className="wn-s-menu">
+          {MENU.map((m, i) => (
+            <motion.button
+              key={m.name}
+              type="button"
+              className="wn-s-item"
+              style={{ top: i * 75.25 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0, backgroundColor: picked[i] ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.5)' }}
+              transition={{ opacity: { duration: 0.6, delay: 0.9 + i * 0.07 }, y: { duration: 0.6, ease: smoothEase, delay: 0.9 + i * 0.07 }, backgroundColor: { duration: 0.2 } }}
+              whileTap={{ scale: 0.97 }}
+              onClick={(e) => {
+                e.stopPropagation()
+                setPicked((p) => p.map((v, j) => (j === i ? !v : v)))
+              }}
+            >
+              <img className="wn-s-item-img" src={m.img} alt="" style={m.size} />
+              <span className="wn-s-item-name">{m.name}</span>
+              <motion.span className="wn-s-check" animate={{ backgroundColor: picked[i] ? '#141b2b' : 'rgba(20,27,43,0)', borderColor: picked[i] ? '#141b2b' : '#9aa1ae' }} transition={{ duration: 0.2 }}>
+                <AnimatePresence>
+                  {picked[i] && <motion.img key="tick" src={icTick} alt="" width={16} height={16} initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ type: 'spring', stiffness: 600, damping: 20 }} />}
+                </AnimatePresence>
+              </motion.span>
+            </motion.button>
+          ))}
+        </div>
       </motion.div>
 
       {/* 경로 미리보기 카드 */}
-      <motion.div className="wn-scard wn-scard-map" variants={rise}>
+      <motion.div className="wn-s-map" variants={rise}>
         <div className="wn-smap-bg">
           <div className="wn-smap-bg-inner">
             <img src={sugMap} alt="" />
@@ -68,28 +134,18 @@ export default function Suggest({ onAdd }: { onAdd: () => void }) {
         <div className="wn-stats">
           <div className="wn-stat">
             <p className="wn-stat-value">+5min</p>
-            <p className="wn-cafe-meta">Added time</p>
+            <p className="wn-stat-label">Added time</p>
           </div>
           <div className="wn-stat">
             <p className="wn-stat-value">14:00</p>
-            <p className="wn-cafe-meta">Arrive at Gate 16</p>
+            <p className="wn-stat-label">Arrive at Gate 16</p>
           </div>
         </div>
-        {/* 지금 위치 → 카페까지 파란 길이 그려짐 */}
-        <motion.div
-          className="wn-sroute"
-          initial={{ clipPath: 'inset(0% 100% 0% 0%)' }}
-          animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-          transition={{ duration: 1.8, ease: smoothEase, delay: 1 }}
-        >
+        {/* 지금 위치 → 가게까지 파란 길이 그려짐 */}
+        <motion.div className="wn-sroute" initial={{ clipPath: 'inset(0% 100% 0% 0%)' }} animate={{ clipPath: 'inset(0% 0% 0% 0%)' }} transition={{ duration: 1.8, ease: smoothEase, delay: 1 }}>
           <img src={sugRoute} alt="" />
         </motion.div>
-        <motion.div
-          className="wn-scar"
-          initial={{ opacity: 0, x: -50, y: 24 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ type: 'spring', stiffness: 60, damping: 14, delay: 0.8 }}
-        >
+        <motion.div className="wn-scar" initial={{ opacity: 0, x: -50, y: 24 }} animate={{ opacity: 1, x: 0, y: 0 }} transition={{ type: 'spring', stiffness: 60, damping: 14, delay: 0.8 }}>
           <div className="wn-scar-inner">
             <img src={carTop} alt="" />
           </div>
@@ -97,37 +153,61 @@ export default function Suggest({ onAdd }: { onAdd: () => void }) {
         <motion.div className="wn-spill" style={{ left: 62, top: 255 }} initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 380, damping: 20, delay: 1.1 }}>
           NOW
         </motion.div>
-        <motion.div className="wn-spill" style={{ left: 562, top: 47 }} initial={{ opacity: 0, scale: 0.6, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ type: 'spring', stiffness: 380, damping: 18, delay: 2.4 }}>
-          Lounge Coffee
+        <motion.div className="wn-spill" style={{ left: 592, top: 30 }} initial={{ opacity: 0, scale: 0.6, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ type: 'spring', stiffness: 380, damping: 18, delay: 2.4 }}>
+          Dunkin
         </motion.div>
       </motion.div>
 
-      <motion.p className="wn-suggested-by" variants={fadeIn}>
-        Haeun suggested
-      </motion.p>
-      <div className="wn-add-slot">
-        <motion.button
-          type="button"
-          className="wn-add-btn"
-          variants={{
-            hidden: { opacity: 0, y: 24, scale: 0.9 },
-            show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 20 } },
-          }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.94 }}
-          animate={adding ? { scale: [1, 0.94, 1.06, 1], boxShadow: '0 0 40px rgba(170, 200, 255, 1)' } : undefined}
-          onClick={(e) => {
-            e.stopPropagation()
-            if (adding) return
-            setAdding(true)
-            setTimeout(onAdd, 380)
-          }}
-        >
-          Add to route
-          {/* 누르길 기다리는 은은한 빛 */}
-          <motion.span className="wn-add-glow" animate={{ opacity: [0, 0.8, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 2.8 }} />
-        </motion.button>
-      </div>
+      {/* 일행 투표 + 결정 버튼 */}
+      <motion.div className="wn-s-decision" style={{ x: '-50%' }} variants={fadeIn}>
+        <div className="wn-s-votes">
+          <div className="wn-s-vote-avatars">
+            <span className="wn-s-vote is-jk">
+              <img src={avatar3} alt="" />
+            </span>
+            <span className="wn-s-vote is-sm">
+              <img src={avatar1} alt="" />
+            </span>
+            {/* 아직 고민 중인 Minjun — 점선 테두리가 천천히 숨 쉼 */}
+            <motion.span className="wn-s-vote is-ml" animate={{ opacity: [1, 0.55, 1] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}>
+              <img src={avatar2} alt="" />
+            </motion.span>
+          </div>
+          <p>Jiho and Sora are in · waiting for Minjun</p>
+        </div>
+        <div className="wn-s-actions">
+          <motion.button
+            type="button"
+            className="wn-s-btn is-glass"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+              e.stopPropagation()
+              onSkip()
+            }}
+          >
+            Not now
+          </motion.button>
+          <motion.button
+            type="button"
+            className="wn-s-btn is-primary"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.94 }}
+            animate={adding ? { scale: [1, 0.94, 1.06, 1], boxShadow: '0 0 40px rgba(170, 200, 255, 1)' } : undefined}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (adding) return
+              setAdding(true)
+              setTimeout(onAdd, 380)
+            }}
+          >
+            <motion.img src={icPlus} alt="" width={27.155} height={27.155} animate={adding ? { rotate: 90 } : { rotate: 0 }} />
+            Add to route
+            {/* 누르길 기다리는 은은한 빛 */}
+            <motion.span className="wn-add-glow" animate={{ opacity: [0, 0.8, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 2.8 }} />
+          </motion.button>
+        </div>
+      </motion.div>
     </motion.div>
   )
 }
