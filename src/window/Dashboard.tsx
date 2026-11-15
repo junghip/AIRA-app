@@ -67,10 +67,8 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
             <p className="wn-jtime">14:20</p>
           </div>
         </div>
-        {/* 메뉴를 열면 다음 경유지 자리에 회색 표시가 맺힘 */}
-        <AnimatePresence>
-          {menuOpen && <motion.img key="t1" className="wn-jcheck" src={jCheck} alt="" width={30.25} height={30.25} initial={{ opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.4 }} transition={{ type: 'spring', stiffness: 380, damping: 20 }} />}
-        </AnimatePresence>
+        {/* 다음 경유지 T1 Lounge — 선이 내려온 뒤 회색 표시가 톡 맺힘 */}
+        <motion.img className="wn-jcheck" src={jCheck} alt="" width={30.25} height={30.25} initial={{ opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 380, damping: 20, delay: 1.5 }} />
       </motion.div>
 
       {/* BOARDING IN — 메뉴를 열면 위로 접혀 들어감 */}

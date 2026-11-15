@@ -28,7 +28,15 @@ const lookOf = (s: Scene, menu: MenuState): Look => {
 
 const fade = { duration: 1.1, ease: smoothEase }
 
+// 영상에 합성할 수 있게 기본은 모든 배경을 검정으로. 주소 끝에 ?photo 를 붙이면 예전처럼 창밖 사진이 보임
+const SHOW_PHOTO = new URLSearchParams(window.location.search).has('photo')
+
 export default function Backdrop({ scene, menu }: { scene: Scene; menu: MenuState }) {
+  if (!SHOW_PHOTO) return <div className="wn-layer wn-bg-black" />
+  return <PhotoBackdrop scene={scene} menu={menu} />
+}
+
+function PhotoBackdrop({ scene, menu }: { scene: Scene; menu: MenuState }) {
   const place = placeOf(scene)
   const look = lookOf(scene, menu)
 

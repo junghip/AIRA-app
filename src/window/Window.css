@@ -3,7 +3,7 @@
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: #0d0e11;
+  background: #000;
 }
 
 .wn-stage {
@@ -17,7 +17,7 @@
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
-  background: #515762;
+  background: #000;
 }
 
 .wn-stage p {
@@ -117,6 +117,10 @@
 
 .wn-tint-dim {
   background: rgba(0, 0, 0, 0.3);
+}
+
+.wn-bg-black {
+  background: #000;
 }
 
 .wn-bg-dark {
@@ -650,7 +654,8 @@
   width: 133px;
   height: 100.625px;
   overflow: hidden;
-  box-shadow: 0 10.558px 21.117px #a5bcd8;
+  /* 그림자가 네모 상자가 아니라 차 모양(누끼)을 따라가게 */
+  filter: drop-shadow(0 10.558px 10.5px #a5bcd8);
 }
 
 .wn-boarding-car img {
@@ -1124,7 +1129,7 @@
   height: 48.61px;
   overflow: hidden;
   opacity: 0.9;
-  box-shadow: 0 5.135px 10.27px #fff;
+  filter: drop-shadow(0 5.135px 5.1px #fff);
 }
 
 .wn-r-car img {
@@ -1645,7 +1650,7 @@
   height: 100px;
   rotate: 154.38deg;
   scale: 1 -1;
-  box-shadow: 0 0 10px rgba(62, 87, 122, 0.5);
+  filter: drop-shadow(0 0 5px rgba(62, 87, 122, 0.5));
 }
 
 .wn-scar-inner img {

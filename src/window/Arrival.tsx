@@ -47,7 +47,7 @@ export function ArrivedCoffee() {
       {/* 남은 정차 시간 — 막대가 차오르며 앞쪽 빛이 함께 흐름 */}
       <motion.div className="wn-arrive-next" {...rise(2)}>
         <div className="wn-arrive-bar">
-          <motion.span initial={{ width: 0 }} animate={{ width: [0, 39, 480] }} transition={{ duration: 14, ease: [0.3, 0, 0.7, 1], times: [0, 0.1, 1], delay: 2.3 }}>
+          <motion.span initial={{ width: 0 }} animate={{ width: [0, 39, 480] }} transition={{ duration: 5.4, ease: [0.3, 0, 0.7, 1], times: [0, 0.1, 1], delay: 2.3 }}>
             <motion.i className="wn-arrive-glow" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }} />
           </motion.span>
         </div>

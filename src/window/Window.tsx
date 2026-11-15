@@ -36,6 +36,25 @@ const ROUTE_FLOW: Partial<Record<Scene, [RouteVariant, RouteVariant]>> = {
   flight: ['gate47', 'gate47'],
 }
 
+// 저절로 넘어가는 시간 (ms) — 장면 안 모션이 다 끝나고 잠깐 머문 뒤 다음으로. 마지막 장면 뒤엔 처음부터 다시
+const HOLD: Record<Scene, number> = {
+  welcome: 5000,
+  waiting: 4500,
+  seated: 4000,
+  starting: 5500,
+  dashboard: 7500,
+  route: 5000,
+  suggest: 7000,
+  routeCoffee: 5500,
+  arrivedCoffee: 8000,
+  gate: 6500,
+  route47: 5500,
+  flight: 6500,
+  bye: 6000,
+}
+// 대시보드에선 잠시 뒤 MENU가 저절로 눌린 것처럼 펼쳐짐
+const AUTO_MENU_AT = 4000
+
 const layerExit = { opacity: 0, filter: 'blur(14px)', transition: { duration: 0.6, ease: smoothEase } }
 
 export default function Window() {
@@ -71,13 +90,27 @@ export default function Window() {
     setRun((n) => n + 1)
   }, [enter])
 
-  // 전시용 키 — →/스페이스 다음, ← 이전, R 처음부터, Esc 메뉴 닫기
+  // 자동 재생 — P 키로 멈춤/다시 재생. 터치하면 기다리지 않고 바로 다음으로
+  const [paused, setPaused] = useState(false)
+  useEffect(() => {
+    if (paused) return
+    const t = setTimeout(() => (scene === 'bye' ? restart() : go(1)), HOLD[scene])
+    const m = scene === 'dashboard' ? setTimeout(() => setMenu((cur) => cur ?? 'open'), AUTO_MENU_AT) : undefined
+    return () => {
+      clearTimeout(t)
+      clearTimeout(m)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scene, run, paused])
+
+  // 전시용 키 — →/스페이스 다음, ← 이전, R 처음부터, Esc 메뉴 닫기, P 자동 재생 멈춤
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') go(1)
       else if (e.key === 'ArrowLeft') go(-1)
       else if (e.key === 'r' || e.key === 'R') restart()
       else if (e.key === 'Escape') setMenu(null)
+      else if (e.key === 'p' || e.key === 'P') setPaused((v) => !v)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
