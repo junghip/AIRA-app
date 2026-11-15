@@ -1,30 +1,28 @@
-/* 공항 콘텐츠 */
-.ap-tabs {
+/* 공항 콘텐츠 (피그마 534:6638 · 534:6730 · 534:6819) */
+.ap-head {
   position: absolute;
-  left: 232px;
-  top: 0;
+  inset: 0 0 auto 0;
   z-index: 6;
 }
 
-.ap-tabs .ds-tabs {
-  left: 0;
+.ap-head .ds-tabs {
+  left: 232px;
 }
 
-.ap-mask {
+.ap-sort {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 5;
-  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
-    linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3d5d2 100%);
+  left: 1896px;
+  top: 77px;
+  width: 392px;
+  font-size: 18px;
+  white-space: nowrap;
+  color: #fff;
 }
 
 .ap-back {
   position: absolute;
   left: 232px;
   top: 50px;
-  z-index: 6;
   width: 69px;
   height: 69px;
   display: flex;
@@ -42,36 +40,31 @@
   scale: -1 1;
 }
 
-/* 목록: 324×496 카드가 가로로 */
-.ap-list {
+.ap-open {
   position: absolute;
-  left: 232px;
-  top: 149px;
-  right: 0;
-  height: 496px;
+  left: 321px;
+  top: 50px;
+  height: 69px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.56px;
+  white-space: nowrap;
+  color: #050c2c;
 }
 
-.ap-track {
-  position: relative;
-  height: 496px;
-  cursor: grab;
-  touch-action: pan-y;
-}
-
-.ap-track:active {
-  cursor: grabbing;
-}
-
+/* 목록: 324×496 카드 여섯 장 */
 .ap-card {
   position: absolute;
-  top: 0;
+  top: 154px;
   width: 324px;
   height: 496px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 20px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.2);
@@ -81,10 +74,11 @@
 }
 
 .ap-card__img {
-  position: relative;
+  position: absolute;
+  left: 20px;
+  top: 20px;
   width: 280px;
   height: 285px;
-  flex-shrink: 0;
   overflow: hidden;
   border-radius: 20px;
   background: #fff;
@@ -102,43 +96,87 @@
   inset: 0;
 }
 
-.ap-card__name,
-.ap-shop__name {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ap-card__name p:first-child {
+.ap-card__name {
+  position: absolute;
+  left: 20px;
+  top: 318.5px;
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.56px;
+  color: #050c2c;
 }
 
-.ap-card__name p:last-child,
-.ap-card__line {
+.ap-card__sub {
+  position: absolute;
+  left: 20px;
   font-size: 20px;
   font-weight: 500;
-  letter-spacing: -0.4px;
-  color: var(--color-sub);
+  color: #7484a3;
+}
+
+.ap-card__sub--kind {
+  top: 361px;
+}
+
+.ap-card__sub--gate {
+  top: 392.5px;
 }
 
 .ap-card__eta {
-  width: 100%;
-  padding: 8px 16px;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 429px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.4);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
-  letter-spacing: -0.4px;
-  text-align: center;
+  color: #050c2c;
+}
+
+/* 저장한 가게 · 함께 보기 */
+.ap-round {
+  position: absolute;
+  top: 694px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 10px rgba(181, 175, 175, 0.7), inset 0 0 4px rgba(255, 255, 255, 0.25);
+  transition: background-color 0.3s;
+}
+
+.ap-round--on {
+  background: #f6f9fc;
+}
+
+.ap-round img {
+  width: 45px;
+  height: 45px;
+}
+
+.ap-round__dot {
+  position: absolute;
+  left: 404px;
+  top: 716px;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
 }
 
 /* 상세: 가게 카드 756×496 */
 .ap-shop {
   position: absolute;
   left: 232px;
-  top: 149px;
+  top: 154px;
   width: 756px;
   height: 496px;
   display: flex;
@@ -146,7 +184,7 @@
   padding: 30px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
   white-space: nowrap;
 }
@@ -162,90 +200,153 @@
 }
 
 .ap-shop__body {
+  position: relative;
   flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  min-width: 0;
 }
 
-.ap-shop__info {
+.ap-shop__name {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.48px;
-  color: var(--color-sub);
+  align-items: center;
+  gap: 19px;
 }
 
 .ap-shop__name p:first-child {
+  margin-left: -1px;
   font-size: 32px;
   font-weight: 600;
   letter-spacing: -0.64px;
-  color: var(--color-ink);
+  color: #050c2c;
+}
+
+.ap-shop__name p:last-child {
+  padding-top: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: #7484a3;
+}
+
+.ap-shop__where {
+  margin-top: 7px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #3a4256;
+}
+
+.ap-order {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 109px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.ap-order p:first-child {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2e3648;
+}
+
+.ap-order p:last-child {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.26px;
+  color: #3a4256;
 }
 
 .ap-menu {
-  flex: 1 0 0;
+  position: absolute;
+  left: 0;
+  right: -1px;
+  top: 139px;
+  height: 293px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 8px;
+  overflow: hidden;
 }
 
 .ap-menu__row {
+  flex-shrink: 0;
+  height: 68px;
   display: flex;
   align-items: center;
-  gap: 20px;
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.48px;
-  color: var(--color-sub);
+  gap: 12px;
+  padding: 0 12px 0 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.4);
+  text-align: left;
+  transition: background-color 0.25s;
+}
+
+.ap-menu__row--on {
+  border-width: 0;
+  padding-left: 10px;
+  padding-right: 14px;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .ap-menu__thumb {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.ap-menu__row p {
+  flex: 1 0 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  color: #141b2b;
+}
+
+.ap-check {
   position: relative;
-  width: 60px;
-  height: 60px;
-  overflow: hidden;
-  border-radius: 7.5px;
-  background: #fff;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #d7dfed;
+  border-radius: 8px;
 }
 
-.ap-menu__thumb img {
+.ap-check__on {
   position: absolute;
-  left: 50%;
-  top: -4.13px;
-  width: 69px;
-  height: 86.25px;
-  max-width: none;
-  translate: -50% 0;
-  object-fit: cover;
+  inset: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #141b2b;
 }
 
-/* 상세: 지도 카드 1290×496 (테두리 2px 안쪽 기준이라 피그마 값에서 2px씩 뺌) */
+.ap-check__on img {
+  width: 16px;
+  height: 16px;
+}
+
+/* 상세: 지도 카드 1290×496 */
 .ap-map {
   position: absolute;
   left: 1038px;
-  top: 149px;
+  top: 154px;
   width: 1290px;
   height: 496px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 30px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
 }
 
 .ap-map__union {
   position: absolute;
-  left: -207.07px;
-  top: -349.64px;
-  width: 2749.746px;
+  left: -205.07px;
+  top: -347.64px;
+  width: 2749.747px;
   height: 1206.058px;
   display: flex;
   align-items: center;
@@ -261,8 +362,8 @@
 
 .ap-map__dashed {
   position: absolute;
-  left: -55px;
-  top: 163px;
+  left: -53px;
+  top: 165px;
   width: 1484.5px;
   height: 270px;
 }
@@ -271,15 +372,15 @@
   position: absolute;
   left: 0;
   top: -6.21px;
-  width: 1488.23px;
-  height: 283.191px;
+  width: 1487.77px;
+  height: 283.2px;
   max-width: none;
 }
 
 .ap-map__route {
   position: absolute;
-  left: -19px;
-  top: 92px;
+  left: -17px;
+  top: 94px;
   width: 1413px;
   height: 329.5px;
 }
@@ -293,50 +394,74 @@
   max-width: none;
 }
 
-.ap-map__stats {
-  position: relative;
-  display: flex;
-  gap: 40px;
-  white-space: nowrap;
-}
-
-.ap-map__stats div {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ap-map__stats p:first-child {
-  font-size: 44px;
-  font-weight: 600;
-  letter-spacing: -0.88px;
-}
-
-.ap-map__stats p:last-child {
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.48px;
-  color: var(--color-sub);
-}
-
 .ap-map__car {
   position: absolute;
-  left: 73px;
-  top: 265px;
-  width: 205.543px;
-  height: 168px;
+  left: 235px;
+  top: 209px;
+  width: 171.162px;
+  height: 145.249px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .ap-map__car img {
-  width: 180px;
-  height: 100px;
+  width: 149.622px;
+  height: 83.124px;
   flex: none;
   object-fit: cover;
-  transform: rotate(154.38deg) scaleY(-1);
+  transform: rotate(150.99deg) scaleY(-1);
   filter: drop-shadow(0 0 10px rgba(62, 87, 122, 0.5));
+}
+
+.ap-map__stats div {
+  position: absolute;
+  top: 30px;
+  white-space: nowrap;
+}
+
+.ap-map__stats div:nth-child(1) {
+  left: 50px;
+}
+
+.ap-map__stats div:nth-child(2) {
+  left: 203px;
+}
+
+.ap-map__stats div:nth-child(3) {
+  left: 378px;
+}
+
+.ap-map__stats p:first-child {
+  font-size: 33.478px;
+  font-weight: 600;
+  letter-spacing: -0.67px;
+  color: #050c2c;
+}
+
+.ap-map__stats p:last-child {
+  margin-top: 7.5px;
+  font-size: 18.261px;
+  font-weight: 500;
+  letter-spacing: -0.37px;
+  color: #7484a3;
+}
+
+.ap-safe {
+  position: absolute;
+  left: 1116px;
+  top: 26px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 17px;
+  background: #050c2c;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+  color: #fff;
 }
 
 .ap-chip {
@@ -350,6 +475,7 @@
   font-weight: 600;
   letter-spacing: -0.48px;
   white-space: nowrap;
+  color: #050c2c;
 }
 
 .ap-chip__pulse {
@@ -359,30 +485,98 @@
   border: 2px solid #fff;
 }
 
-.ap-suggest {
-  position: relative;
-  align-self: flex-end;
-  width: 320px;
-  padding: 16px 40px;
-  border-radius: 999px;
+/* 경유 확인 패널 */
+.ap-confirm {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 354px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 22px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(7.05px);
+  -webkit-backdrop-filter: blur(7.05px);
+  box-shadow: 0 12px 30px rgba(31, 41, 69, 0.12);
 }
 
-.ap-suggest__text {
+.ap-confirm__text {
+  flex: 1 0 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 10px;
   white-space: nowrap;
 }
 
-.ap-suggest__text span:first-child {
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.64px;
+.ap-confirm__text > p {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  color: #141b2b;
 }
 
-.ap-suggest__text span:last-child {
+.ap-confirm__len {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.36px;
-  color: var(--color-sub);
+  color: #3a4256;
+}
+
+.ap-len {
+  position: relative;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #dce1ea;
+  border-radius: 20px;
+  background: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  color: #141b2b;
+}
+
+.ap-len__thumb {
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  background: #141b2b;
+}
+
+.ap-len__text {
+  position: relative;
+  transition: color 0.25s;
+}
+
+.ap-len[aria-pressed='true'] .ap-len__text {
+  color: #fff;
+}
+
+.ap-btn {
+  flex-shrink: 0;
+  height: 56px;
+  padding: 0 30px;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.ap-btn--ghost {
+  background: #e6eaf2;
+  color: #050c2c;
+}
+
+.ap-btn--main {
+  width: 183px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #050c2c;
+  color: #fff;
 }

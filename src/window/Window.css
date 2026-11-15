@@ -1162,8 +1162,8 @@
 /* ── OUR FLIGHT 패널 ── */
 .wn-f-title {
   position: absolute;
-  left: 324.91px;
-  top: 369.65px;
+  left: 317.91px;
+  top: 465.65px;
   font-size: 25.531px;
   font-weight: 500;
   letter-spacing: -0.51px;
@@ -1173,8 +1173,8 @@
 
 .wn-f-body {
   position: absolute;
-  left: 324.91px;
-  top: 423.45px;
+  left: 317.91px;
+  top: 519.45px;
   width: 318.232px;
   height: 235.254px;
 }
@@ -1246,9 +1246,8 @@
 
 .wn-weather {
   position: absolute;
-  left: 749px;
-  top: 370px;
-  width: 266px;
+  left: 714px;
+  top: 437px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -1286,13 +1285,21 @@
   letter-spacing: -0.64px;
 }
 
+.wn-weather-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  white-space: nowrap;
+}
+
 .wn-weather-desc {
   display: flex;
   align-items: center;
   gap: 13px;
-  font-size: 36px;
+  padding-bottom: 3px;
+  font-size: 24px;
   font-weight: 500;
-  letter-spacing: -0.72px;
+  letter-spacing: -0.48px;
   white-space: nowrap;
 }
 

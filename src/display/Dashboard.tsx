@@ -35,6 +35,12 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
   const [playing, setPlaying] = useSharedState<string | null>('mp.playing', null)
   const dark = tab === 'media'
   const home = tab === 'home'
+  const airport = tab === 'airport'
+  const [apOpen] = useSharedState<string | null>('ap.open', null)
+  const [apSent] = useSharedState('ap.sent', false)
+  // 시계 글자를 진하게 (홈 · 공항)
+  const inkClock = home || airport
+  const showBoarding = airport && !apSent
 
   return (
     <div className="db">
@@ -92,7 +98,7 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
       <AnimatePresence>
         {!dark && (
           <motion.div
-            className={`db-clock ${home ? 'db-clock--home' : ''}`}
+            className={`db-clock ${inkClock ? 'db-clock--home' : ''} ${airport && !apOpen ? 'db-clock--wide' : ''}`}
             onDoubleClick={onRestart}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -100,21 +106,21 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
             transition={{ ...spring, delay: 0.25 }}
           >
             <span className="db-clock__date">Thu, Dec 24 </span>
-            <img className="db-clock__sep" src={home ? clockSepHome : clockSep} alt="" />
+            <img className="db-clock__sep" src={inkClock ? clockSepHome : clockSep} alt="" />
             <span className="db-clock__time">
               12<motion.span animate={{ opacity: [1, 0.25, 1] }} transition={{ duration: 2, repeat: Infinity }}>:</motion.span>40
             </span>
-            <img className="db-clock__sep" src={home ? clockSepHome : clockSep} alt="" />
+            <img className="db-clock__sep" src={inkClock ? clockSepHome : clockSep} alt="" />
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
-                key={tab}
+                key={showBoarding ? 'boarding' : 'weather'}
                 className="db-clock__extra"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                {tab === 'airport' ? (
+                {showBoarding ? (
                   'Boarding in 48min'
                 ) : (
                   <>

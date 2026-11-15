@@ -67,8 +67,8 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
             <p className="wn-jtime">14:20</p>
           </div>
         </div>
-        {/* 다음 경유지 T1 Lounge — 선이 내려온 뒤 회색 표시가 톡 맺힘 */}
-        <motion.img className="wn-jcheck" src={jCheck} alt="" width={30.25} height={30.25} initial={{ opacity: 0, scale: 0.4 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 380, damping: 20, delay: 1.5 }} />
+        {/* 다음 경유지 T1 Lounge 표시 — 모션 없이 그대로 */}
+        <img className="wn-jcheck" src={jCheck} alt="" width={30.25} height={30.25} />
       </motion.div>
 
       {/* BOARDING IN — 메뉴를 열면 위로 접혀 들어감 */}
