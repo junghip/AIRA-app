@@ -22,7 +22,7 @@ import BoardingPass, { PASS_H, PASS_W } from '../screens/pass/BoardingPass'
 import { usePrimaryCopy, useSharedState } from './shared'
 import './Welcome.css'
 
-// 피그마 Section 8 "첫 웰컴" 6장: 시작 → 안내 → 스캐너(STEP 1 OF 2) → 읽는 중 → 확인 → 환영
+// 피그마 Section 8 "첫 웰컴" 6장: 시작 → 안내 → 스캐너 → 읽는 중 → 확인 → 환영
 const STEPS = ['intro', 'prompt', 'scanner', 'reading', 'confirmed', 'welcome'] as const
 type Step = (typeof STEPS)[number]
 
@@ -203,9 +203,6 @@ export default function Welcome({ onDone, autoplay = false }: { onDone: () => vo
       <AnimatePresence mode="wait">
         {step === 'scanner' && (
           <motion.div key="scan-copy" className="ds-layer" {...fadeBlur} transition={{ duration: 0.5 }}>
-            <motion.p className="wl-stepno" initial={{ x: -20 }} animate={{ x: 0 }} transition={{ ...softSpring, delay: 0.1 }}>
-              STEP 1 OF 2
-            </motion.p>
             <motion.p className="wl-scan-head" initial={{ x: -20 }} animate={{ x: 0 }} transition={{ ...softSpring, delay: 0.18 }}>
               Scan your boarding pass QR code to the scanner on your right.
             </motion.p>

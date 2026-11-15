@@ -189,17 +189,6 @@
 }
 
 /* 3. 스캐너 안내 */
-.wl-stepno {
-  position: absolute;
-  left: 136px;
-  top: 277px;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 2;
-  letter-spacing: 1.2px;
-  color: #fff;
-}
-
 .wl-scan-head {
   position: absolute;
   left: 136px;

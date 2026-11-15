@@ -183,7 +183,6 @@ function StopToast() {
   const [toast, setToast] = useSharedState('ap.toast', false)
   const [openId] = useSharedState<string | null>('ap.open', null)
   const [picked] = useSharedState<string[]>('ap.picked', [])
-  const [stop] = useSharedState('ap.stop', STOP_OPTIONS[0])
   const primary = usePrimaryCopy()
   const place = PLACES.find((p) => p.id === openId)
 
@@ -193,7 +192,7 @@ function StopToast() {
     return () => clearTimeout(t)
   }, [toast, primary, setToast])
 
-  const order = picked.length === 0 ? '' : picked.length === 1 ? ` · ${picked[0]} ready when you arrive` : ` · ${picked.length} items ready when you arrive`
+  const items = `${picked.length} item${picked.length === 1 ? '' : 's'}`
   return (
     <AnimatePresence>
       {toast && place && (
@@ -209,10 +208,8 @@ function StopToast() {
             <img src={checkWhite} alt="" />
           </motion.span>
           <span className="ap-toast__text">
-            <span>Stop added</span>
-            <span>
-              {place.name} · {stop} stop{order}
-            </span>
+            <span>Stop Suggested</span>
+            <span>Your order of {items} was sent · Gate 16 at 14:07</span>
           </span>
         </motion.div>
       )}

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
-import Tour, { TouchMark } from './Tour'
+import Tour, { tourEnabled } from './Tour'
 import Welcome from './Welcome'
 import { resetShared, usePrimaryCopy, useSharedState } from './shared'
 import './Display.css'
@@ -64,7 +64,6 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
           </motion.div>
         )}
       </AnimatePresence>
-      <TouchMark />
     </>
   )
 }
@@ -73,7 +72,7 @@ export default function Display() {
   const scale = useFitScale(STAGE_W, STAGE_H)
 
   return (
-    <div className="ds-viewport">
+    <div className={`ds-viewport ${tourEnabled() ? 'ds-no-cursor' : ''}`}>
       <div className="ds-stage" style={{ width: STAGE_W, height: STAGE_H, transform: `translate(-50%, -50%) scale(${scale})` }}>
         <DisplayScene />
       </div>

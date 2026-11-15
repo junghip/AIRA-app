@@ -153,3 +153,10 @@
   position: relative;
   transition: color 0.3s;
 }
+
+/* 자동 둘러보기 중엔 마우스 커서·누름 표시를 숨김 (?manual 이면 보임) */
+.ds-no-cursor,
+.ds-no-cursor * {
+  cursor: none !important;
+  -webkit-tap-highlight-color: transparent;
+}

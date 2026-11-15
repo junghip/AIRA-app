@@ -1,6 +1,7 @@
 import { LayoutGroup, motion } from 'motion/react'
 import { useMemo } from 'react'
 import { DisplayScene, STAGE_H, STAGE_W, useFitScale } from './Display'
+import { tourEnabled } from './Tour'
 import { SceneCopy } from './shared'
 import './CurvedDisplay.css'
 
@@ -47,7 +48,7 @@ export default function CurvedDisplay() {
   const scale = useFitScale(boxW * 1.03, boxH + FLOOR)
 
   return (
-    <div className="cv-viewport">
+    <div className={`cv-viewport ${tourEnabled() ? 'ds-no-cursor' : ''}`}>
       <div className="cv-room" style={{ width: boxW, height: boxH + FLOOR, perspective: VIEW_DIST, transform: `translate(-50%, -50%) scale(${scale})` }}>
         {/* 바닥에 번지는 화면 빛 */}
         <motion.div

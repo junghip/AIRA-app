@@ -592,12 +592,12 @@
   align-items: center;
   gap: 18px;
   padding: 16px 28px 16px 18px;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
   border-radius: 999px;
-  background: rgba(5, 12, 44, 0.92);
-  box-shadow: 0 16px 40px rgba(20, 30, 60, 0.3);
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(20, 30, 60, 0.18);
   white-space: nowrap;
-  color: #fff;
+  color: #050c2c;
 }
 
 .ap-toast__icon {
@@ -608,7 +608,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #3bb273;
+  background: #050c2c;
 }
 
 .ap-toast__icon img {
@@ -635,5 +635,5 @@
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.36px;
-  color: rgba(255, 255, 255, 0.72);
+  color: #56627b;
 }
