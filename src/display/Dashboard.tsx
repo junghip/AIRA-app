@@ -21,6 +21,8 @@ import './Dashboard.css'
 
 export type Tab = 'home' | 'media' | 'airport'
 
+const HIDDEN = 0.001
+
 // 아이콘마다 [선택됨(남색), 홈에서 꺼짐, 공항에서 꺼짐, 미디어(어두운 배경)에서 꺼짐] — 피그마 화면의 아이콘 그대로
 const NAV: { id: Tab; label: string; on: string; offHome: string; offLight: string; offDark: string }[] = [
   { id: 'home', label: 'Home', on: navHome, offHome: navHome, offLight: airNavHome, offDark: mediaNavHome },
@@ -45,17 +47,20 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
   return (
     <div className="db">
       {/* 배경: 미디어는 어둡게, 공항 콘텐츠는 흰빛 20% 한 겹 */}
-      <motion.div className="db-bg db-bg--dark" animate={{ opacity: dark ? 1 : 0 }} transition={{ duration: 0.7, ease: smoothEase }} />
-      <motion.div className="db-bg db-bg--haze" animate={{ opacity: tab === 'airport' ? 1 : 0 }} transition={{ duration: 0.7 }} />
+      {/* 꺼져 있을 때도 0이 아닌 아주 작은 값 — 완전히 투명하면 브라우저가 미리 그려 두지 않아서,
+          켜지는 순간 휘어진 화면 조각 곳곳이 비어 보임 */}
+      <motion.div className="db-bg db-bg--dark" initial={{ opacity: HIDDEN }} animate={{ opacity: dark ? 1 : HIDDEN }} transition={{ duration: 0.7, ease: smoothEase }} />
+      <motion.div className="db-bg db-bg--haze" initial={{ opacity: HIDDEN }} animate={{ opacity: tab === 'airport' ? 1 : HIDDEN }} transition={{ duration: 0.7 }} />
 
       <AnimatePresence mode="popLayout">
         <motion.div
           key={tab}
           className="ds-layer"
-          initial={{ opacity: 0, x: 40, filter: 'blur(8px)' }}
+          // 새 화면은 아주 옅게(0.001) 먼저 깔아 사진까지 다 그려 둔 뒤 0.6초 후에 나타남 (완전히 0이면 미리 안 그려짐)
+          initial={{ opacity: HIDDEN, x: 40, filter: 'blur(8px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
           exit={{ opacity: 0, x: -40, filter: 'blur(8px)' }}
-          transition={{ duration: 0.55, ease: smoothEase }}
+          transition={{ duration: 0.55, ease: smoothEase, opacity: { duration: 0.55, delay: 0.6, ease: smoothEase }, x: { duration: 0.55, delay: 0.6, ease: smoothEase } }}
         >
           {tab === 'home' && <HomePanel onShowPass={() => setPassOpen(true)} onRest={() => setResting(true)} />}
           {tab === 'media' && <MediaPanel />}

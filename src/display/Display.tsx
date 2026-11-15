@@ -29,10 +29,17 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
   const [boarded, setBoarded] = useSharedState('ds.boarded', false)
   // 처음부터 다시 보기 — R 키 (전시용)
   const [run, setRun] = useSharedState('ds.run', 0)
+  // 다시 시작할 때는 하늘색 막을 먼저 덮고 → 그 뒤에서 화면을 바꾸고 → 자리 잡은 다음 걷어 냄
+  // (휘어진 화면은 조각이 많아 화면이 통째로 바뀌는 순간 일부 조각이 늦게 그려지는데, 그 순간을 가림)
+  const [curtain, setCurtain] = useSharedState('ds.curtain', false)
   const restart = useCallback(() => {
-    resetShared(['ds.run'])
-    setRun((n) => n + 1)
-  }, [setRun])
+    setCurtain(true)
+    setTimeout(() => {
+      resetShared(['ds.run', 'ds.curtain'])
+      setRun((n) => n + 1)
+      setTimeout(() => setCurtain(false), 1500)
+    }, 700)
+  }, [setRun, setCurtain])
 
   const primary = usePrimaryCopy()
   useEffect(() => {
@@ -65,6 +72,13 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
           </motion.div>
         )}
       </AnimatePresence>
+      <motion.div
+        className="ds-curtain"
+        initial={false}
+        animate={{ opacity: curtain ? 1 : 0 }}
+        transition={{ duration: curtain ? 0.6 : 0.9, ease: 'easeInOut' }}
+        style={{ pointerEvents: curtain ? 'auto' : 'none' }}
+      />
     </>
   )
 }

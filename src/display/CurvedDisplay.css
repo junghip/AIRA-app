@@ -11,7 +11,6 @@
   top: 50%;
   left: 50%;
   transform-origin: center;
-  perspective-origin: 50% 40%;
 }
 
 .cv-floor {
@@ -27,7 +26,6 @@
 
 .cv-cylinder {
   position: absolute;
-  transform-style: preserve-3d;
 }
 
 .cv-strip {
@@ -59,11 +57,31 @@
   transform: none;
 }
 
-/* 같은 화면이 조각 수만큼 그려지므로 무거운 배경 흐림은 끔 (밑이 은은한 그라데이션이라 차이가 거의 없음)
-   영화 카드 아래 정보 띠만은 포스터 글씨를 가려야 해서 남김 */
-.cv-cylinder *:not(.mp-card__info) {
+/* 같은 화면이 조각 수만큼 그려지므로 무거운 흐림 효과는 모두 끔
+   - 배경 흐림(backdrop-filter): 밑이 은은한 그라데이션이라 차이가 거의 없음
+   - 화면 전환 때의 흐려짐(filter: blur): 조각마다 매 프레임 다시 그려야 해서 가장 무거움
+   차 그림자(drop-shadow)만 남김 */
+.cv-cylinder * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+
+.cv-screen *:not(.hp-car img, .ap-map__car img) {
+  filter: none !important;
+}
+
+/* 영화 카드 아래 정보 띠: 흐림 대신 조금 더 진한 흰 막으로 포스터 글씨를 가림 */
+.cv-screen .mp-card__info::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.cv-screen .mp-card__info {
+  isolation: isolate;
 }
 
 .cv-shade {

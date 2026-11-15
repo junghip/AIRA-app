@@ -30,6 +30,13 @@
   background: linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3d5d2 100%);
 }
 
+.ds-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 300;
+  background: linear-gradient(180deg, #8ca2c0 0%, #a9bbd4 30%, #c3ccda 58%, #e3d5d2 100%);
+}
+
 .ds-layer {
   position: absolute;
   inset: 0;
