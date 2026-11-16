@@ -1275,13 +1275,14 @@
 .wn-s-scale {
   position: absolute;
   inset: 0;
-  transform: scale(0.9);
-  transform-origin: 916.45px 782.8px;
+  /* 피그마 "창문 디벨롭할게요1" 532:3684 — 카드 두 장이 처음 시안의 0.798배, 왼쪽 위 (321.3, 295.2)에서 시작 */
+  transform: translate(188.93px, 101.36px) scale(0.79762);
+  transform-origin: 0 0;
 }
 
 .wn-s-banner {
   position: absolute;
-  left: 961.56px;
+  left: 959.56px;
   top: 169px;
   height: 68px;
   box-sizing: border-box;
@@ -1497,7 +1498,7 @@
 
 .wn-s-map {
   position: absolute;
-  left: 1011px;
+  left: 1013.85px;
   top: 245px;
   width: 754px;
   height: 573px;
@@ -1640,8 +1641,8 @@
 
 .wn-s-decision {
   position: absolute;
-  left: 962.18px;
-  top: 874.45px;
+  left: 960.18px;
+  top: 812px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1795,7 +1796,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 616px;
+  top: 586px;
   display: flex;
   justify-content: center;
   gap: 18px;
@@ -1846,7 +1847,7 @@
 .wn-arrive-next {
   position: absolute;
   left: 720px;
-  top: 945px;
+  top: 815px;
   width: 480px;
   display: flex;
   flex-direction: column;

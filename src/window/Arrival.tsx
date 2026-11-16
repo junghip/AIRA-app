@@ -13,7 +13,7 @@ const rise = (delay: number) => ({
 export function ArrivedCoffee() {
   return (
     <div className="wn-layer wn-noclick">
-      <div className="wn-arrive-text" style={{ top: 410 }}>
+      <div className="wn-arrive-text" style={{ top: 380 }}>
         <motion.p className="wn-arrive-title" style={{ fontSize: 56 }} {...rise(0.9)}>
           We’ve arrived at Dunkin
         </motion.p>

@@ -16,7 +16,7 @@ import sugRoad from '../assets/window/sug-road-v2.svg'
 import sugRoute from '../assets/window/sug-route-v2.svg'
 import { smoothEase } from '../motion/transitions'
 
-// 피그마 "창문 디벨롭할게요" 기본 v3 (532:3684) — 일행이 추천한 Dunkin, 미리 주문하고 경로에 넣을지 고르기
+// 피그마 "창문 디벨롭할게요1" 기본 v3 (532:3684) — 일행이 추천한 Dunkin, 미리 주문하고 경로에 넣을지 고르기
 const MENU = [
   { name: 'Original Glazed', img: menuGlazed, size: { width: 54, height: 67 } },
   { name: 'Boston Kreme', img: menuBoston, size: { width: 54, height: 68 } },
@@ -48,7 +48,7 @@ export default function Suggest({ cue, onAdd, onSkip }: { cue: boolean; onAdd: (
         <p className="wn-s-banner-time"> just now</p>
       </motion.div>
 
-      {/* 카드 두 장 — 피그마에서 이전 시안보다 0.9배로 줄어듦 */}
+      {/* 카드 두 장 — 피그마에서 처음 시안보다 작아짐 (Window.css .wn-s-scale) */}
       <div className="wn-s-scale">
       {/* 가게 카드 */}
       <motion.div className="wn-s-place" variants={rise}>
