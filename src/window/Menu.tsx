@@ -16,13 +16,9 @@ type Item = 'route' | 'flight' | 'suitcase' | 'camera' | 'close'
 const ITEMS: Item[] = ['route', 'flight', 'suitcase', 'camera', 'close']
 type Tab = 'route' | 'flight'
 
-// 버튼 세로 위치 (피그마 그대로) — AIRA Route 탭을 고르면 전체가 21px 위로 올라감
-const TOP: Record<'open' | Tab, Record<Item, number>> = {
-  open: { route: 653, flight: 733, suitcase: 813, camera: 893, close: 973 },
-  route: { route: 632, flight: 712, suitcase: 792, camera: 872, close: 952 },
-  // OUR FLIGHT 탭은 버튼 자리가 그대로, 비행기 버튼만 알약으로 (피그마 534:6458)
-  flight: { route: 653, flight: 733, suitcase: 813, camera: 893, close: 973 },
-}
+// 버튼 세로 위치 (피그마 "창문 디벨롭할게요1") — 메뉴를 펼친 상태·두 탭 모두 같은 자리
+const RAIL = { route: 632, flight: 712, suitcase: 792, camera: 872, close: 952 }
+const TOP: Record<'open' | Tab, Record<Item, number>> = { open: RAIL, route: RAIL, flight: RAIL }
 
 const PILL: Record<Tab, { width: number; label: string; icon: string; size: [number, number] }> = {
   route: { width: 183, label: 'AIRA Route', icon: icRouteWhite, size: [22.119, 14.925] },
