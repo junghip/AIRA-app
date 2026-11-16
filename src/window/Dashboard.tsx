@@ -121,7 +121,7 @@ export default function Dashboard({ menuOpen, onMenu }: { menuOpen: boolean; onM
           Local time 04:40
         </p>
         <p className="wn-dest-foot" style={{ left: 261.6 }}>
-          Departs 14:50
+          Departs 15:00
         </p>
       </motion.div>
 

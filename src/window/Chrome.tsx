@@ -26,7 +26,7 @@ export function TopBar({ scene }: { scene: Scene }) {
           </div>
           <div className="wn-topbar-side is-right">
             <p>4°C</p>
-            <p className="is-time">00:12</p>
+            <p className="is-time">12:40</p>
           </div>
         </motion.div>
       )}

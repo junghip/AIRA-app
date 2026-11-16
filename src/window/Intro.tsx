@@ -155,7 +155,7 @@ export default function Intro({ scene }: { scene: Scene }) {
             <span className="is-dot">·</span>
             <span>Gate 16</span>
             <span className="is-dot">·</span>
-            <span>Boarding 01:40</span>
+            <span>Boarding 14:20</span>
           </motion.div>
 
           <AnimatePresence>
