@@ -1,5 +1,5 @@
 import { AnimatePresence, MotionConfig } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
 import Screen from './components/Screen'
@@ -11,12 +11,18 @@ import Aira from './screens/aira/Aira'
 import Reserve from './screens/reserve/Reserve'
 import Window from './window/Window'
 
+// 포토부스는 무거운 라이브러리(사람 인식·저장소)를 쓰니 그 화면에 갈 때만 불러옴
+const Booth = lazy(() => import('./booth/Booth'))
+const PhotoPage = lazy(() => import('./booth/PhotoPage'))
+
 // 피그마 화면이 추가될 때마다 여기에 한 줄씩
 const routes = [
   { path: '/', element: <Home /> },
   { path: '/pass', element: <Pass /> },
   { path: '/reserve', element: <Reserve /> },
   { path: '/aira', element: <Aira /> },
+  // 포토부스 QR로 여는 사진 받기 + 방명록
+  { path: '/photo/:id', element: <Suspense fallback={null}><PhotoPage /></Suspense> },
 ]
 
 export default function App() {
@@ -34,6 +40,17 @@ export default function App() {
     return (
       <MotionConfig reducedMotion="user">
         <Window />
+      </MotionConfig>
+    )
+  }
+
+  // 아이패드 세로 포토부스
+  if (location.pathname.startsWith('/booth')) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <Suspense fallback={null}>
+          <Booth />
+        </Suspense>
       </MotionConfig>
     )
   }

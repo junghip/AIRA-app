@@ -1,0 +1,380 @@
+/* QR로 여는 모바일 화면 — AIRA 앱과 같은 하늘색 배경 + 유리 카드 */
+.pp {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--bg-sky);
+}
+
+.pp__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: calc(var(--safe-top) + 10px) 21px calc(env(safe-area-inset-bottom) + 48px);
+}
+
+.pp__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pp__chip {
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 23px;
+  background: var(--glass-chip);
+  box-shadow:
+    1px 4px 13.9px rgba(0, 0, 0, 0.15),
+    inset 0 4px 4px rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  letter-spacing: -0.28px;
+  color: #fff;
+}
+
+/* 인사 + 이름 */
+.pp__hello {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+  color: #fff;
+}
+
+.pp__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 19px;
+  letter-spacing: -0.38px;
+  color: #e9f0ff;
+  text-align: left;
+}
+
+.pp__name b {
+  font-weight: 700;
+  color: #fff;
+}
+
+.pp__name-edit {
+  padding: 3px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 12px;
+  letter-spacing: -0.2px;
+}
+
+.pp__name-form {
+  display: flex;
+  gap: 8px;
+}
+
+.pp__name-form input {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  font: inherit;
+  font-size: 16px; /* 16px 미만이면 아이폰이 확대함 */
+  color: var(--color-ink);
+}
+
+.pp__name-form button {
+  padding: 0 16px;
+  border-radius: 14px;
+  background: var(--color-ink);
+  font-size: 15px;
+  color: #fff;
+}
+
+.pp__title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+/* 내 사진 */
+.pp__photo-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.pp__photo {
+  width: min(100%, 330px);
+  aspect-ratio: 2 / 3;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(40, 60, 100, 0.3);
+  -webkit-touch-callout: default; /* 길게 눌러 저장 허용 */
+}
+
+.pp__photo--empty {
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  white-space: pre-line;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.pp__save {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pp__save .cta:disabled {
+  opacity: 0.5;
+}
+
+.pp__hint {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* 방명록 */
+.pp__book {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.pp__book-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 4px;
+  color: #fff;
+}
+
+.pp__book-head h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.44px;
+}
+
+.pp__book-head span {
+  font-size: 13px;
+  color: #e9f0ff;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 3px 20px rgba(164, 164, 164, 0.5);
+}
+
+.composer__who {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+  color: var(--color-sub);
+}
+
+.composer__who b {
+  color: var(--color-ink);
+}
+
+.composer__who button {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-sub);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.composer textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(116, 132, 163, 0.2);
+  border-radius: 16px;
+  outline: none;
+  resize: none;
+  background: rgba(255, 255, 255, 0.8);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.composer textarea::placeholder {
+  color: #9aa6bf;
+}
+
+.composer__preview {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.composer__preview img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.composer__preview button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.composer__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.composer__attach {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 99px;
+  background: rgba(116, 132, 163, 0.12);
+  font-size: 14px;
+  color: var(--color-sub);
+}
+
+.composer__count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #9aa6bf;
+}
+
+.composer__send {
+  padding: 9px 18px;
+  border-radius: 99px;
+  background: var(--color-ink);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.composer__send:disabled {
+  opacity: 0.35;
+}
+
+.pp__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 3px 16px rgba(120, 130, 150, 0.25);
+}
+
+.entry__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.entry__avatar {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #8ca2c0, #c3ccda);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.entry__me {
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: var(--color-ink);
+  font-size: 11px;
+  color: #fff;
+}
+
+.entry__head time {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-sub);
+}
+
+.entry__del {
+  font-size: 12px;
+  color: #c0576a;
+}
+
+.entry__msg {
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.entry__img {
+  width: 100%;
+  max-height: 360px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.pp__empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+}
+
+.pp__toast {
+  position: fixed;
+  z-index: 200;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 28px);
+  padding: 12px 20px;
+  border-radius: 99px;
+  background: rgba(5, 12, 44, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font-size: 14px;
+  white-space: nowrap;
+  color: #fff;
+}
