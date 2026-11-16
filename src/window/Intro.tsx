@@ -150,7 +150,7 @@ export default function Intro({ scene }: { scene: Scene }) {
         <motion.div key="intro" className="wn-layer wn-noclick" exit={{ opacity: 0, filter: 'blur(12px)', transition: { duration: 0.6 } }}>
           {/* 항공편 칩 */}
           <motion.div className="wn-trip-chip" style={{ x: '-50%' }} initial={{ opacity: 0, y: -12, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.7, ease: smoothEase, delay: 0.15 }}>
-            <span className="is-flight">KE 017</span>
+            <span className="is-flight">LH 702</span>
             <span>Berlin</span>
             <span className="is-dot">·</span>
             <span>Gate 16</span>
