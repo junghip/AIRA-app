@@ -7,7 +7,7 @@ import RollingText from '../components/RollingText'
 import { smoothEase } from '../motion/transitions'
 import type { RouteVariant } from './scenes'
 
-// 피그마 "창문 디벨롭할게요" 기본 v3 (534:6458) — OUR FLIGHT 탭, 창밖은 눈 내리는 베를린
+// 피그마 "창문 디벨롭할게요1" 기본 v3 (532:4147) — OUR FLIGHT 탭, 창밖은 눈 내리는 베를린
 const item = {
   hidden: { opacity: 0, y: 14, filter: 'blur(6px)' },
   show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: smoothEase } },
@@ -17,7 +17,7 @@ export default function FlightPanel({ variant }: { variant: RouteVariant }) {
   const gate47 = variant === 'gate47'
   return (
     <motion.div className="wn-layer" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } } }}>
-      <img className="wn-union" src={unionFlight} alt="" style={{ left: 267.78, top: 412.75, width: 418.534, height: 398.474 }} />
+      <img className="wn-union" src={unionFlight} alt="" style={{ left: 267.78, top: 391.75, width: 418.534, height: 398.474 }} />
 
       <motion.p className="wn-f-title" variants={item}>
         OUR JOURNEY

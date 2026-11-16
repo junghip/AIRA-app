@@ -15,7 +15,7 @@ export function ArrivedCoffee() {
     <div className="wn-layer wn-noclick">
       <div className="wn-arrive-text" style={{ top: 410 }}>
         <motion.p className="wn-arrive-title" style={{ fontSize: 56 }} {...rise(0.9)}>
-          We’ve arrived at Lounge Coffee
+          We’ve arrived at Dunkin
         </motion.p>
         <motion.p className="wn-arrive-sub" {...rise(1.1)}>
           AIRA will wait right here for you

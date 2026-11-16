@@ -54,6 +54,8 @@ const HOLD: Record<Scene, number> = {
 }
 // 대시보드에선 잠시 뒤 MENU가 저절로 눌린 것처럼 펼쳐짐
 const AUTO_MENU_AT = 4000
+// 추천 장면이 끝나기 이만큼 전에 Add to route가 강조됨
+const CUE_BEFORE = 2000
 
 const layerExit = { opacity: 0, filter: 'blur(14px)', transition: { duration: 0.6, ease: smoothEase } }
 
@@ -62,6 +64,8 @@ export default function Window() {
   const [index, setIndex] = useState(0)
   const scene: Scene = SCENES[index]
   const [run, setRun] = useState(0)
+  // 추천 장면 — 넘어가기 직전 Add to route 버튼을 강조 (다음 화면이 이 버튼의 결과임을 보여줌)
+  const [cue, setCue] = useState(false)
 
   // 메뉴 — 대시보드에선 닫힌 채로, 경로 장면에선 AIRA Route 탭이 열린 채로 시작
   const [menu, setMenu] = useState<MenuState>(null)
@@ -71,6 +75,7 @@ export default function Window() {
   const enter = useCallback((i: number) => {
     const s = SCENES[i]
     setIndex(i)
+    setCue(false)
     setMenu(s === 'flight' ? 'flight' : s === 'route' || s === 'routeCoffee' || s === 'route47' ? 'route' : null)
     const flow = ROUTE_FLOW[s]
     if (flow) setVariant(flow[0])
@@ -96,9 +101,11 @@ export default function Window() {
     if (paused) return
     const t = setTimeout(() => (scene === 'bye' ? restart() : go(1)), HOLD[scene])
     const m = scene === 'dashboard' ? setTimeout(() => setMenu((cur) => cur ?? 'open'), AUTO_MENU_AT) : undefined
+    const c = scene === 'suggest' ? setTimeout(() => setCue(true), HOLD.suggest - CUE_BEFORE) : undefined
     return () => {
       clearTimeout(t)
       clearTimeout(m)
+      clearTimeout(c)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scene, run, paused])
@@ -142,7 +149,7 @@ export default function Window() {
         <AnimatePresence>
           {scene === 'suggest' && (
             <motion.div key={`suggest-${run}`} className="wn-layer" exit={{ ...layerExit, scale: 0.97 }}>
-              <Suggest onAdd={() => go(1)} onSkip={() => go(-1)} />
+              <Suggest cue={cue} onAdd={() => go(1)} onSkip={() => go(-1)} />
             </motion.div>
           )}
         </AnimatePresence>

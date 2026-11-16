@@ -33,10 +33,12 @@ const fadeIn = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: smoothEase } },
 }
 
-export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: () => void }) {
+export default function Suggest({ cue, onAdd, onSkip }: { cue: boolean; onAdd: () => void; onSkip: () => void }) {
   const [picked, setPicked] = useState<boolean[]>([true, false, false, false])
   const [adding, setAdding] = useState(false)
   const count = picked.filter(Boolean).length
+  // 고른 쪽 강조 — 자동 재생에서 넘어가기 직전(cue) 또는 직접 눌렀을 때
+  const lit = cue || adding
 
   return (
     <motion.div className="wn-layer wn-noclick" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.16, delayChildren: 0.3 } } }}>
@@ -160,6 +162,10 @@ export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: 
           <motion.button
             type="button"
             className="wn-s-btn is-glass"
+            initial={false}
+            // 고르지 않은 쪽은 한 걸음 물러남
+            animate={{ opacity: lit ? 0.4 : 1, scale: lit ? 0.96 : 1 }}
+            transition={{ duration: 0.5, ease: smoothEase }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.95 }}
             onClick={(e) => {
@@ -169,24 +175,41 @@ export default function Suggest({ onAdd, onSkip }: { onAdd: () => void; onSkip: 
           >
             Not now
           </motion.button>
-          <motion.button
-            type="button"
-            className="wn-s-btn is-primary"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.94 }}
-            animate={adding ? { scale: [1, 0.94, 1.06, 1], boxShadow: '0 0 40px rgba(170, 200, 255, 1)' } : undefined}
-            onClick={(e) => {
-              e.stopPropagation()
-              if (adding) return
-              setAdding(true)
-              setTimeout(onAdd, 380)
-            }}
-          >
-            <motion.img src={icPlus} alt="" width={27.155} height={27.155} animate={adding ? { rotate: 90 } : { rotate: 0 }} />
-            Add to route
-            {/* 누르길 기다리는 은은한 빛 */}
-            <motion.span className="wn-add-glow" animate={{ opacity: [0, 0.8, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 2.8 }} />
-          </motion.button>
+          <div className="wn-s-add-wrap">
+            {/* 강조될 때 버튼 둘레로 빛 고리가 두 번 퍼져 나감 */}
+            <AnimatePresence>
+              {lit &&
+                [0, 0.7].map((d) => (
+                  <motion.span key={d} className="wn-add-ring" initial={{ opacity: 0, scale: 1 }} animate={{ opacity: [0, 0.9, 0], scale: [1, 1.18, 1.32] }} exit={{ opacity: 0 }} transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 + d }} />
+                ))}
+            </AnimatePresence>
+            <motion.button
+              type="button"
+              className="wn-s-btn is-primary"
+              initial={false}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.94 }}
+              animate={
+                adding
+                  ? { scale: [1.08, 0.96, 1.08], backgroundColor: '#f2f6ff', boxShadow: '0 0 48px rgba(170, 200, 255, 1), inset 0 0 10px #fff' }
+                  : { scale: cue ? 1.08 : 1, backgroundColor: cue ? '#f2f6ff' : '#d9e2ee', boxShadow: cue ? '0 0 48px rgba(170, 200, 255, 1), inset 0 0 10px #fff' : '0 0 20px rgba(130, 153, 185, 0.8), inset 0 0 10px #fff' }
+              }
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (adding) return
+                setAdding(true)
+                setTimeout(onAdd, 380)
+              }}
+            >
+              <motion.img src={icPlus} alt="" width={27.155} height={27.155} animate={{ rotate: lit ? 90 : 0 }} transition={{ type: 'spring', stiffness: 300, damping: 16 }} />
+              Add to route
+              {/* 누르길 기다리는 은은한 빛 */}
+              {!lit && <motion.span className="wn-add-glow" animate={{ opacity: [0, 0.8, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 2.8 }} />}
+              {/* 강조될 때 빛줄기가 버튼을 한 번 훑고 지나감 */}
+              {lit && <motion.span className="wn-add-sweep" initial={{ x: '-120%' }} animate={{ x: '260%' }} transition={{ duration: 0.9, ease: smoothEase, delay: 0.1 }} />}
+            </motion.button>
+          </div>
         </div>
       </motion.div>
     </motion.div>
