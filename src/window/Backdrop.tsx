@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useRef } from 'react'
 import berlin from '../assets/window/berlin.png'
 import bgCrowd from '../assets/window/bg-crowd.png'
 import bgLounge from '../assets/window/bg-lounge.png'
@@ -31,9 +32,26 @@ const fade = { duration: 1.1, ease: smoothEase }
 // 영상에 합성할 수 있게 기본은 모든 배경을 검정으로. 주소 끝에 ?photo 를 붙이면 예전처럼 창밖 사진이 보임
 const SHOW_PHOTO = new URLSearchParams(window.location.search).has('photo')
 
-export default function Backdrop({ scene, menu }: { scene: Scene; menu: MenuState }) {
+export default function Backdrop({ scene, menu, video, run }: { scene: Scene; menu: MenuState; video: string | null; run: number }) {
+  if (video) return <VideoBackdrop src={video} run={run} />
   if (!SHOW_PHOTO) return <div className="wn-layer wn-bg-black" />
   return <PhotoBackdrop scene={scene} menu={menu} />
+}
+
+// 끌어다 놓은 영상을 창밖 풍경으로 — 유리 카드의 흐림이 실제 영상 위에서 그대로 보임. 처음부터(R) 다시 하면 영상도 처음으로
+function VideoBackdrop({ src, run }: { src: string; run: number }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    v.currentTime = 0
+    v.play().catch(() => {})
+  }, [run, src])
+  return (
+    <div className="wn-layer wn-bg-black">
+      <video ref={ref} className="wn-bg-video" src={src} autoPlay loop muted playsInline />
+    </div>
+  )
 }
 
 function PhotoBackdrop({ scene, menu }: { scene: Scene; menu: MenuState }) {

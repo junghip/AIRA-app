@@ -123,6 +123,56 @@ export default function Window() {
     return () => window.removeEventListener('keydown', onKey)
   }, [go, restart])
 
+  // 배경 영상 — 영상 파일을 화면에 끌어다 놓으면 뒤에 깔림 (내 컴퓨터에서만 재생, 어디에도 올라가지 않음). V 키로 다시 검정 배경
+  const [video, setVideo] = useState<string | null>(null)
+  const [dragging, setDragging] = useState(false)
+  useEffect(() => {
+    let depth = 0
+    const hasFile = (e: DragEvent) => !!e.dataTransfer && Array.from(e.dataTransfer.types).includes('Files')
+    const onEnter = (e: DragEvent) => {
+      if (!hasFile(e)) return
+      depth++
+      setDragging(true)
+    }
+    const onLeave = () => {
+      depth = Math.max(0, depth - 1)
+      if (depth === 0) setDragging(false)
+    }
+    const onOver = (e: DragEvent) => {
+      if (hasFile(e)) e.preventDefault()
+    }
+    const onDrop = (e: DragEvent) => {
+      e.preventDefault()
+      depth = 0
+      setDragging(false)
+      const file = Array.from(e.dataTransfer?.files ?? []).find((f) => f.type.startsWith('video/'))
+      if (!file) return
+      setVideo((old) => {
+        if (old) URL.revokeObjectURL(old)
+        return URL.createObjectURL(file)
+      })
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'v' && e.key !== 'V') return
+      setVideo((old) => {
+        if (old) URL.revokeObjectURL(old)
+        return null
+      })
+    }
+    window.addEventListener('dragenter', onEnter)
+    window.addEventListener('dragleave', onLeave)
+    window.addEventListener('dragover', onOver)
+    window.addEventListener('drop', onDrop)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('dragenter', onEnter)
+      window.removeEventListener('dragleave', onLeave)
+      window.removeEventListener('dragover', onOver)
+      window.removeEventListener('drop', onDrop)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [])
+
   const car = isCarScene(scene)
 
   return (
@@ -133,7 +183,7 @@ export default function Window() {
         // 화면 아무 데나 터치하면 다음 장면, 마지막 장면에선 처음으로
         onClick={() => (scene === 'bye' ? restart() : go(1))}
       >
-        <Backdrop scene={scene} menu={car ? menu : null} />
+        <Backdrop scene={scene} menu={car ? menu : null} video={video} run={run} />
         <TopBar scene={scene} />
         <BottomBar scene={scene} />
         <Intro key={`intro-${run}`} scene={scene} />
@@ -168,6 +218,12 @@ export default function Window() {
         </AnimatePresence>
 
         <Logo scene={scene} run={run} />
+        {/* 영상을 끌고 있을 때만 보이는 안내 — 녹화에는 안 나옴 */}
+        {dragging && (
+          <div className="wn-drop-hint">
+            <p>영상을 놓으면 배경으로 깔려요</p>
+          </div>
+        )}
       </div>
     </div>
   )

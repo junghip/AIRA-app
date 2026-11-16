@@ -6,7 +6,7 @@
 
 **의자 디스플레이** (`/display`, 2388×834 가로 화면): 웰컴 → 탑승권 스캔 → 홈 / 미디어 / 공항 콘텐츠. 주소: https://junghip.github.io/AIRA-app/display — `R` 키로 처음부터 다시, 아래 시계를 더블클릭해도 처음으로.
 
-**차량 창문** (`/window`, 1920×1080 가로 화면): 웰컴 → 탑승 대기 → 모두 탑승 → 출발(진행선) → 대시보드(MENU: AIRA Route / OUR FLIGHT) → AIRA Route → Eden 추천 → 경로에 Dunkin 추가 → 카페 도착 → 게이트 변경 16→47 → 바뀐 경로 → OUR FLIGHT(베를린) → See you. 주소: https://junghip.github.io/AIRA-app/window — 장면이 저절로 순서대로 넘어가고 끝나면 처음부터 반복 (`P` 멈춤/재생). 화면 터치·→·스페이스로 바로 다음, ← 이전, `R` 처음부터, Esc 메뉴 닫기. 배경은 영상 합성용 검정 — 주소에 `?photo`를 붙이면 창밖 사진이 보임.
+**차량 창문** (`/window`, 1920×1080 가로 화면): 웰컴 → 탑승 대기 → 모두 탑승 → 출발(진행선) → 대시보드(MENU: AIRA Route / OUR FLIGHT) → AIRA Route → Eden 추천 → 경로에 Dunkin 추가 → 카페 도착 → 게이트 변경 16→47 → 바뀐 경로 → OUR FLIGHT(베를린) → See you. 주소: https://junghip.github.io/AIRA-app/window — 장면이 저절로 순서대로 넘어가고 끝나면 처음부터 반복 (`P` 멈춤/재생). 화면 터치·→·스페이스로 바로 다음, ← 이전, `R` 처음부터, Esc 메뉴 닫기. 배경은 영상 합성용 검정 — 주소에 `?photo`를 붙이면 창밖 사진이 보임. 영상 파일을 화면에 끌어다 놓으면 배경으로 깔려 유리 흐림까지 그대로 보임 (내 컴퓨터에서만 재생, `R`로 영상도 처음부터, `V`로 다시 검정).
 
 ## 실행
 
