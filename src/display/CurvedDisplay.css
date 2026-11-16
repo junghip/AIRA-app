@@ -61,14 +61,14 @@
 
 /* 같은 화면이 조각 수만큼 그려지므로 무거운 흐림 효과는 모두 끔
    - 배경 흐림(backdrop-filter): 밑이 은은한 그라데이션이라 차이가 거의 없음
-   - 화면 전환 때의 흐려짐(filter: blur): 조각마다 매 프레임 다시 그려야 해서 가장 무거움
-   차 그림자(drop-shadow)만 남김 */
+   - 화면 전환 때의 흐려짐(filter: blur): 조각마다 매 프레임 다시 그려야 해서 가장 무거움 */
 .cv-cylinder * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
 
-.cv-screen *:not(.hp-car img, .ap-map__car img) {
+/* 움직임 효과가 직접 넣는 흐림(인라인 style)만 끔 — 디자인에 들어간 은은한 빛·그림자(CSS)는 그대로 */
+.cv-screen [style*='filter'] {
   filter: none !important;
 }
 
@@ -92,4 +92,15 @@
   z-index: 100;
   pointer-events: none;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0.06) 50%, rgba(0, 0, 0, 0) 82%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+/* 안내 문장 뒤 은은한 파란 빛 — 평면에선 상자를 150px 흐려서 만들지만, 조각마다 그 흐림을 그리면 화면이 멈출 만큼 무거움
+   → 같은 모양의 퍼지는 그라데이션으로 대신 그림 (흐림이 퍼지는 만큼 상자를 넓힘) */
+.cv-screen .wl-glow {
+  left: calc(386px - 400px);
+  top: calc(299px - 400px);
+  width: calc(1616px + 800px);
+  height: calc(236px + 800px);
+  background: radial-gradient(closest-side, rgba(119, 159, 214, 0.17) 0%, rgba(119, 159, 214, 0.1) 45%, rgba(119, 159, 214, 0) 100%);
+  filter: none !important;
 }
