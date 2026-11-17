@@ -1,6 +1,6 @@
 import { AnimatePresence, MotionConfig } from 'motion/react'
 import { lazy, Suspense, useEffect, useRef } from 'react'
-import { Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate, useNavigationType } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
 import Screen from './components/Screen'
 import CurvedDisplay from './display/CurvedDisplay'
@@ -25,6 +25,27 @@ const routes = [
   { path: '/photo/:id', element: <Suspense fallback={null}><PhotoPage /></Suspense> },
 ]
 
+const IDLE_RESET_MS = 10_000 // 이 시간 동안 터치가 없으면 첫 화면으로
+
+// 전시용: 아무도 만지지 않으면 홈으로 되돌려 다음 관람객이 처음부터 보게 함
+function useIdleReset(active: boolean) {
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!active) return
+    let timer = setTimeout(() => navigate('/'), IDLE_RESET_MS)
+    const restart = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => navigate('/'), IDLE_RESET_MS)
+    }
+    const events = ['pointerdown', 'pointermove', 'keydown', 'wheel'] as const
+    events.forEach((e) => window.addEventListener(e, restart, { passive: true }))
+    return () => {
+      clearTimeout(timer)
+      events.forEach((e) => window.removeEventListener(e, restart))
+    }
+  }, [active, navigate])
+}
+
 export default function App() {
   const location = useLocation()
   const direction = useNavigationType() === 'POP' ? -1 : 1
@@ -33,6 +54,10 @@ export default function App() {
   useEffect(() => {
     isFirstRender.current = false
   }, [])
+
+  // 폰 화면 흐름(홈 제외)에서만 — 가로 화면들과 QR 사진 페이지는 그대로
+  const { pathname } = location
+  useIdleReset(['/pass', '/reserve', '/aira'].includes(pathname))
 
   // 의자 디스플레이는 폰 프레임 없이 가로 화면 전체로
   // 차량 창문(Section 10)도 1920×1080 가로 화면 전체로

@@ -26,6 +26,7 @@ type Step = 'time' | 'passengers' | 'booked'
 const order: Step[] = ['time', 'passengers', 'booked']
 
 const DRAG_PX_PER_STEP = 36
+const MIN_RIDERS = 2 // 2명부터 시작, 그 아래로는 못 줄임
 const MAX_RIDERS = 4 // 이 인원이 되어야 다음으로 넘어갈 수 있음
 
 // 단계 사이 내용이 옆으로 밀리며 바뀜 (dir: 1 앞으로, -1 뒤로)
@@ -41,7 +42,7 @@ export default function Reserve() {
   const [[step, dir], setStepState] = useState<[Step, number]>(['time', 1])
   const [time, setTime] = useState(SUGGESTED)
   const [timeDir, setTimeDir] = useState(1)
-  const [riders, setRiders] = useState(1)
+  const [riders, setRiders] = useState(MIN_RIDERS)
   const [ridersDir, setRidersDir] = useState(1)
   const [sheetOpen, setSheetOpen] = useState(false)
   const [ridersNudge, setRidersNudge] = useState(0)
@@ -63,7 +64,7 @@ export default function Reserve() {
   }
 
   const changeRiders = (delta: number) => {
-    const next = Math.min(MAX_RIDERS, Math.max(1, riders + delta))
+    const next = Math.min(MAX_RIDERS, Math.max(MIN_RIDERS, riders + delta))
     if (next === riders) return false
     setRidersDir(Math.sign(delta))
     setRiders(next)
@@ -342,7 +343,7 @@ function RiderCounter({
       <div className="rider-counter">
       <motion.div variants={riseIn}>
         <motion.div animate={minusHint}>
-          <StepperButton icon={subtractIcon} label="Remove a passenger" disabled={riders <= 1} onClick={() => press(-1)} />
+          <StepperButton icon={subtractIcon} label="Remove a passenger" disabled={riders <= MIN_RIDERS} onClick={() => press(-1)} />
         </motion.div>
       </motion.div>
       <motion.div className="rider-counter__value" variants={riseIn}>
