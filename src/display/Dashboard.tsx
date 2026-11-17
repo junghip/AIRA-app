@@ -54,9 +54,10 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
   const airport = tab === 'airport'
   const [apOpen] = useSharedState<string | null>('ap.open', null)
   const [apSent] = useSharedState('ap.sent', false)
+  const [apGroup] = useSharedState('ap.group', false)
   // 시계 글자를 진하게 (홈 · 공항)
   const inkClock = home || airport
-  const showBoarding = airport && !apSent
+  const showBoarding = airport && !apSent && !apGroup
 
   return (
     <div className="db">
@@ -115,7 +116,7 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
       <AnimatePresence>
         {!dark && (
           <motion.div
-            className={`db-clock ${inkClock ? 'db-clock--home' : ''} ${airport && !apOpen ? 'db-clock--wide' : ''}`}
+            className={`db-clock ${inkClock ? 'db-clock--home' : ''} ${airport && !apOpen && !apGroup ? 'db-clock--wide' : ''}`}
             onDoubleClick={onRestart}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

@@ -2,8 +2,10 @@ import { AnimatePresence, motion } from 'motion/react'
 import { type CSSProperties } from 'react'
 import backArrow from '../assets/display/back-arrow.svg'
 import btnBag from '../assets/display/btn-bag.svg'
+import btnBagOff from '../assets/display/btn-bag-off.svg'
 import btnDot from '../assets/display/btn-dot.svg'
 import btnPeople from '../assets/display/btn-people.svg'
+import btnPeopleOn from '../assets/display/btn-people-on.svg'
 import carTop from '../assets/display/car-top.png'
 import checkWhite from '../assets/display/check-white.svg'
 import foodAngel from '../assets/display/food-angel.jpg'
@@ -20,6 +22,7 @@ import menuBoston from '../assets/display/menu-boston.png'
 import menuGlazed from '../assets/display/menu-glazed.png'
 import menuMunchkin from '../assets/display/menu-munchkin.png'
 import { smoothEase, softSpring, spring } from '../motion/transitions'
+import GroupPanel from './GroupPanel'
 import { useSharedState } from './shared'
 import Tabs from './Tabs'
 import './AirportPanel.css'
@@ -128,6 +131,8 @@ export default function AirportPanel() {
   const [openId, setOpenId] = useSharedState<string | null>('ap.open', null)
   const [, setSent] = useSharedState('ap.sent', false)
   const [, setPicked] = useSharedState<string[]>('ap.picked', [])
+  // 사람 버튼 → 일행 보기 (피그마 602:4317), 가방 버튼 → 가게 목록
+  const [group, setGroup] = useSharedState('ap.group', false)
   const place = PLACES.find((p) => p.id === openId)
   const open = (id: string | null) => {
     setSent(false)
@@ -140,7 +145,63 @@ export default function AirportPanel() {
   return (
     <>
       <AnimatePresence mode="popLayout" initial={false}>
-        {place ? <Detail key="detail" place={place} onClose={() => open(null)} /> : <List key="list" onOpen={open} />}
+        {place ? (
+          <Detail key="detail" place={place} onClose={() => open(null)} />
+        ) : group ? (
+          <GroupPanel key="group" />
+        ) : (
+          <List key="list" onOpen={open} />
+        )}
+      </AnimatePresence>
+
+      {/* 가게 목록 · 일행 보기 전환 (상세 화면에선 숨김) */}
+      <AnimatePresence>
+        {!place && (
+          <motion.div key="rounds" className="ds-layer ap-rounds" exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+            <motion.button
+              type="button"
+              className={`ap-round ${group ? '' : 'ap-round--on'}`}
+              style={{ left: 232 }}
+              aria-label="Places"
+              aria-pressed={!group}
+              onClick={() => setGroup(false)}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...softSpring, delay: 0.45 }}
+            >
+              <img src={group ? btnBagOff : btnBag} alt="" />
+            </motion.button>
+            <motion.button
+              type="button"
+              className={`ap-round ${group ? 'ap-round--on' : ''}`}
+              style={{ left: 342 }}
+              aria-label="Travel group"
+              aria-pressed={group}
+              onClick={() => setGroup(true)}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...softSpring, delay: 0.51 }}
+            >
+              <img src={group ? btnPeopleOn : btnPeople} alt="" />
+            </motion.button>
+            {/* 일행 소식 알림 점 — 일행 화면을 열면 사라짐 */}
+            <AnimatePresence>
+              {!group && (
+                <motion.img
+                  className="ap-round__dot"
+                  src={btnDot}
+                  alt=""
+                  initial={{ scale: 0 }}
+                  animate={{ scale: [0, 1.3, 1] }}
+                  exit={{ scale: 0 }}
+                  transition={{ delay: 0.9, duration: 0.5 }}
+                />
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* 위쪽: 목록에선 카테고리 탭, 상세에선 뒤로 + 영업 안내 */}
@@ -163,6 +224,14 @@ export default function AirportPanel() {
               Open now · about 2 min wait
             </motion.p>
           </motion.div>
+        ) : group ? (
+          <motion.div key="head-group" className="ap-head" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <p className="gp-tag gp-tag--title">Travel Group</p>
+            <div className="gp-tag gp-tag--count">
+              <p>2 joining</p>
+              <p>1 in AIRA</p>
+            </div>
+          </motion.div>
         ) : (
           <motion.div key="head-list" className="ap-head" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Tabs id="air-tabs" options={TAB_OPTIONS} value={tab} onChange={setTab} />
@@ -176,7 +245,6 @@ export default function AirportPanel() {
 }
 
 function List({ onOpen }: { onOpen: (id: string) => void }) {
-  const [together, setTogether] = useSharedState('ap.together', false)
   return (
     <motion.div className="ds-layer ap-list" exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       {PLACES.map((p, i) => (
@@ -205,25 +273,6 @@ function List({ onOpen }: { onOpen: (id: string) => void }) {
         </motion.div>
       ))}
 
-      {/* 저장한 가게 · 일행과 함께 보기 */}
-      <motion.button type="button" className="ap-round ap-round--on" style={{ left: 232 }} aria-label="Saved places" whileTap={{ scale: 0.9 }} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ ...softSpring, delay: 0.45 }}>
-        <img src={btnBag} alt="" />
-      </motion.button>
-      <motion.button
-        type="button"
-        className={`ap-round ${together ? 'ap-round--on' : ''}`}
-        style={{ left: 342 }}
-        aria-label="Share with passengers"
-        aria-pressed={together}
-        onClick={() => setTogether((v) => !v)}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...softSpring, delay: 0.51 }}
-      >
-        <img src={btnPeople} alt="" />
-      </motion.button>
-      <motion.img className="ap-round__dot" src={btnDot} alt="" initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ delay: 0.9, duration: 0.5 }} />
     </motion.div>
   )
 }

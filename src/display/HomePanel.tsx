@@ -1,5 +1,5 @@
 import { motion, useSpring, useTransform } from 'motion/react'
-import { useEffect, useRef, type PointerEvent } from 'react'
+import { useEffect, useRef } from 'react'
 import arrowRight from '../assets/display/arrow-right-s.svg'
 import btnBell from '../assets/display/btn-bell-v2.svg'
 import btnDot from '../assets/display/btn-dot.svg'
@@ -246,7 +246,6 @@ function MySeat() {
   const [mode, setMode] = useSharedState('hp.mode', 'Private')
   const [size, setSize] = useSharedState('hp.size', 'Compact')
   const dialRef = useRef<HTMLDivElement>(null)
-  const dragging = useRef(false)
 
   const seatAngle = Math.round(sweep / 2)
   const smooth = useSpring(sweep, { stiffness: 260, damping: 30 })
@@ -255,13 +254,32 @@ function MySeat() {
   const ringRotate = useTransform(smooth, (s) => s - 90)
   const nudge = (d: number) => setSweep((s) => Math.min(180, Math.max(0, s + d)))
 
-  const track = (e: PointerEvent) => {
+  // 링 가장자리를 잡으면 점이 손가락 위치로, 가운데 좌석을 잡으면 손가락이 돈 만큼 좌석이 같이 돎
+  const grab = useRef<{ ring: boolean; from: number; sweep: number } | null>(null)
+  const pointer = (e: { clientX: number; clientY: number }) => {
     const r = dialRef.current!.getBoundingClientRect()
     const dx = e.clientX - (r.left + r.width / 2)
     const dy = e.clientY - (r.top + r.height / 2)
-    let deg = (Math.atan2(dx, -dy) * 180) / Math.PI
-    if (deg < 0) deg = deg < -90 ? 180 : 0
-    setSweep(Math.min(180, Math.max(0, deg)))
+    return { deg: (Math.atan2(dx, -dy) * 180) / Math.PI, dist: Math.hypot(dx, dy) / (r.width / 2) }
+  }
+  const toRing = (deg: number) => setSweep(Math.min(180, Math.max(0, deg < 0 ? (deg < -90 ? 180 : 0) : deg)))
+  const start = (e: { clientX: number; clientY: number }) => {
+    const p = pointer(e)
+    const ring = p.dist > 0.78
+    grab.current = { ring, from: p.deg, sweep }
+    if (ring) toRing(p.deg)
+  }
+  const track = (e: { clientX: number; clientY: number }) => {
+    const g = grab.current
+    if (!g) return
+    const p = pointer(e)
+    if (g.ring) return toRing(p.deg)
+    // 한 바퀴 경계(±180°)를 넘어도 끊기지 않게
+    let turn = p.deg - g.from
+    if (turn > 180) turn -= 360
+    if (turn < -180) turn += 360
+    // 좌석 각도 = 점 위치의 절반 → 좌석을 θ만큼 돌리면 점은 2θ
+    setSweep(Math.min(180, Math.max(0, g.sweep + turn * 2)))
   }
 
   return (
@@ -276,15 +294,14 @@ function MySeat() {
         ref={dialRef}
         className="hp-dial"
         onPointerDown={(e) => {
-          dragging.current = true
           e.currentTarget.setPointerCapture(e.pointerId)
-          track(e)
+          start(e)
         }}
-        onPointerMove={(e) => dragging.current && track(e)}
-        onPointerUp={() => (dragging.current = false)}
-        onPointerCancel={() => (dragging.current = false)}
+        onPointerMove={(e) => track(e)}
+        onPointerUp={() => (grab.current = null)}
+        onPointerCancel={() => (grab.current = null)}
       >
-        <motion.img className="hp-dial__seat" src={seatTop} alt="" style={{ rotate: seatRotate }} />
+        <motion.img className="hp-dial__seat" src={seatTop} alt="" draggable={false} style={{ rotate: seatRotate }} />
         <motion.div className="hp-dial__turn" style={{ rotate: ringRotate }}>
           <img className="hp-dial__arc" src={dialArc} alt="" />
           <img className="hp-dial__dot" src={dialDot} alt="" />

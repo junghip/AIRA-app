@@ -1,0 +1,360 @@
+/* 일행 보기 — 좌표는 피그마 2388×834 기준 (602:4317) */
+.gp p {
+  margin: 0;
+}
+
+.gp-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 600;
+}
+
+.gp-avatar--lg {
+  width: 80px;
+  height: 80px;
+  font-size: 22px;
+}
+
+.gp-avatar--sm {
+  width: 60px;
+  height: 60px;
+  font-size: 21px;
+}
+
+/* 경유 제안 */
+.gp-stop {
+  position: absolute;
+  left: 230px;
+  top: 139px;
+  width: 1503px;
+  height: 105px;
+  display: flex;
+  align-items: center;
+  gap: 19.879px;
+  padding: 14.909px 17.394px 14.909px 14.909px;
+  border-radius: 27.333px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 19.879px 49.697px rgba(31, 41, 69, 0.12);
+  box-sizing: border-box;
+}
+
+.gp-stop__photo {
+  width: 94.424px;
+  height: 74.545px;
+  flex-shrink: 0;
+  border-radius: 14.909px;
+  object-fit: cover;
+  background: linear-gradient(149.37deg, #8a6a55 0%, #4e3a2f 71.429%);
+}
+
+.gp-stop__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3.727px;
+}
+
+.gp-stop__meta {
+  color: #4f6699;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.32px;
+  white-space: pre;
+}
+
+.gp-stop__title {
+  display: flex;
+  align-items: baseline;
+  gap: 7.455px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+  color: #3a4256;
+}
+
+.gp-stop__title span:first-child {
+  color: #141b2b;
+}
+
+.gp-stop__spacer {
+  flex: 1;
+}
+
+.gp-opt {
+  height: 59.636px;
+  padding: 0 24.848px;
+  flex-shrink: 0;
+  border: 2.485px solid #dce1ea;
+  border-radius: 29.818px;
+  background: #fff;
+  color: #141b2b;
+  font: inherit;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.gp-opt--on {
+  border-color: #050c2c;
+  background: #050c2c;
+  color: #fff;
+}
+
+/* 일행 카드 2×2 */
+.gp-people {
+  position: absolute;
+  left: 230px;
+  top: 261px;
+  width: 1502px;
+  height: 409px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 17.394px;
+}
+
+.gp-person {
+  display: flex;
+  align-items: center;
+  gap: 17.394px;
+  padding: 17.394px 22.364px;
+  border: 1.242px solid rgba(255, 255, 255, 0.6);
+  border-radius: 27.333px;
+  background: rgba(255, 255, 255, 0.3);
+  box-sizing: border-box;
+}
+
+.gp-person__info {
+  display: flex;
+  flex-direction: column;
+  gap: 7.455px;
+}
+
+.gp-person__head {
+  display: flex;
+  align-items: center;
+  gap: 9.939px;
+}
+
+.gp-person__name {
+  color: #141b2b;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.gp-pill {
+  display: flex;
+  align-items: center;
+  height: 27.333px;
+  padding: 0 12.424px;
+  border-radius: 13.667px;
+  background: rgba(255, 255, 255, 0.6);
+  color: #2e3648;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.gp-pill--me {
+  background: #050c2c;
+  color: #fff;
+}
+
+.gp-person__where {
+  color: #2e3648;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.gp-person__check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4f6699;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+
+.gp-person__check img {
+  width: 24px;
+  height: 24px;
+}
+
+/* 일행 채팅 */
+.gp-chat {
+  position: absolute;
+  left: 1761.76px;
+  top: 50px;
+  width: 583.939px;
+  height: 740.485px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 29.818px 27.333px 22.364px;
+  border: 1.242px solid rgba(255, 255, 255, 0.6);
+  border-radius: 34.788px;
+  background: rgba(255, 255, 255, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.gp-chat__title {
+  color: #050c2c;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+}
+
+.gp-thread {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 30px;
+  overflow: hidden;
+}
+
+.gp-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.gp-msg__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3.727px;
+}
+
+.gp-msg__meta {
+  color: #3a4256;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+}
+
+.gp-bubble {
+  max-width: 442px;
+  padding: 11.182px 16.152px;
+  border-radius: 19.879px 19.879px 19.879px 4.97px;
+  background: #fff;
+  color: #141b2b;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  box-sizing: border-box;
+}
+
+.gp-bubble--wide {
+  width: 442px;
+}
+
+.gp-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7.455px;
+}
+
+.gp-chip {
+  height: 42.242px;
+  padding: 0 14.909px;
+  border: 1.242px solid rgba(255, 255, 255, 0.8);
+  border-radius: 21.121px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #141b2b;
+  font: inherit;
+  font-size: 16.152px;
+  font-weight: 500;
+  letter-spacing: -0.323px;
+  white-space: nowrap;
+}
+
+.gp-composer {
+  display: flex;
+  align-items: center;
+  gap: 9.939px;
+}
+
+.gp-input {
+  flex: 1;
+  height: 64.606px;
+  display: flex;
+  align-items: center;
+  padding: 0 24.848px;
+  border: 1.242px solid rgba(255, 255, 255, 0.9);
+  border-radius: 32.303px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #5b6478;
+  font-size: 19.879px;
+  letter-spacing: -0.4px;
+  box-sizing: border-box;
+}
+
+.gp-send {
+  width: 64.606px;
+  height: 64.606px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: #050c2c;
+}
+
+.gp-send img {
+  width: 24.848px;
+  height: 24.848px;
+}
+
+/* 위쪽 이름표 */
+.gp-tag {
+  position: absolute;
+  top: 50px;
+  height: 69px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 30px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(130, 153, 185, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.25);
+  color: #050c2c;
+  font-weight: 600;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.gp-tag p {
+  margin: 0;
+}
+
+.gp-tag--title {
+  left: 232px;
+  width: 224px;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  letter-spacing: -0.56px;
+}
+
+.gp-tag--count {
+  left: 1474px;
+  width: 258px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 24px;
+  letter-spacing: -0.48px;
+}

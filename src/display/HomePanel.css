@@ -532,3 +532,12 @@
   height: 9px;
   pointer-events: none;
 }
+
+/* 좌석 사진을 끌 때 사진 자체가 끌려 나가거나 선택되지 않게 */
+.hp-dial,
+.hp-dial img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}

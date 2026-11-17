@@ -636,3 +636,12 @@
   letter-spacing: -0.32px;
   color: #7484a3;
 }
+
+/* 가방·사람 버튼 층 — 빈 곳은 아래 카드가 눌리도록 */
+.ap-rounds {
+  pointer-events: none;
+}
+
+.ap-rounds .ap-round {
+  pointer-events: auto;
+}
