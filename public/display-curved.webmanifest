@@ -2,7 +2,7 @@
   "id": "./display-curved",
   "name": "AIRA Curved",
   "short_name": "AIRA Curved",
-  "start_url": "./display-curved",
+  "start_url": "./display-curved/",
   "scope": "./",
   "display": "fullscreen",
   "orientation": "landscape",

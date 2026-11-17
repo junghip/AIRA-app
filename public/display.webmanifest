@@ -2,7 +2,7 @@
   "id": "./display",
   "name": "AIRA Seat",
   "short_name": "AIRA Seat",
-  "start_url": "./display",
+  "start_url": "./display/",
   "scope": "./",
   "display": "fullscreen",
   "orientation": "landscape",
