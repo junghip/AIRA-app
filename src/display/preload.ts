@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 // 화면을 띄우기 전에 의자 디스플레이의 사진·아이콘·영상을 모두 받아 두고 그려 둠
 // → 화면이 넘어갈 때 사진이 비어 있다가 뒤늦게 뜨는 일이 없게
 const images = Object.values(
-  import.meta.glob('../assets/display/*.{png,jpg,jpeg,svg}', { eager: true, query: '?url', import: 'default' }),
+  import.meta.glob(['../assets/display/*.{png,jpg,jpeg,svg}', '../assets/display/posters/*.jpg'], { eager: true, query: '?url', import: 'default' }),
 ) as string[]
 const videos = Object.values(import.meta.glob('../assets/display/*.mp4', { eager: true, query: '?url', import: 'default' })) as string[]
 

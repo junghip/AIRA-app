@@ -43,9 +43,14 @@ type Place = {
   menu: MenuItem[]
 }
 
-// 메뉴 사진이 없는 가게는 가게 사진을 작게 잘라 씀
-const photoMenu = (src: string, names: string[]): MenuItem[] =>
-  names.map((name) => ({ name, src, thumb: { width: 54, height: 54, borderRadius: 10, objectFit: 'cover' } }))
+// 메뉴 사진 (정사각형으로 잘라 둔 menu-이름.jpg) — 같은 메뉴는 가게끼리 돌려 씀
+const menuPhotos = import.meta.glob('../assets/display/menu-*.jpg', { eager: true, import: 'default' }) as Record<string, string>
+const photoMenu = (items: [name: string, photo: string][]): MenuItem[] =>
+  items.map(([name, photo]) => ({
+    name,
+    src: menuPhotos[`../assets/display/menu-${photo}.jpg`],
+    thumb: { width: 54, height: 54, borderRadius: 10, objectFit: 'cover' },
+  }))
 
 const PLACES: Place[] = [
   {
@@ -57,7 +62,7 @@ const PLACES: Place[] = [
     src: foodCoffee,
     crop: { width: 309.916, height: 387.5, left: 0, top: -81 },
     detailCrop: { width: 362, height: 452, left: -18, top: 0 },
-    menu: photoMenu(foodCoffee, ['Signature Latte', 'Americano', 'Flat White', 'Croissant']),
+    menu: photoMenu([['Signature Latte', 'latte'], ['Americano', 'americano-cup'], ['Flat White', 'flat-white'], ['Croissant', 'croissant']]),
   },
   {
     id: 'bread',
@@ -69,7 +74,7 @@ const PLACES: Place[] = [
     crop: { width: 280, height: 373, left: 0, top: -88 },
     detailCrop: { width: 328, height: 437, left: -24, top: 0 },
     shade: 0.02,
-    menu: photoMenu(foodSandwich, ['Club Sandwich', 'Americano', 'Croissant', 'Bagel']),
+    menu: photoMenu([['Club Sandwich', 'club-sandwich'], ['Americano', 'americano-cup'], ['Croissant', 'croissant'], ['Bagel', 'bagel']]),
   },
   {
     id: 'tea',
@@ -80,7 +85,7 @@ const PLACES: Place[] = [
     src: foodTea,
     crop: { width: 326, height: 435, left: -31, top: -128 },
     detailCrop: { width: 362, height: 483, left: -41, top: -24 },
-    menu: photoMenu(foodTea, ['Green Tea', 'Earl Grey', 'Macaron', 'Scone']),
+    menu: photoMenu([['Green Tea', 'green-tea'], ['Earl Grey', 'earl-grey'], ['Macaron', 'macaron'], ['Scone', 'scone']]),
   },
   {
     id: 'starbucks',
@@ -91,7 +96,7 @@ const PLACES: Place[] = [
     src: foodStarbucks,
     crop: { width: 280, height: 373, left: 0, top: -37 },
     detailCrop: { width: 324, height: 459, left: -22, top: -14 },
-    menu: photoMenu(foodStarbucks, ['Caffè Latte', 'Cold Brew', 'Muffin', 'Brownie']),
+    menu: photoMenu([['Caffè Latte', 'latte'], ['Cold Brew', 'cold-brew'], ['Muffin', 'muffin'], ['Brownie', 'brownie']]),
   },
   {
     id: 'dunkin',
@@ -118,7 +123,7 @@ const PLACES: Place[] = [
     src: foodAngel,
     crop: { width: 280, height: 373, left: 0, top: -15 },
     detailCrop: { width: 324, height: 648, left: -22, top: -100 },
-    menu: photoMenu(foodAngel, ['Café Latte', 'Vanilla Latte', 'Cheesecake', 'Waffle']),
+    menu: photoMenu([['Café Latte', 'latte'], ['Vanilla Latte', 'vanilla-latte'], ['Cheesecake', 'cheesecake'], ['Waffle', 'waffle']]),
   },
 ]
 

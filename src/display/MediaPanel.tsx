@@ -1,4 +1,4 @@
-import { motion, type PanInfo } from 'motion/react'
+import { AnimatePresence, motion, type PanInfo } from 'motion/react'
 import { useEffect, useRef, type CSSProperties } from 'react'
 import genreAction from '../assets/display/genre-action.jpg'
 import genreAnimation from '../assets/display/genre-animation.jpg'
@@ -44,11 +44,11 @@ const BAR = 'linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255
 const BAR_BRIGHT = 'linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 100%)'
 
 // 포스터 크기·위치는 피그마의 작은 카드 값을 474px 카드 기준으로 되돌린 값
-const MOVIES: Movie[] = [
+const TRAVEL: Movie[] = [
   {
     title: 'Midnight In Paris',
     year: '2011',
-    time: '1hr 36min',
+    time: '1hr 34min',
     src: movieJourney,
     img: { width: '100%', height: '124.78%', left: 0, top: '-23.15%' },
     tint: TINT,
@@ -58,7 +58,7 @@ const MOVIES: Movie[] = [
   {
     title: 'Roman Holiday',
     year: '1953',
-    time: '1hr 36min',
+    time: '1hr 58min',
     src: movieVacation,
     img: { width: '102.13%', height: '125.48%', left: '-1.15%', top: '-6.93%' },
     tint: 'linear-gradient(90deg, rgba(252, 252, 252, 0.2) 0%, rgba(252, 252, 252, 0.2) 100%), linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.032) 100%)',
@@ -68,7 +68,7 @@ const MOVIES: Movie[] = [
   {
     title: 'Before Sunrise',
     year: '1995',
-    time: '1hr 36min',
+    time: '1hr 41min',
     src: movieAvion,
     img: { width: '100%', height: '100%', left: 0, top: 0, objectFit: 'cover', objectPosition: 'bottom' },
     tint: 'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 100%)',
@@ -99,6 +99,71 @@ const MOVIES: Movie[] = [
   },
 ]
 
+// 장르마다 5편 — 포스터 한 장을 카드 가득 (가운데 3번째가 처음 가운데에 옴)
+const posters = import.meta.glob('../assets/display/posters/*.jpg', { eager: true, import: 'default' }) as Record<string, string>
+const film = (slug: string, title: string, year: string, time: string): Movie => ({
+  title,
+  year,
+  time,
+  src: posters[`../assets/display/posters/${slug}.jpg`],
+  img: { width: '100%', height: '100%', left: 0, top: 0, objectFit: 'cover', objectPosition: '50% 30%' },
+  tint: 'linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.25) 100%)',
+  bar: BAR_BRIGHT,
+})
+
+const BY_GENRE: Record<string, Movie[]> = {
+  Travel: TRAVEL,
+  Comedy: [
+    film('the-grand-budapest-hotel', 'The Grand Budapest Hotel', '2014', '1hr 40min'),
+    film('little-miss-sunshine', 'Little Miss Sunshine', '2006', '1hr 41min'),
+    film('the-secret-life-of-walter-mitty', 'The Secret Life of Walter Mitty', '2013', '1hr 54min'),
+    film('the-intouchables', 'The Intouchables', '2011', '1hr 52min'),
+    film('planes-trains-and-automobiles', 'Planes, Trains and Automobiles', '1987', '1hr 33min'),
+  ],
+  Drama: [
+    film('good-bye-lenin', 'Good Bye, Lenin!', '2003', '2hr 1min'),
+    film('the-terminal', 'The Terminal', '2004', '2hr 8min'),
+    film('forrest-gump', 'Forrest Gump', '1994', '2hr 22min'),
+    film('lost-in-translation', 'Lost in Translation', '2003', '1hr 42min'),
+    film('wings-of-desire', 'Wings of Desire', '1987', '2hr 8min'),
+  ],
+  Romance: [
+    film('before-sunset', 'Before Sunset', '2004', '1hr 20min'),
+    film('notting-hill', 'Notting Hill', '1999', '2hr 4min'),
+    film('la-la-land', 'La La Land', '2016', '2hr 8min'),
+    film('about-time', 'About Time', '2013', '2hr 3min'),
+    film('notebook', 'The Notebook', '2004', '2hr 3min'),
+  ],
+  Action: [
+    film('run-lola-run', 'Run Lola Run', '1998', '1hr 21min'),
+    film('the-bourne-supremacy', 'The Bourne Supremacy', '2004', '1hr 48min'),
+    film('top-gun-maverick', 'Top Gun: Maverick', '2022', '2hr 10min'),
+    film('mission-impossible', 'Mission: Impossible – Fallout', '2018', '2hr 27min'),
+    film('mad-max-fury-road', 'Mad Max: Fury Road', '2015', '2hr'),
+  ],
+  Animation: [
+    film('spirited-away', 'Spirited Away', '2001', '2hr 5min'),
+    film('coco', 'Coco', '2017', '1hr 45min'),
+    film('up', 'Up', '2009', '1hr 36min'),
+    film('kikis-delivery-service', 'Kiki’s Delivery Service', '1989', '1hr 43min'),
+    film('ratatouille', 'Ratatouille', '2007', '1hr 51min'),
+  ],
+  Family: [
+    film('paddington-2', 'Paddington 2', '2017', '1hr 43min'),
+    film('night-at-the-museum', 'Night at the Museum', '2006', '1hr 48min'),
+    film('home-alone', 'Home Alone', '1990', '1hr 43min'),
+    film('charlie-and-the-chocolate-factory', 'Charlie and the Chocolate Factory', '2005', '1hr 55min'),
+    film('the-sound-of-music', 'The Sound of Music', '1965', '2hr 54min'),
+  ],
+  'Short Films': [
+    film('paperman', 'Paperman', '2012', '7min'),
+    film('piper', 'Piper', '2016', '6min'),
+    film('bao', 'Bao', '2018', '8min'),
+    film('feast', 'Feast', '2014', '6min'),
+    film('hair-love', 'Hair Love', '2019', '7min'),
+  ],
+}
+
 // 가운데에서 몇 칸 떨어졌는지 → 위치·크기·투명도 (피그마 값)
 const SLOT: Record<number, { x: number; scale: number; opacity: number; z: number }> = {
   0: { x: 0, scale: 1, opacity: 1, z: 3 },
@@ -123,6 +188,7 @@ export default function MediaPanel() {
   const [view, setView] = useSharedState('mp.view', 'Scroll')
   const [genre, setGenre] = useSharedState('mp.genre', 'Travel')
   const [, setPlaying] = useSharedState<string | null>('mp.playing', null)
+  const MOVIES = BY_GENRE[genre] ?? TRAVEL
   const n = MOVIES.length
   const go = (d: number) => setActive((a) => (a + d + n) % n)
   // 카드마다 직전 칸을 기억 — 맨 끝에서 반대편 끝으로 넘어가는 카드는 가로지르지 않고 그 자리에서 나타남
@@ -130,6 +196,13 @@ export default function MediaPanel() {
   useEffect(() => {
     shown.current = active
   }, [active])
+  // 장르를 바꾸면 그 장르의 가운데(3번째) 영화부터
+  const pickGenre = (g: string) => {
+    if (g === genre) return
+    shown.current = 2
+    setActive(2)
+    setGenre(g)
+  }
   const offset = (i: number, a: number) => {
     let o = i - a
     if (o > n / 2) o -= n
@@ -155,7 +228,16 @@ export default function MediaPanel() {
       </motion.div>
 
       {/* 카드 넘기기 — 끌거나, 옆 카드를 누르면 가운데로 */}
-      <motion.div className="mp-carousel" onPanEnd={onPanEnd}>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={genre}
+          className="mp-carousel"
+          onPanEnd={onPanEnd}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -24 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
         {MOVIES.map((m, i) => {
           const off = offset(i, active)
           const slot = SLOT[Math.abs(off)]
@@ -198,7 +280,8 @@ export default function MediaPanel() {
             </motion.button>
           )
         })}
-      </motion.div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* 장르 타일 */}
       {GENRES.map((g, i) => {
@@ -214,7 +297,7 @@ export default function MediaPanel() {
             whileHover={{ opacity: 1 }}
             whileTap={{ scale: 0.94 }}
             transition={{ ...spring, delay: 0.1 + i * 0.03 }}
-            onClick={() => setGenre(g.name)}
+            onClick={() => pickGenre(g.name)}
             aria-pressed={on}
           >
             <span className="mp-genre__img" style={g.img}>
