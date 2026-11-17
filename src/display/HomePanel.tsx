@@ -31,8 +31,8 @@ import './HomePanel.css'
 
 // 피그마 Section 8 "홈 - 기본 메뉴" (522:1293)
 const enter = (delay: number) => ({
-  initial: { opacity: 0, y: 30, filter: 'blur(8px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
   transition: { ...softSpring, delay },
 })
 

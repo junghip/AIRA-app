@@ -178,7 +178,7 @@ export default function AirportPanel() {
 function List({ onOpen }: { onOpen: (id: string) => void }) {
   const [together, setTogether] = useSharedState('ap.together', false)
   return (
-    <motion.div className="ds-layer ap-list" exit={{ opacity: 0, filter: 'blur(8px)' }} transition={{ duration: 0.4 }}>
+    <motion.div className="ds-layer ap-list" exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       {PLACES.map((p, i) => (
         <motion.div
           key={p.id}
@@ -236,7 +236,7 @@ function Detail({ place, onClose }: { place: Place; onClose: () => void }) {
   const toggle = (name: string) => setPicked((p) => (p.includes(name) ? p.filter((n) => n !== name) : [...p, name]))
 
   return (
-    <motion.div className="ds-layer ap-detail" exit={{ opacity: 0, filter: 'blur(8px)' }} transition={{ duration: 0.4 }}>
+    <motion.div className="ds-layer ap-detail" exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       {/* 가게 + 미리 주문 */}
       <motion.section className="ap-shop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
         <motion.div className="ap-shop__img" layoutId={`ap-img-${place.id}`} transition={spring}>

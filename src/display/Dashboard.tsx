@@ -30,6 +30,20 @@ const NAV: { id: Tab; label: string; on: string; offHome: string; offLight: stri
   { id: 'airport', label: 'Airport', on: airNavFlight, offHome: navFlightHome, offLight: navFlight, offDark: mediaNavFlight },
 ]
 
+const CURVED = window.location.pathname.includes('display-curved')
+const CURVED_TAB = {
+  initial: { opacity: HIDDEN, x: 40 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -40 },
+  transition: { duration: 0.55, ease: smoothEase, opacity: { duration: 0.55, delay: 0.6, ease: smoothEase }, x: { duration: 0.55, delay: 0.6, ease: smoothEase } },
+}
+const FLAT_TAB = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -40 },
+  transition: { duration: 0.45, ease: smoothEase },
+}
+
 export default function Dashboard({ onRestart }: { onRestart: () => void }) {
   const [tab, setTab] = useSharedState<Tab>('db.tab', 'home')
   const [passOpen, setPassOpen] = useSharedState('db.pass', false)
@@ -56,11 +70,9 @@ export default function Dashboard({ onRestart }: { onRestart: () => void }) {
         <motion.div
           key={tab}
           className="ds-layer"
-          // 새 화면은 아주 옅게(0.001) 먼저 깔아 사진까지 다 그려 둔 뒤 0.6초 후에 나타남 (완전히 0이면 미리 안 그려짐)
-          initial={{ opacity: HIDDEN, x: 40, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, x: -40, filter: 'blur(8px)' }}
-          transition={{ duration: 0.55, ease: smoothEase, opacity: { duration: 0.55, delay: 0.6, ease: smoothEase }, x: { duration: 0.55, delay: 0.6, ease: smoothEase } }}
+          // 휘어진 화면: 새 화면을 아주 옅게(0.001) 먼저 깔아 조각마다 다 그려 둔 뒤 0.6초 후에 나타남
+          // 평면 화면: 기다림·흐림 없이 바로 밀려 들어옴 (화면 전체 흐림은 무거워서 전환이 끊김)
+          {...(CURVED ? CURVED_TAB : FLAT_TAB)}
         >
           {tab === 'home' && <HomePanel onShowPass={() => setPassOpen(true)} onRest={() => setResting(true)} />}
           {tab === 'media' && <MediaPanel />}

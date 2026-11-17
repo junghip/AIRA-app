@@ -4,7 +4,7 @@ import Dashboard from './Dashboard'
 import { usePreloaded } from './preload'
 import Tour, { tourEnabled } from './Tour'
 import Welcome from './Welcome'
-import { resetShared, usePrimaryCopy, useSharedState } from './shared'
+import { getShared, resetShared, usePrimaryCopy, useSharedState } from './shared'
 import './Display.css'
 
 // 피그마 Section 8 "의자 디스플레이" — 2388×834 가로 화면을 창 크기에 맞춰 통째로 확대·축소
@@ -60,6 +60,8 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
             <Dashboard onRestart={restart} />
             {/* 홈에 들어오면 자동 둘러보기 시작 — 끝나면 처음(웰컴)부터 다시 */}
             <Tour onFinish={restart} />
+            {/* 직접 누르는 화면: 홈에 들어온 뒤 10초 동안 아무도 안 누르면 처음(웰컴)부터 다시 */}
+            {!tourEnabled() && <IdleReset onIdle={restart} />}
           </motion.div>
         ) : (
           <motion.div
@@ -81,6 +83,39 @@ export function DisplayScene({ onboardingAutoplay = false }: { onboardingAutopla
       />
     </>
   )
+}
+
+const IDLE_MS = 10_000
+// 영화를 보는 중엔 안 누르는 게 당연하니 30초까지 기다려 줌
+const IDLE_MOVIE_MS = 30_000
+
+function IdleReset({ onIdle }: { onIdle: () => void }) {
+  const primary = usePrimaryCopy()
+  useEffect(() => {
+    if (!primary) return
+    let last = Date.now()
+    let timer = 0
+    const check = () => {
+      const limit = getShared<string | null>('mp.playing', null) ? IDLE_MOVIE_MS : IDLE_MS
+      const left = last + limit - Date.now()
+      if (left <= 0) onIdle()
+      else timer = window.setTimeout(check, left)
+    }
+    const touched = () => {
+      last = Date.now()
+      window.clearTimeout(timer)
+      timer = window.setTimeout(check, IDLE_MS)
+    }
+    touched()
+    window.addEventListener('pointerdown', touched)
+    window.addEventListener('keydown', touched)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('pointerdown', touched)
+      window.removeEventListener('keydown', touched)
+    }
+  }, [primary, onIdle])
+  return null
 }
 
 export default function Display() {
