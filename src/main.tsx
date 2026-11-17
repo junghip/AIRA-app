@@ -13,6 +13,9 @@ import App from './App.tsx'
   if (page) {
     document.querySelector('link[rel="manifest"]')?.setAttribute('href', `${base}${page}.webmanifest`)
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000000')
+    // 아이패드 홈 화면 앱에선 화면이 아래 홈 막대 칸까지 안 내려가서 그 칸에 페이지 바탕(밝은 회색)이 보임 → 바탕도 검정
+    document.documentElement.style.background = '#000'
+    document.body.style.background = '#000'
     document.querySelector('meta[name="apple-mobile-web-app-title"]')?.setAttribute('content', page === 'display' ? 'AIRA Seat' : 'AIRA Curved')
   }
 }
