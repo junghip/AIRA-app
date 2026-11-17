@@ -23,6 +23,7 @@ import { softSpring, spring } from '../motion/transitions'
 import Segmented from './Segmented'
 import { usePrimaryCopy, useSharedState } from './shared'
 import Tabs from './Tabs'
+import { tourEnabled } from './Tour'
 import './MediaPanel.css'
 
 // 피그마 Section 8 "영화" (522:1467) — 가운데 474×538 카드, 양옆은 같은 카드를 줄여서 겹침
@@ -270,8 +271,13 @@ function ClipVideo() {
     v.defaultMuted = true
     v.setAttribute('muted', '')
     v.setAttribute('playsinline', '')
+    // 직접 눌러서 튼 경우(평면 화면)엔 소리도 켜 봄 — 브라우저가 막으면 소리 없이 재생
+    if (!tourEnabled()) v.muted = false
     const play = () => {
-      v.play().catch(() => {})
+      v.play().catch(() => {
+        v.muted = true
+        v.play().catch(() => {})
+      })
     }
     play()
     // 아직 준비가 덜 됐으면 준비되는 대로 다시 재생 시도

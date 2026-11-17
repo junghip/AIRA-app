@@ -15,7 +15,11 @@ const AT = {
   suggest: [2192, 570],
 } as const
 
-export const tourEnabled = () => !new URLSearchParams(window.location.search).has('manual')
+// 휘어진 화면은 저절로 넘어가고(?manual 이면 끔), 평면 화면은 직접 누름(?tour 이면 켬)
+export const tourEnabled = () => {
+  const q = new URLSearchParams(window.location.search)
+  return window.location.pathname.includes('display-curved') ? !q.has('manual') : q.has('tour')
+}
 
 export default function Tour({ onFinish }: { onFinish: () => void }) {
   const primary = usePrimaryCopy()
